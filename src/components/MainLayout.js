@@ -23,8 +23,8 @@ export default function MainLayout({children}){
           style={{ height: '100%', borderRight: 0 }}
         >
           {/* <SubMenu key="sub1" title="subnav 1"> */}
-            <Menu.Item key="1" style={{color:"#164166"}}><Link to='/'>Home</Link></Menu.Item>
-            <Menu.Item key="2" style={{color:"#164166"}}><Link to='/orders'>Orders</Link></Menu.Item>
+            <Menu.Item key="1" ><Link to='/' style={{color:"#164166"}}>Home</Link></Menu.Item>
+            <Menu.Item key="2" ><Link to='/orders' style={{color:"#164166"}}>Orders</Link></Menu.Item>
             <Menu.Item key="3" style={{color:"#164166"}}>Products</Menu.Item>
             <Menu.Item key="4" style={{color:"#164166"}}>Suppliers</Menu.Item>
             <Menu.Item key="5" style={{color:"#164166"}}>Analytics</Menu.Item>
