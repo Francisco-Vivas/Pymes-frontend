@@ -2,11 +2,16 @@ import { Link } from "react-router-dom";
 import { Row, Col, Form, Input, Typography, Button, Divider } from "antd";
 import { loginFn } from "../services/";
 import { useContextInfo } from "../hooks/auth.hooks";
+import { useEffect } from "react";
 
 const { Title, Text } = Typography;
 
 const Login = ({ history }) => {
-  const { login } = useContextInfo();
+  const { user, login } = useContextInfo();
+
+  useEffect(() => {
+    if (user) history.push("/");
+  }, []);
 
   const googleUrl =
     process.env.NODE_ENV === "development"

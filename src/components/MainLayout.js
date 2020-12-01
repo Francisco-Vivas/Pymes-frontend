@@ -1,11 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Layout, Menu } from "antd";
+import { logoutFn } from "../services/index";
+import { useContextInfo } from "../hooks/auth.hooks";
 
-// const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 export default function MainLayout({ children }) {
+  const { logout } = useContextInfo();
+  const history = useHistory();
+
+  const handleLogout = async () => {
+    await logoutFn();
+    logout();
+    history.push("/");
+  };
+
   return (
     <Layout>
       <Header className="header" style={{ backgroundColor: "#164166" }}>
@@ -21,8 +30,12 @@ export default function MainLayout({ children }) {
           <Menu.Item key="2" style={{ color: "#dce9ed" }}>
             <Link to="/signup">Sign Up</Link>
           </Menu.Item>
-          <Menu.Item key="3" style={{ color: "#dce9ed" }}>
-            <Link to="/logout">Log Out</Link>
+          <Menu.Item
+            onClick={handleLogout}
+            key="3"
+            style={{ color: "#dce9ed" }}
+          >
+            Log Out
           </Menu.Item>
         </Menu>
       </Header>

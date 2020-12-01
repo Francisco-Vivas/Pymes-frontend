@@ -1,6 +1,7 @@
-import React from "react";
+import { useEffect } from "react";
 import { Row, Col, Form, Input, Button, Typography, Divider } from "antd";
 import { signupFn } from "../services/";
+import { useContextInfo } from "../hooks/auth.hooks";
 
 const { Title, Text } = Typography;
 
@@ -11,6 +12,11 @@ const googleUrl =
 
 const Signup = ({ history }) => {
   const [form] = Form.useForm();
+  const { user } = useContextInfo();
+
+  useEffect(() => {
+    if (user) history.push("/");
+  }, []);
 
   async function onFinish(value) {
     await signupFn(value);
