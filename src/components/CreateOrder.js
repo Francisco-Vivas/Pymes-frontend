@@ -4,7 +4,7 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { createJob } from '../services/jobs'
 import axios from 'axios'
 
-const CreateOrderForm = ({ addOrder }) => {
+export default function CreateOrderForm({ addOrder }){
   const [order] = Form.useForm()
 
   async function handleSubmit(values) {
@@ -36,30 +36,27 @@ const CreateOrderForm = ({ addOrder }) => {
     </div>
   );
 
-  // company,
-  // location,
-  // description,
-  // salary,
-  // skills,
-  // image,
-  // status,
+
 
   return (
     <Form form={form} layout="vertical" onFinish={handleSubmit}>
-      <Form.Item name="title" label="Title:">
+      <Form.Item name="order" label="Order #:">
         <Input />
       </Form.Item>
-      <Form.Item name="company" label="Company:">
+      <Form.Item name="date" label="Date:">
         <Input />
       </Form.Item>
-      <Form.Item name="location" label="Location:">
+      <Form.Item name="customer" label="Customer:">
         <Input />
       </Form.Item>
-      <Form.Item name="description" label="Description:">
+      <Form.Item name="total" label="Total:">
         <Input />
       </Form.Item>
-      <Form.Item name="salarymin" label="Salary min:">
-        <InputNumber />
+      <Form.Item name="payment" label="Payment:">
+        <Select>
+          <Select.Option value="PENDING">PENDING</Select.Option>
+          <Select.Option value="PAID">PAID</Select.Option>
+        </Select>
       </Form.Item>
       <Form.Item name="salarymax" label="Salary max:">
         <InputNumber />
@@ -77,18 +74,8 @@ const CreateOrderForm = ({ addOrder }) => {
           {img ? <img src={img} style={{ width: '100%' }} /> : uploadButton}
         </Upload>
       </Form.Item>
-      <Form.Item name="status" label="Status:">
-        <Select>
-          <Select.Option value="WISHLIST">Wishlist</Select.Option>
-          <Select.Option value="APPLIED">Applied</Select.Option>
-          <Select.Option value="INTERVIEW">Interview</Select.Option>
-          <Select.Option value="OFFER">Offer</Select.Option>
-          <Select.Option value="REJECTED">Rejected</Select.Option>
-        </Select>
-      </Form.Item>
+      
       <Button type="primary" block size="middle" htmlType="submit">Create</Button>
     </Form>
   )
 }
-
-export default 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Table, Tag, Space, Radio } from 'antd';
-const { Columns } = Table
+import { Table, Tag, Space, Modal, Button } from 'antd';
+
 
 export default function Orders(){
   const columns = [
@@ -74,14 +74,22 @@ export default function Orders(){
     }
   ];
 
-const [data, setData] = useData(null)
+
+
+// const [data, setData] = useData(null)
 
 
 
 
   return (
-  <Table
-    columns={columns}
-  />
-  <Button type=>Add </Button>
+    <div>
+      <Button type="dashed" style={{float:"left"}}
+      // onClick={() => setShowModal(true)}
+      > New Order </Button>
+      <br/>
+      <br/>
+      <Table
+        columns={columns}>
+      </Table>
+    </div>
   )}
