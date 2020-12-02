@@ -1,27 +1,79 @@
-import { useEffect } from "react";
-import { Row, Col, Form, Input, Button, Typography, Divider } from "antd";
+import { useState, useEffect } from "react";
+import {
+  Row,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Button,
+  Typography,
+  Divider,
+  Select,
+} from "antd";
 import { signupFn } from "../services/auth";
 import { useContextInfo } from "../hooks/auth.hooks";
+import countryCodes from "country-codes-list";
 
 const { Title, Text } = Typography;
+const { Option } = Select;
 
 const googleUrl =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000/auth/google"
     : "/auth/google";
 
-const Signup = ({ history }) => {
+export default function Signup({ history }) {
+  const [countries, setCountries] = useState(null);
   const [form] = Form.useForm();
   const { user } = useContextInfo();
 
   useEffect(() => {
     if (user) history.push("/");
+    async function getCountryCodes() {
+      const countryCodesNames = countryCodes.customList(
+        "countryCode",
+        "(+{countryCallingCode}) {countryNameEn}"
+      );
+      const countryCodesValues = countryCodes.customList(
+        "countryCode",
+        "+{countryCallingCode}"
+      );
+      setCountries({ countryCodesNames, countryCodesValues });
+    }
+    getCountryCodes();
   }, []);
 
   async function onFinish(value) {
-    await signupFn(value);
+    await signupFn({
+      ...value,
+      cellphone: `${value.prefix}${value.cellphone}`,
+    });
     history.push("/login");
   }
+
+  const prefixPhoneNum = countries ? (
+    <Form.Item name="prefix" noStyle>
+      <Select style={{ width: "8rem", fontSize: "0.8rem" }}>
+        {Object.keys(countries.countryCodesNames).map((key) => (
+          <Option
+            style={{}}
+            key={key}
+            value={countries.countryCodesValues[key]}
+          >
+            {countries.countryCodesNames[key]}
+          </Option>
+        ))}
+      </Select>
+    </Form.Item>
+  ) : (
+    <Form.Item initialValue="+57" name="prefix" noStyle>
+      <Select style={{ width: "" }}>
+        <Option stlye={{}} value="">
+          (+57) Colombia
+        </Option>
+      </Select>
+    </Form.Item>
+  );
 
   return (
     <Row>
@@ -84,12 +136,12 @@ const Signup = ({ history }) => {
           <Form.Item label="Company Name" name="companyName">
             <Input />
           </Form.Item>
-          {/* ######################## NUMBER ########################### */}
-          <Form.Item label="Cellphone Number" name="cellphone">
-            <Input />
+
+          <Form.Item label="Cellphone Number / WhatsApp" name="cellphone">
+            <Input addonBefore={prefixPhoneNum} maxLength="10" />
           </Form.Item>
 
-          <Button type="primary" block htmlType="submit">
+          <Button shape="round" type="primary" block htmlType="submit">
             Sign up
           </Button>
         </Form>
@@ -102,6 +154,4 @@ const Signup = ({ history }) => {
       </Col>
     </Row>
   );
-};
-
-export default Signup;
+}

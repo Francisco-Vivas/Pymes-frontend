@@ -4,8 +4,8 @@ import Layout from "./components/MainLayout";
 import Home from "./components/Home";
 import Orders from "./pages/Orders";
 import NotFound from "./components/404/NotFound.js";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 //const Signup = () => <h1>Sign up</h1>;
 //const Login = () => <h1>Login</h1>;
