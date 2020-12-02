@@ -14,9 +14,6 @@ export default function CreateOrderForm({ addOrder }){
 
     return (
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
-            <Form.Item name="order" label="Order #:">
-                <Input />
-            </Form.Item>
             <Form.Item name="date" label="Date:">
                 <Input />
             </Form.Item>

@@ -24,7 +24,7 @@ export default function Orders(){
   const columns = [
     {
       title: 'Order #',
-      dataIndex: 'order',
+      dataIndex: 'orderNum',
       key: 'order',
     },
     {
