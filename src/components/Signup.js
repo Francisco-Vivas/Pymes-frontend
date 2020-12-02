@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Row, Col, Form, Input, Button, Typography, Divider } from "antd";
-import { signupFn } from "../services/";
+import { signupFn } from "../services/auth";
 import { useContextInfo } from "../hooks/auth.hooks";
 
 const { Title, Text } = Typography;
@@ -78,6 +78,14 @@ const Signup = ({ history }) => {
               },
             ]}
           >
+            <Input />
+          </Form.Item>
+
+          <Form.Item label="Company Name" name="companyName">
+            <Input />
+          </Form.Item>
+          {/* ######################## NUMBER ########################### */}
+          <Form.Item label="Cellphone Number" name="cellphone">
             <Input />
           </Form.Item>
 

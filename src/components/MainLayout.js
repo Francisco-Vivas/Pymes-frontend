@@ -1,6 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
 import { Layout, Menu } from "antd";
-import { logoutFn } from "../services/index";
+import { logoutFn } from "../services/auth";
 import { useContextInfo } from "../hooks/auth.hooks";
 
 const { Header, Content, Sider } = Layout;

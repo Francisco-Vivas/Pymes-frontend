@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Row, Col, Form, Input, Typography, Button, Divider } from "antd";
-import { loginFn } from "../services/";
+import { loginFn } from "../services/auth";
 import { useContextInfo } from "../hooks/auth.hooks";
 import { useEffect } from "react";
 

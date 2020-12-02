@@ -1,5 +1,5 @@
 import { useState, createContext, useContext, useEffect } from "react";
-import { currentUserFn } from "../services";
+import { currentUserFn } from "../services/auth";
 
 export const AppContext = createContext();
 
