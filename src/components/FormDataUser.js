@@ -1,17 +1,40 @@
-import React from "react";
 import { useHistory } from "react-router-dom";
+import { Form, Input, Button, Select } from "antd";
+import countryCodes from "country-codes-list";
+import { useEffect, useState } from "react";
 
-const history = useHistory();
+const { Option } = Select;
 
-const FormDataUser = ({ countries, onFinishFn, isSignup = true }) => {
+const FormDataUser = ({ onFinishFn, isSignup = true, prevData = {} }) => {
+  const [countries, setCountries] = useState(null);
+  const history = useHistory();
   const [form] = Form.useForm();
 
+  useEffect(() => {
+    async function getCountryCodes() {
+      const countryCodesNames = countryCodes.customList(
+        "countryCode",
+        "(+{countryCallingCode}) {countryNameEn}"
+      );
+      const countryCodesValues = countryCodes.customList(
+        "countryCode",
+        "+{countryCallingCode}"
+      );
+      setCountries({ countryCodesNames, countryCodesValues });
+    }
+    getCountryCodes();
+  }, []);
+
   async function onFinish(value) {
-    await onFinishFn({
+    console.log({
       ...value,
-      cellphone: `${value.prefix}${value.cellphone}`,
+      cellphone: value.cellphone || "",
     });
-    history.push("/login");
+    // await onFinishFn({
+    //   ...value,
+    //   cellphone: value.cellphone || "",
+    // });
+    // history.push("/login");
   }
 
   const prefixPhoneNum = countries ? (
@@ -31,15 +54,18 @@ const FormDataUser = ({ countries, onFinishFn, isSignup = true }) => {
   ) : (
     <Form.Item initialValue="+57" name="prefix" noStyle>
       <Select style={{ width: "" }}>
-        <Option stlye={{}} value="">
-          (+57) Colombia
-        </Option>
+        <Option stlye={{}} value=""></Option>
       </Select>
     </Form.Item>
   );
 
   return (
-    <Form layout="vertical" form={form} onFinish={onFinish}>
+    <Form
+      layout="vertical"
+      form={form}
+      onFinish={onFinish}
+      defaultValue={prevData || {}}
+    >
       <Form.Item
         name="email"
         label="Email:"

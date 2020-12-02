@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
 //const Signup = () => <h1>Sign up</h1>;
-//const Login = () => <h1>Login</h1>;
+const EditUser = () => <h1>EditUser</h1>;
 
 const Router = () => (
   <BrowserRouter>
@@ -17,6 +17,7 @@ const Router = () => (
         <Route exact path="/" component={Home} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
+        <Route path="/edit" component={EditUser} />
         <Route path="/orders" component={Orders} />
         <Route component={NotFound} />
       </Switch>
