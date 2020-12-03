@@ -1,10 +1,9 @@
 import { useEffect } from "react";
-import { Row, Col, Button, Typography, Divider, Select } from "antd";
+import { Row, Col, Button, Divider } from "antd";
 import { signupFn } from "../services/auth";
 import { useContextInfo } from "../hooks/auth.hooks";
 import FormDataUser from "../components/FormDataUser";
-
-const { Title, Text } = Typography;
+import { Titles } from "../components/styledComponents/Typography";
 
 const googleUrl =
   process.env.NODE_ENV === "development"
@@ -19,11 +18,10 @@ export default function Signup({ history }) {
   }, []);
 
   return (
-    <Row>
-      <Col xs={24} sm={24} md={12} lg={8}>
-        <Title level={1}>Sign up</Title>
-        <Text type="secondary">Welcome!</Text>
-        <Divider />
+    <Row justify="center" align="middle">
+      <Col>
+        <Titles level={1}>SIGN UP</Titles>
+        <br />
         <FormDataUser onFinishFn={signupFn} isSignup={true} />
         <Divider>or</Divider>
         <a href={googleUrl}>
