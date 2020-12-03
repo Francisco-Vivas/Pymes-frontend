@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^4.9.1",
+    "antd-img-crop": "^3.13.2",
     "axios": "^0.21.0",
     "country-codes-list": "^1.6.8",
     "react": "^17.0.1",

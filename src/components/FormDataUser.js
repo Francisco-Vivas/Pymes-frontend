@@ -1,14 +1,24 @@
 import { useHistory } from "react-router-dom";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, Upload, Skeleton } from "antd";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import ImgCrop from "antd-img-crop";
 import countryCodes from "country-codes-list";
 import { useEffect, useState } from "react";
+import { useContextInfo } from "../hooks/auth.hooks";
+import axios from "axios";
+
+const cloudinaryAPI =
+  "https://api.cloudinary.com/v1_1/franciscovivascodes/image/upload";
 
 const { Option } = Select;
 
-const FormDataUser = ({ onFinishFn, isSignup = true, prevData = {} }) => {
+const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
   const [countries, setCountries] = useState(null);
+  const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   const [form] = Form.useForm();
+  const { user } = useContextInfo();
 
   useEffect(() => {
     async function getCountryCodes() {
@@ -21,21 +31,60 @@ const FormDataUser = ({ onFinishFn, isSignup = true, prevData = {} }) => {
         "+{countryCallingCode}"
       );
       setCountries({ countryCodesNames, countryCodesValues });
+      if (user) setImage(user.image);
     }
     getCountryCodes();
   }, []);
 
   async function onFinish(value) {
-    console.log({
+    const dataUpdated = {
       ...value,
       cellphone: value.cellphone || "",
-    });
-    // await onFinishFn({
-    //   ...value,
-    //   cellphone: value.cellphone || "",
-    // });
-    // history.push("/login");
+      image,
+    };
+
+    await onFinishFn(dataUpdated);
+
+    if (logUpdate) logUpdate(dataUpdated);
+    if (isSignup) return history.push("/login");
+    return history.push("/profile");
   }
+
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow.document.write(image.outerHTML);
+  };
+
+  async function handleUploadFile(file) {
+    setLoading(true);
+
+    const data = new FormData();
+
+    data.append("file", file);
+    data.append("upload_preset", "pymes-companyImage");
+    const {
+      data: { secure_url },
+    } = await axios.post(cloudinaryAPI, data);
+
+    setImage(secure_url);
+    setLoading(false);
+  }
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
 
   const prefixPhoneNum = countries ? (
     <Form.Item name="prefix" noStyle>
@@ -51,20 +100,26 @@ const FormDataUser = ({ onFinishFn, isSignup = true, prevData = {} }) => {
         ))}
       </Select>
     </Form.Item>
+  ) : user ? (
+    <Form.Item name="prefix" noStyle>
+      <Select style={{ width: "" }}>
+        <Option style={{}} value=""></Option>
+      </Select>
+    </Form.Item>
   ) : (
     <Form.Item initialValue="+57" name="prefix" noStyle>
       <Select style={{ width: "" }}>
-        <Option stlye={{}} value=""></Option>
+        <Option style={{}} value=""></Option>
       </Select>
     </Form.Item>
   );
 
-  return (
+  return user ? (
     <Form
       layout="vertical"
       form={form}
       onFinish={onFinish}
-      defaultValue={prevData || {}}
+      initialValues={user}
     >
       <Form.Item
         name="email"
@@ -120,6 +175,23 @@ const FormDataUser = ({ onFinishFn, isSignup = true, prevData = {} }) => {
       >
         <Input />
       </Form.Item>
+      <Form.Item label="Image:">
+        <ImgCrop rotate>
+          <Upload
+            showUploadList={false}
+            listType="picture-card"
+            beforeUpload={handleUploadFile}
+            onPreview={onPreview}
+            name="image"
+          >
+            {image ? (
+              <img src={image} alt="avatar" style={{ width: "100%" }} />
+            ) : (
+              uploadButton
+            )}
+          </Upload>
+        </ImgCrop>
+      </Form.Item>
 
       <Form.Item label="Company Name" name="companyName">
         <Input />
@@ -133,6 +205,8 @@ const FormDataUser = ({ onFinishFn, isSignup = true, prevData = {} }) => {
         {isSignup ? "Sign up" : "Edit Profile"}
       </Button>
     </Form>
+  ) : (
+    <Skeleton loading={!Boolean(user)} active></Skeleton>
   );
 };
 

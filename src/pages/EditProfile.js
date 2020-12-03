@@ -1,24 +1,19 @@
 import { useEffect } from "react";
-import { Row, Col, Button, Typography, Divider, Select } from "antd";
+import { Row, Col, Typography, Divider, Skeleton } from "antd";
 import { useContextInfo } from "../hooks/auth.hooks";
 import FormDataUser from "../components/FormDataUser";
 import { editUserFn } from "../services/user";
 
 const { Title, Text } = Typography;
 
-const googleUrl =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000/auth/google"
-    : "/auth/google";
+export default function EditProfile({ history }) {
+  const { user, login } = useContextInfo();
 
-export default function EditUser({ history }) {
-  const { user } = useContextInfo();
+  // useEffect(() => {
+  //   if (!user) history.push("/");
+  // }, []);
 
-  useEffect(() => {
-    if (!user) history.push("/");
-  }, []);
-
-  return (
+  return user ? (
     <Row>
       <Col xs={24} sm={24} md={12} lg={8}>
         <Title level={1}>Edit your profile</Title>
@@ -27,9 +22,14 @@ export default function EditUser({ history }) {
         <FormDataUser
           onFinishFn={editUserFn}
           isSignup={false}
-          prevData={user}
+          logUpdate={login}
         />
       </Col>
     </Row>
+  ) : (
+    <>
+      <Skeleton loading={!Boolean(user)} active avatar></Skeleton>
+      <Skeleton loading={!Boolean(user)} active></Skeleton>
+    </>
   );
 }
