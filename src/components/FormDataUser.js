@@ -114,7 +114,7 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
     </Form.Item>
   );
 
-  return user ? (
+  return isSignup || user ? (
     <Form
       layout="vertical"
       form={form}

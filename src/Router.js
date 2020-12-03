@@ -21,8 +21,8 @@ const Router = () => (
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
         <ProtectedRoute path="/profile/edit" component={EditProfile} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/orders" component={Orders} />
+        <ProtectedRoute path="/profile" component={Profile} />
+        <ProtectedRoute path="/orders" component={Orders} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
