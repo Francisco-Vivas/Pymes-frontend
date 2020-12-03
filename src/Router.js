@@ -4,11 +4,14 @@ import Layout from "./components/MainLayout";
 import Home from "./components/Home";
 import Orders from "./pages/Orders";
 import NotFound from "./components/404/NotFound.js";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import EditProfile from "./pages/EditProfile";
+import Profile from "./pages/Profile";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 //const Signup = () => <h1>Sign up</h1>;
-//const Login = () => <h1>Login</h1>;
+//const Profile = () => <h1>Profile</h1>;
 
 const Router = () => (
   <BrowserRouter>
@@ -17,7 +20,9 @@ const Router = () => (
         <Route exact path="/" component={Home} />
         <Route path="/signup" component={Signup} />
         <Route path="/login" component={Login} />
-        <Route path="/orders" component={Orders} />
+        <ProtectedRoute path="/profile/edit" component={EditProfile} />
+        <ProtectedRoute path="/profile" component={Profile} />
+        <ProtectedRoute path="/orders" component={Orders} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

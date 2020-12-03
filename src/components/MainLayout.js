@@ -1,6 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
 import { Layout, Menu } from "antd";
-import { logoutFn } from "../services/index";
+import { logoutFn } from "../services/auth";
 import { useContextInfo } from "../hooks/auth.hooks";
 
 const { Header, Content, Sider } = Layout;
@@ -8,6 +8,7 @@ const { Header, Content, Sider } = Layout;
 export default function MainLayout({ children }) {
   const { logout } = useContextInfo();
   const history = useHistory();
+  const { user } = useContextInfo();
 
   const handleLogout = async () => {
     await logoutFn();
@@ -24,19 +25,29 @@ export default function MainLayout({ children }) {
           mode="horizontal"
           style={{ backgroundColor: "#164166" }}
         >
-          <Menu.Item key="1" style={{ color: "#dce9ed" }}>
-            <Link to="/login">Log In</Link>
-          </Menu.Item>
-          <Menu.Item key="2" style={{ color: "#dce9ed" }}>
-            <Link to="/signup">Sign Up</Link>
-          </Menu.Item>
-          <Menu.Item
-            onClick={handleLogout}
-            key="3"
-            style={{ color: "#dce9ed" }}
-          >
-            Log Out
-          </Menu.Item>
+          {user ? (
+            <>
+              <Menu.Item key="1" style={{ color: "#dce9ed" }}>
+                <Link to="/profile">Profile</Link>
+              </Menu.Item>
+              <Menu.Item
+                onClick={handleLogout}
+                key="3"
+                style={{ color: "#dce9ed" }}
+              >
+                Log Out
+              </Menu.Item>
+            </>
+          ) : (
+            <>
+              <Menu.Item key="1" style={{ color: "#dce9ed" }}>
+                <Link to="/login">Log In</Link>
+              </Menu.Item>
+              <Menu.Item key="2" style={{ color: "#dce9ed" }}>
+                <Link to="/signup">Sign Up</Link>
+              </Menu.Item>
+            </>
+          )}
         </Menu>
       </Header>
       <Layout>
