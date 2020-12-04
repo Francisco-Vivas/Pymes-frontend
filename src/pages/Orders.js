@@ -1,49 +1,45 @@
-import React, { useState, useEffect } from 'react'
-import { Table, Tag, Space, Modal, Button } from 'antd';
+import React, { useState, useEffect } from "react";
+import { Table, Button } from "antd";
 // import CreateOrder from '../pages/CreateOrderForm'
-import { Link } from 'react-router-dom'
-import { getAllOrders } from '../services/orders'
+import { Link } from "react-router-dom";
+import { getAllOrders } from "../services/orders";
 
-
-
-export default function Orders(){
-
-  const [orders, setOrders] = useState(null)
+export default function Orders() {
+  const [orders, setOrders] = useState(null);
 
   useEffect(() => {
     async function getOrders(){
       const { data } = await getAllOrders()
       setOrders(data)
     }
-    getOrders()
-  }, [])
-
+    getOrders();
+  }, []);
 
   const columns = [
     {
-      title: 'Order #',
-      dataIndex: 'orderNum',
-      key: 'orderNum',
+      title: "Order #",
+      dataIndex: "orderNum",
+      key: "orderNum",
     },
     {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
     },
     {
-      title: 'Customer',
-      dataIndex: 'customer',
-      key: 'customer',
+      title: "Customer",
+      dataIndex: "customer",
+      key: "customer",
     },
     {
-      title: 'Total',
-      dataIndex: 'total',
-      key: 'total',
+      title: "Total",
+      dataIndex: "total",
+      key: "total",
     },
     {
-      title: 'Payment',
-      dataIndex: 'payment',
-      key: 'payment',
+      title: "Payment",
+      dataIndex: "payment",
+      key: "payment",
       // render: payments => (
       //   <span>
       //     {payments?.map(payment => {
@@ -58,9 +54,9 @@ export default function Orders(){
       // ),
     },
     {
-      title: 'Fulfillment',
-      dataIndex: 'fulfillment',
-      key: 'fulfillment',
+      title: "Fulfillment",
+      dataIndex: "fulfillment",
+      key: "fulfillment",
       // render: fulfillments => (
       //   <span>
       //     {fulfillments.map(fulfillment => {
@@ -75,18 +71,18 @@ export default function Orders(){
       // ),
     },
     {
-      title: 'Comments',
-      dataIndex: 'extra',
-      key: 'extra'
+      title: "Comments",
+      dataIndex: "extra",
+      key: "extra",
     },
     {
-      title: '',
-      dataIndex:'details',
-      key:'details'
-    }
+      title: "",
+      dataIndex: "details",
+      key: "details",
+    },
   ];
-  
-  const dataSource = orders?.map(order => {
+
+  const dataSource = orders?.map((order) => {
     return {
       key: order._id,
       orderNum: order.orderNum,
@@ -102,13 +98,21 @@ export default function Orders(){
 
   return (
     <div>
-      <Link to='/orders/create-order'><Button style={{float:"left", color:"#4D5768", border:"1px dashed #4D5768"}}> New Order </Button></Link>
-      <br/>
-      <br/>
-      <Table
-        dataSource={dataSource}
-        columns={columns}>
-      </Table>
+      <Link to="/orders/create-order">
+        <Button
+          style={{
+            float: "left",
+            color: "#4D5768",
+            border: "1px dashed #4D5768",
+          }}
+        >
+          {" "}
+          New Order{" "}
+        </Button>
+      </Link>
+      <br />
+      <br />
+      <Table dataSource={dataSource} columns={columns}></Table>
       {/* <Modal
         visible={showModal}
         title="Create New Order"
@@ -117,4 +121,5 @@ export default function Orders(){
         footer={null}>
       </Modal> */}
     </div>
-  )}
+  );
+}

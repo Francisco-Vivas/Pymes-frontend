@@ -26,7 +26,11 @@ export default function MainLayout({ children }) {
         <Menu
           theme="dark"
           mode="horizontal"
-          style={{ backgroundColor: "#81A1C1", color: "#f0f2f5", textAlign:"right" }}
+          style={{
+            backgroundColor: "#81A1C1",
+            color: "#f0f2f5",
+            textAlign: "right",
+          }}
         >
           {user ? (
             <>
@@ -68,7 +72,7 @@ export default function MainLayout({ children }) {
                 <Link to="/orders">Orders</Link>
               </Menu.Item>
               <Menu.Item key="3" style={{ color: "#4D5768" }}>
-                Products
+                <Link to="/products">Products</Link>
               </Menu.Item>
               <Menu.Item key="4" style={{ color: "#4D5768" }}>
                 Suppliers

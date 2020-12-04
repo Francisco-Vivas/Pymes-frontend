@@ -16,7 +16,7 @@ const Profile = ({ history }) => {
       };
 
   return user ? (
-    <Row>
+    <Row justify="center" align="middle">
       <Col xs={24} sm={24} md={20} lg={15}>
         <Col pull={6}>
           <Avatar
@@ -27,31 +27,36 @@ const Profile = ({ history }) => {
         />
           <TitleS
             level={1}
-            style={{ display: "inline-block", marginLeft: "1rem", color:"#4D5768"}}
+            style={{
+              display: "inline-block",
+              marginLeft: "1rem",
+              color: "#4D5768",
+            }}
           >
             Welcome {user.companyName}!
           </TitleS>
         </Col>
         {/* <p style={{color:"#d3d3d3", textAlign:"left", paddingLeft:"114px"}}>This is all your information!</p> */}
         <Divider />
-        <p style={{color:"#4D5768", textAlign:"left", paddingLeft:"110px"}}> 
-        Admin: {user.username} {user.userlastname}
-        <br/>
-        <br/>
-        Phone: {user.prefix} {user.cellphone}
-        <br/>
-        <br/>
-        Email: {user.email}
-        <br/>
-        <br/>
-        Address: {user.address}
-        <br/>
-        <br/>
+        <p
+          style={{ color: "#4D5768", textAlign: "left", paddingLeft: "110px" }}
+        >
+          Admin: {user.username} {user.userlastname}
+          <br />
+          <br />
+          Phone: {user.prefix} {user.cellphone}
+          <br />
+          <br />
+          Email: {user.email}
+          <br />
+          <br />
+          Address: {user.address}
+          <br />
+          <br />
         </p>
 
-
         <Link to="/profile/edit">
-          <ButtonS shape="square" style={{float:"right"}}>
+          <ButtonS shape="square" style={{ float: "right" }}>
             Edit profile
           </ButtonS>
         </Link>

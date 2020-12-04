@@ -10,4 +10,4 @@ const userService = axios.create({
   withCredentials: true,
 });
 
-export const editUserFn = (userInfo) => userService.post("/edit", userInfo);
+export const editUserFn = (userInfo) => userService.put("/edit", userInfo);
