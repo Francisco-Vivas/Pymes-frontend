@@ -11,6 +11,7 @@ import CreateOrders from "./pages/CreateOrders";
 import LandingPage from "./pages/LandingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
+import OrderDetail from './pages/OrderDetail';
 
 const Router = () => (
   <BrowserRouter>
@@ -24,6 +25,7 @@ const Router = () => (
           <ProtectedRoute exact path="/profile" component={Profile} />
           <ProtectedRoute exact path="/orders" component={Orders} />
           <ProtectedRoute exact path="/orders/create-order" component={CreateOrders} />
+          <ProtectedRoute exact path="/orders/:ordersID" component={OrderDetail} />
           {/* <Route exact path="*" component={NotFound} /> */}
         </Layout>
       </Switch>

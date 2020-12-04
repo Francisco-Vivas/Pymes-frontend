@@ -85,10 +85,10 @@ export default function Orders(){
       key:'details'
     }
   ];
-
+  
   const dataSource = orders?.map(order => {
     return {
-      key: order.id,
+      key: order._id,
       orderNum: order.orderNum,
       date: order.date,
       customer: order.customer,
@@ -96,9 +96,9 @@ export default function Orders(){
       payment: order.payment,
       fulfillment: order.fulfillment,
       extra: order.extra,
-      details: <Link to='/orders/${_id}'><Button>Order Details</Button></Link>
+      details: <Link to={`/orders/${order._id}`}><Button>Order Details</Button></Link>
     }})
-
+    
 
   return (
     <div>

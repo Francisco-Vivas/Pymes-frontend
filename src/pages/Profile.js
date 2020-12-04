@@ -21,7 +21,7 @@ const Profile = ({ history }) => {
         <Col pull={6}>
           <Avatar
             {...AvatarProperties}
-             shape="circle"
+            shape="circle"
           style={{ backgroundColor: "#4D5768", borderColor: "#4D5768" }}
           size={{ xs: 60, sm: 80, md: 100, lg: 120, xl: 150, xxl: 170 }}
         />
@@ -55,7 +55,8 @@ const Profile = ({ history }) => {
             Edit profile
           </ButtonS>
         </Link>
-      </Row>
+      </Col>
+    </Row>
   ) : (
     <Skeleton loading={!user} active></Skeleton>
   );
