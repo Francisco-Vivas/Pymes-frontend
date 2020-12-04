@@ -12,9 +12,7 @@ export default function Orders(){
 
   useEffect(() => {
     async function getOrders(){
-      console.log("hola")
       const { data } = await getAllOrders()
-      console.log("chao", data)
       setOrders(data)
     }
     getOrders()
@@ -98,7 +96,7 @@ export default function Orders(){
       payment: order.payment,
       fulfillment: order.fulfillment,
       extra: order.extra,
-      details: <Button>Order Details</Button>
+      details: <Link to='/orders/${_id}'><Button>Order Details</Button></Link>
     }})
 
 
