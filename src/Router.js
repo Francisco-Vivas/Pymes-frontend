@@ -8,24 +8,29 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import EditProfile from "./pages/EditProfile";
 import Profile from "./pages/Profile";
+import CreateOrders from "./pages/CreateOrders";
+import LandingPage from "./pages/LandingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+
+//--------------DUMMIES
 //const Signup = () => <h1>Sign up</h1>;
 //const Profile = () => <h1>Profile</h1>;
 
 const Router = () => (
   <BrowserRouter>
-    <Layout>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/login" component={Login} />
-        <ProtectedRoute path="/profile/edit" component={EditProfile} />
-        <ProtectedRoute path="/profile" component={Profile} />
-        <ProtectedRoute path="/orders" component={Orders} />
-        <Route component={NotFound} />
+        <Route exact path="/" component={LandingPage} />
+        <Layout>
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/login" component={Login} />
+          <ProtectedRoute exact path="/profile/edit" component={EditProfile} />
+          <ProtectedRoute exact path="/profile" component={Profile} />
+          <ProtectedRoute exact path="/orders" component={Orders} />
+          <ProtectedRoute exact path="/orders/create-order" component={CreateOrders} />
+          {/* <Route exact path="*" component={NotFound} /> */}
+        </Layout>
       </Switch>
-    </Layout>
   </BrowserRouter>
 );
 

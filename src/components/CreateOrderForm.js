@@ -41,7 +41,7 @@ export default function CreateOrderForm({ addOrder }){
             <Form.Item name="extra" label="Extra:">
                 <Input />
             </Form.Item>
-            <Button type="primary" block size="middle" htmlType="submit" style={{color:"white", backgroundColor:"#ec4767"}}>Create Order</Button>
+            <Button type="primary" block size="middle" htmlType="submit" style={{color:"white", backgroundColor:"#4D5768"}}>Create Order</Button>
         </Form>
     )
 }

@@ -10,7 +10,7 @@ const Login = ({ history }) => {
   const { user, login } = useContextInfo();
 
   useEffect(() => {
-    if (user) history.push("/");
+    if (user) history.push("/orders");
   }, []);
 
   const googleUrl =
@@ -28,7 +28,7 @@ const Login = ({ history }) => {
     <Row>
       <Col xs={24} sm={24} md={12} lg={8}>
         <Title level={1}>Login</Title>
-        <Text type="secondary">Is awesome to see you again!</Text>
+        <Text type="secondary">It's awesome to see you again!</Text>
         <Divider />
         <Form
           layout="vertical"

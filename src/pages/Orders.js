@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Tag, Space, Modal, Button } from 'antd';
-import CreateOrderForm from '../components/CreateOrderForm'
+// import CreateOrder from '../pages/CreateOrderForm'
+import { Link } from 'react-router-dom'
+import { getAllOrders } from '../services/orders'
+
 
 
 export default function Orders(){
 
   const [orders, setOrders] = useState(null)
-  const [showModal, setShowModal] = useState(false)
 
-  // useEffect(() => {
-  //   async function getOrders(){
-  //     const { data } = await getAllOrders()
-  //     setOrders(data)
-  //   }
-  //   getOrders()
-  // }, [])
+  useEffect(() => {
+    async function getOrders(){
+      console.log("hola")
+      const { data } = await getAllOrders()
+      console.log("chao", data)
+      setOrders(data)
+    }
+    getOrders()
+  }, [])
 
-  function addOrder(order){
-    setOrders([...orders, order])
-    setShowModal(false)
-  }
 
   const columns = [
     {
@@ -29,8 +29,8 @@ export default function Orders(){
     },
     {
       title: 'Date',
-      dataIndex: 'gate',
-      key: 'gate',
+      dataIndex: 'date',
+      key: 'date',
     },
     {
       title: 'Customer',
@@ -46,71 +46,71 @@ export default function Orders(){
       title: 'Payment',
       key: 'payment',
       dataIndex: 'payment',
-      render: payments => (
-        <span>
-          {payments.map(payment => {
-            let color = payment === "PAID" ? 'green' : 'red';
-            return (
-              <Tag color={color} key={payment}>
-                {payment.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </span>
-      ),
+      // render: payments => (
+      //   <span>
+      //     {payments?.map(payment => {
+      //       let color = payment === "PAID" ? 'green' : 'red';
+      //       return (
+      //         <Tag color={color} key={payment}>
+      //           {payment.toUpperCase()}
+      //         </Tag>
+      //       );
+      //     })}
+      //   </span>
+      // ),
     },
     {
       title: 'Fulfillment',
       key: 'fulfillment',
       dataIndex: 'fulfillment',
-      render: fulfillments => (
-        <span>
-          {fulfillments.map(fulfillment => {
-            let color = fulfillment === "FULFILLED" ? 'green' : 'red';
-            return (
-              <Tag color={color} key={fulfillment}>
-                {fulfillment.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </span>
-      ),
+      // render: fulfillments => (
+      //   <span>
+      //     {fulfillments.map(fulfillment => {
+      //       let color = fulfillment === "FULFILLED" ? 'green' : 'red';
+      //       return (
+      //         <Tag color={color} key={fulfillment}>
+      //           {fulfillment.toUpperCase()}
+      //         </Tag>
+      //       );
+      //     })}
+      //   </span>
+      // ),
     },
     {
-      title: 'Send Invoice',
-      key: 'invoice',
-      render: () => (
-        <Space size="middle">
-          <a>Delete</a>
-        </Space>
-      ),
-    },
-    {
-      title: 'Extra',
+      title: 'Comments',
       dataIndex: 'extra',
       key: 'extra',
     }
   ];
 
+  const dataSource = orders?.map(order => {
+    return {
+      key: order.id,
+      order: order.orderNum,
+      date: order.date,
+      customer: order.customer,
+      total: order.total,
+      payment: order.payment,
+      fulfillment: order.fulfillment,
+      extra: order.extra
+    }})
 
 
   return (
     <div>
-      <Button type="dashed" style={{float:"left", color:"#ec4767"}}
-      onClick={() => setShowModal(true)}
-      > New Order </Button>
+      <Link to='/orders/create-order'><Button style={{float:"left", color:"#4D5768", border:"1px dashed #4D5768"}}> New Order </Button></Link>
       <br/>
       <br/>
       <Table
+        dataSource={dataSource}
         columns={columns}>
       </Table>
-      <Modal
+      {/* <Modal
         visible={showModal}
         title="Create New Order"
         onOk={() => setShowModal(false)}
         onCancel={() => setShowModal(false)}
         footer={null}>
-          <CreateOrderForm addOrder={addOrder}/>
-      </Modal>
+      </Modal> */}
     </div>
   )}
