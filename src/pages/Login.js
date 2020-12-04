@@ -10,7 +10,7 @@ const Login = ({ history }) => {
   const { user, login } = useContextInfo();
 
   useEffect(() => {
-    if (user) history.push("/orders");
+    if (user) history.push("/dashboard");
   }, []);
 
   const googleUrl =

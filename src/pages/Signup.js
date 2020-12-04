@@ -15,7 +15,7 @@ export default function Signup({ history }) {
   const { user } = useContextInfo();
 
   useEffect(() => {
-    if (user) history.push("/");
+    if (user) history.push("/dashboard");
   }, []);
 
   return (

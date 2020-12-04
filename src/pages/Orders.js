@@ -25,7 +25,7 @@ export default function Orders(){
     {
       title: 'Order #',
       dataIndex: 'orderNum',
-      key: 'order',
+      key: 'orderNum',
     },
     {
       title: 'Date',
@@ -84,9 +84,10 @@ export default function Orders(){
   ];
 
   const dataSource = orders?.map(order => {
+    console.log(order.orderNum)
     return {
       key: order.id,
-      order: order.orderNum,
+      orderNum: order.orderNum,
       date: order.date,
       customer: order.customer,
       total: order.total,
