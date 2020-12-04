@@ -56,7 +56,7 @@ const Profile = ({ history }) => {
         </p>
 
         <Link to="/profile/edit">
-          <ButtonS shape="square" style={{ float: "right" }}>
+          <ButtonS type='primary' style={{ float: "right" }}>
             Edit profile
           </ButtonS>
         </Link>

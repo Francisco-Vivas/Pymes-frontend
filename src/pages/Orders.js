@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "antd";
-// import CreateOrder from '../pages/CreateOrderForm'
 import { Link } from "react-router-dom";
 import { getAllOrders } from "../services/orders";
 import { ButtonS } from "../components/styledComponents/antdStyled"

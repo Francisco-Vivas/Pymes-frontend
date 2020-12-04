@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { updateOrder, getOrderDetail } from '../services/orders'
 import { Link, useHistory } from 'react-router-dom'
-import { Form, Button, Input, InputNumber, Select } from 'antd'
+import { Form, Button, Input, InputNumber, Select, Typography, Divider } from 'antd'
 import { InputS, ButtonS } from '../components/styledComponents/antdStyled'
+import { TitleS } from '../components/styledComponents/Typography'
+
+const { Text } = Typography
 
 export default function UpdateOrder({ match:{ params:{ ordersID }}}){
     const [form] = Form.useForm()
@@ -19,15 +22,18 @@ export default function UpdateOrder({ match:{ params:{ ordersID }}}){
     }, [])
 
     async function handleSubmit(values){
-        const updatedOrder = { ...order, values }
-        const { data: newOrder } = await updateOrder(order._id, updatedOrder)
+        // const updatedOrder = { ...order, values }
+        const { data: newOrder } = await updateOrder(order._id, values)
         setOrder(newOrder)
-        history.push('/orders/:ordersID')
+        history.push(`/orders/${ordersID}`)
     }
 
-    console.log(order)
 
-    return (
+    return order && (
+        <div>
+        <TitleS level={1}>Edit your order</TitleS>
+        <Text type="secondary">Update your order details</Text>
+        <Divider />
         <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={order}>
             <Form.Item name="date" label="Date:">
                 <Input />
@@ -56,5 +62,6 @@ export default function UpdateOrder({ match:{ params:{ ordersID }}}){
             </Form.Item>
             <ButtonS type="primary" size="middle" htmlType="submit">Edit Order</ButtonS>
         </Form>
+        </div>
     )
 }
