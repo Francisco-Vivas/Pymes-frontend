@@ -1,17 +1,13 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Typography, Button, Divider, Skeleton, Avatar } from "antd";
+import { Row, Col, Divider, Skeleton, Avatar, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useContextInfo } from "../hooks/auth.hooks";
-
-const { Title, Text } = Typography;
+import { ButtonS } from "../components/styledComponents/antdStyled";
+import { TextS, TitleS } from "../components/styledComponents/Typography";
 
 const Profile = ({ history }) => {
   const { user } = useContextInfo();
-
-  // useEffect(() => {
-  //   if (!user) history.push("/");
-  // }, []);
 
   const AvatarProperties = user
     ? { src: user.image }
@@ -20,29 +16,34 @@ const Profile = ({ history }) => {
       };
 
   return user ? (
-    <Row>
-      <Col xs={24} sm={24} md={20} lg={15}>
-        <Col>
-          <Avatar
-            {...AvatarProperties}
-            size={{ xs: 40, sm: 60, md: 80, lg: 90, xl: 100, xxl: 150 }}
-          />
-          <Title
-            level={1}
-            style={{ display: "inline-block", marginLeft: "1rem" }}
-          >
-            Hi, {user.companyName}
-          </Title>
-        </Col>
-        <Text type="secondary">This is all your information!</Text>
-        <Divider />
+    <>
+      <Row justify="Start" align="middle">
+        <Avatar
+          {...AvatarProperties}
+          shape="circle"
+          style={{ backgroundColor: "#4D5768", borderColor: "#4D5768" }}
+          size={{ xs: 60, sm: 80, md: 100, lg: 120, xl: 150, xxl: 170 }}
+        />
+        <TitleS level={1} style={{ marginLeft: "3rem" }}>
+          Welcome {user.companyName}!
+        </TitleS>
+      </Row>
+      <Row justify="center" align="middle">
+        <Space direction="vertical" align="start">
+          <TextS type="secondary">
+            Admin: {user.username} {user.userlastname}
+          </TextS>
+          <TextS>Phone: {user.cellphone}</TextS>
+          <TextS>Email: {user.email}</TextS>
+          <TextS>Address: {user.address}</TextS>
+        </Space>
+      </Row>
+      <Row justify="end" align="bottom">
         <Link to="/profile/edit">
-          <Button block shape="round">
-            Edit profile
-          </Button>
+          <ButtonS type="primary">Edit profile</ButtonS>
         </Link>
-      </Col>
-    </Row>
+      </Row>
+    </>
   ) : (
     <Skeleton loading={!user} active></Skeleton>
   );

@@ -25,6 +25,16 @@ code {
   border-right: 3px solid #81a1c1 !important;
 }
 
+.ant-menu.ant-menu-dark .ant-menu-item-selected,
+.ant-menu-submenu-popup.ant-menu-dark,
+.ant-menu-item-selected {
+  background-color: #5e81ac !important;
+}
+
+.ant-menu-item-active {
+  background-color: #5e81acaa !important;
+}
+
 .ant-menu-item-selected a,
 .ant-menu-item-selected a:hover {
   color: #2e3440 !important;
@@ -35,5 +45,22 @@ code {
   color: #2e3440 !important;
 }
 
+.ant-menu-item a,
+.ant-menu-item a:hover {
+  color: #2e3440 !important;
+}
+
 .ant-menu-dark.ant-menu-horizontal > .ant-menu-item:hover {
+}
+
+#basic_password,
+#password,
+.ant-input,
+.ant-input-group-addon {
+  background-color: #f0f2f5 !important;
+  color: #4d5768 !important;
+}
+
+.ant-layout {
+  background-color: #ffffff !important;
 }

@@ -3,7 +3,7 @@ import { Row, Col, Button, Divider } from "antd";
 import { signupFn } from "../services/auth";
 import { useContextInfo } from "../hooks/auth.hooks";
 import FormDataUser from "../components/FormDataUser";
-import { Titles } from "../components/styledComponents/Typography";
+import { TitleS } from "../components/styledComponents/Typography";
 
 const googleUrl =
   process.env.NODE_ENV === "development"
@@ -20,14 +20,12 @@ export default function Signup({ history }) {
   return (
     <Row justify="center" align="middle">
       <Col>
-        <Titles level={1}>SIGN UP</Titles>
+        <TitleS level={1}>SIGN UP</TitleS>
         <br />
         <FormDataUser onFinishFn={signupFn} isSignup={true} />
         <Divider>or</Divider>
         <a href={googleUrl}>
-          <Button block shape="round">
-            Sing up with Google
-          </Button>
+          <Button>Sing up with Google</Button>
         </a>
       </Col>
     </Row>

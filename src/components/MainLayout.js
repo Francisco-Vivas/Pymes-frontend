@@ -2,13 +2,13 @@ import { Link, useHistory } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import { logoutFn } from "../services/auth";
 import { useContextInfo } from "../hooks/auth.hooks";
+import { useEffect } from "react";
 
 const { Header, Content, Sider } = Layout;
 
 export default function MainLayout({ children }) {
-  const { logout } = useContextInfo();
+  const { user, logout } = useContextInfo();
   const history = useHistory();
-  const { user } = useContextInfo();
 
   const handleLogout = async () => {
     await logoutFn();
@@ -55,9 +55,12 @@ export default function MainLayout({ children }) {
       </Header>
       <Layout>
         {user ? (
-          <Sider width={200} className="site-layout-background">
+          <Sider
+            width={150}
+            className="site-layout-background"
+            style={{ backgroundColor: "#FFFFFF!important" }}
+          >
             <Menu mode="inline" style={{ height: "100%", borderRight: 0 }}>
-              {/* <SubMenu key="sub1" title="subnav 1"> */}
               <Menu.Item key="1" style={{ color: "#4D5768" }}>
                 <Link to="/">Home</Link>
               </Menu.Item>
@@ -82,18 +85,34 @@ export default function MainLayout({ children }) {
         ) : (
           <> </>
         )}
-        <Layout style={{ padding: "0 24px 24px" }}>
-          <Content
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-            }}
-          >
-            <div className="site-layout-content">{children}</div>
-          </Content>
-        </Layout>
+        {user ? (
+          <Layout style={{ backgroundColor: "#F0F2F5" }}>
+            <Content
+              className="site-layout-background"
+              style={{
+                padding: 24,
+                margin: 0,
+                minHeight: 280,
+                backgroundColor: "#F0F2F5",
+              }}
+            >
+              <div className="site-layout-content">{children}</div>
+            </Content>
+          </Layout>
+        ) : (
+          <Layout style={{ padding: "0 24px 24px", backgroundColor: "#FFF" }}>
+            <Content
+              className="site-layout-background"
+              style={{
+                padding: 24,
+                margin: 0,
+                minHeight: 280,
+              }}
+            >
+              <div className="site-layout-content">{children}</div>
+            </Content>
+          </Layout>
+        )}
       </Layout>
     </Layout>
   );

@@ -11,5 +11,5 @@ const TextStyled = styled(Text)`
   color: #4d5768 !important;
 `;
 
-export const Titles = (props) => <TitleStyled {...props} />;
-export const Texts = (props) => <TextStyled {...props} />;
+export const TitleS = (props) => <TitleStyled {...props} />;
+export const TextS = (props) => <TextStyled {...props} />;

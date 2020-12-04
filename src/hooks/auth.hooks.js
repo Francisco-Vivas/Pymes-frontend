@@ -1,30 +1,25 @@
-import { useState, createContext, useContext, useEffect } from "react";
+import { useState, createContext, useContext, useEffect, useMemo } from "react";
 import { currentUserFn } from "../services/auth";
 
 export const AppContext = createContext();
 
 export const AppCtxProvider = (props) => {
   const [user, setUser] = useState(null);
-
   useEffect(() => {
     async function getSessionData() {
       const { data: currentUser } = await currentUserFn();
-      login(currentUser);
+      if (currentUser) setUser(currentUser);
     }
     getSessionData();
   }, []);
 
-  const login = (userInfo) => {
-    setUser(userInfo);
-  };
+  const login = (userInfo) => setUser(userInfo);
 
-  const logout = () => {
-    setUser(null);
-  };
+  const logout = () => setUser(null);
 
-  const value = { user, login, logout };
+  const value = useMemo(() => ({ user, login, logout }), [user]);
 
-  return <AppContext.Provider {...props} value={value} />;
+  return <AppContext.Provider value={value} {...props} />;
 };
 
 export const useContextInfo = () => useContext(AppContext);

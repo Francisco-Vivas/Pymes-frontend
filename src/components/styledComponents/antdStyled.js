@@ -34,21 +34,5 @@ export const ButtonS = (props) => {
       border-color: ${color + "BB"};
     }
   `;
-  console.log(props.type);
   return <ButtonStyled {...props} />;
 };
-
-/* ################################ LAYOUT ################################*/
-const { Header, Content, Sider } = Layout;
-
-const MenuStyled = styled(Menu)`
-  background-color: "#81A1C1" !important;
-  color: #f0f2f5;
-`;
-export const MenuS = (props) => <MenuStyled {...props} />;
-
-const MenuItemStyled = styled(Menu.Item)`
-  background-color: "#81A1C1" !important;
-  color: #f0f2f5;
-`;
-export const MenuItemS = (props) => <MenuItemStyled {...props} />;

@@ -156,7 +156,9 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
         <InputS addonBefore={prefixPhoneNum} maxLength="10" />
       </Form.Item>
 
-      {/* Address */}
+      <Form.Item label="Address:" name="address">
+        <InputS />
+      </Form.Item>
 
       <Form.Item
         name="email"
