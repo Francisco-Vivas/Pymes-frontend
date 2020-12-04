@@ -13,7 +13,7 @@ export default function EditProfile({ history }) {
     <Row justify="center" align="middle">
       <Col>
         <Title level={1}>Edit your profile</Title>
-        <Text type="secondary">Update your data.</Text>
+        <Text type="secondary">Update your data</Text>
         <Divider />
         <FormDataUser
           onFinishFn={editUserFn}

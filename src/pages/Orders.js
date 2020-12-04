@@ -3,6 +3,8 @@ import { Table, Button } from "antd";
 // import CreateOrder from '../pages/CreateOrderForm'
 import { Link } from "react-router-dom";
 import { getAllOrders } from "../services/orders";
+import { ButtonS } from "../components/styledComponents/antdStyled"
+
 
 export default function Orders() {
   const [orders, setOrders] = useState(null);
@@ -92,7 +94,7 @@ export default function Orders() {
       payment: order.payment,
       fulfillment: order.fulfillment,
       extra: order.extra,
-      details: <Link to={`/orders/${order._id}`}><Button>Order Details</Button></Link>
+      details: <Link to={`/orders/${order._id}`}><ButtonS type="secondary">Order Details</ButtonS></Link>
     }})
     
 

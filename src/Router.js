@@ -12,6 +12,7 @@ import LandingPage from "./pages/LandingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import OrderDetail from './pages/OrderDetail';
+import EditOrder from './pages/EditOrder';
 import { useContextInfo } from "./hooks/auth.hooks";
 
 const Router = () => {
@@ -27,6 +28,7 @@ const Router = () => {
           <ProtectedRoute exact path="/profile" component={Profile} />
           <ProtectedRoute exact path="/orders" component={Orders} />
           <ProtectedRoute exact path="/orders/create-order" component={CreateOrders} />
+          <ProtectedRoute exact path="/orders/:ordersID/edit" component={EditOrder} />
           <ProtectedRoute exact path="/orders/:ordersID" component={OrderDetail} />
           {/* <Route exact path="*" component={NotFound} /> */}
         </Switch>

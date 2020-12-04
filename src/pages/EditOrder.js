@@ -1,25 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { updateOrder, getOrderDetail } from '../services/orders'
+import { Link, useHistory } from 'react-router-dom'
 import { Form, Button, Input, InputNumber, Select } from 'antd'
-import { createOrder } from '../services/orders'
-import { useHistory } from "react-router-dom";
-import { useContextInfo } from '../hooks/auth.hooks';
-import { InputS } from './styledComponents/antdStyled'
+import { InputS, ButtonS } from '../components/styledComponents/antdStyled'
 
-
-export default function CreateOrderForm({ addOrder }){
+export default function UpdateOrder({ match:{ params:{ ordersID }}}){
     const [form] = Form.useForm()
-    const history = useHistory();
-    const { user, login } = useContextInfo()
+    const history = useHistory()
+    const [order, setOrder] = useState({})
+    const { date, customer, payment, fulfillment, extra, _id } = order
 
-    async function handleSubmit(values) {
-    const order = {...values}
-    const { data: newOrder } = await createOrder(order);
-    login({...user, ordersID: [...user.ordersID, newOrder._id]})
-    return history.push("/orders")
+    useEffect(() => {
+        async function getData(){
+            const { data } = await getOrderDetail(ordersID)
+            setOrder(data)
+        }
+        getData()
+    }, [])
+
+    async function handleSubmit(values){
+        const updatedOrder = { ...order, values }
+        const { data: newOrder } = await updateOrder(order._id, updatedOrder)
+        setOrder(newOrder)
+        history.push('/orders/:ordersID')
     }
 
+    console.log(order)
+
     return (
-        <Form form={form} layout="vertical" onFinish={handleSubmit}>
+        <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={order}>
             <Form.Item name="date" label="Date:">
                 <Input />
             </Form.Item>
@@ -45,7 +54,7 @@ export default function CreateOrderForm({ addOrder }){
             <Form.Item name="extra" label="Comments:">
                 <InputS />
             </Form.Item>
-            <Button type="primary" size="middle" htmlType="submit" style={{color:"white", backgroundColor:"#4D5768"}}>Create Order</Button>
+            <ButtonS type="primary" size="middle" htmlType="submit">Edit Order</ButtonS>
         </Form>
     )
 }
