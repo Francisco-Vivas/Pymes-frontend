@@ -201,7 +201,7 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
         <Input addonBefore={prefixPhoneNum} maxLength="10" />
       </Form.Item>
 
-      <Button shape="round" type="primary" block htmlType="submit">
+      <Button shape="square" type="primary" htmlType="submit">
         {isSignup ? "Sign up" : "Edit Profile"}
       </Button>
     </Form>

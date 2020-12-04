@@ -55,7 +55,7 @@ export default function MainLayout({ children }) {
           <Menu mode="inline" style={{ height: "100%", borderRight: 0 }}>
             {/* <SubMenu key="sub1" title="subnav 1"> */}
             <Menu.Item key="1" style={{ color: "#4D5768" }}>
-              <Link to="/">Home</Link>
+              <Link to="/dashboard">Dashboard</Link>
             </Menu.Item>
             <Menu.Item key="2" style={{ color: "#4D5768" }}>
               <Link to="/orders">Orders</Link>

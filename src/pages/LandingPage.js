@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout, Menu, Divider, Button } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useContextInfo } from "../hooks/auth.hooks"
 import { logoutFn } from "../services/auth";
 
@@ -9,7 +9,8 @@ const { Header, Content, Sider } = Layout;
 
 export default function LandingPage(){
     const { logout } = useContextInfo()
-    const { user } = useContextInfo();
+    const { user } = useContextInfo()
+    const history = useHistory()
 
     const handleLogout = async () => {
         await logoutFn();

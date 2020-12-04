@@ -44,8 +44,8 @@ export default function Orders(){
     },
     {
       title: 'Payment',
-      key: 'payment',
       dataIndex: 'payment',
+      key: 'payment',
       // render: payments => (
       //   <span>
       //     {payments?.map(payment => {
@@ -61,8 +61,8 @@ export default function Orders(){
     },
     {
       title: 'Fulfillment',
-      key: 'fulfillment',
       dataIndex: 'fulfillment',
+      key: 'fulfillment',
       // render: fulfillments => (
       //   <span>
       //     {fulfillments.map(fulfillment => {
@@ -79,12 +79,16 @@ export default function Orders(){
     {
       title: 'Comments',
       dataIndex: 'extra',
-      key: 'extra',
+      key: 'extra'
+    },
+    {
+      title: '',
+      dataIndex:'details',
+      key:'details'
     }
   ];
 
   const dataSource = orders?.map(order => {
-    console.log(order.orderNum)
     return {
       key: order.id,
       orderNum: order.orderNum,
@@ -93,7 +97,8 @@ export default function Orders(){
       total: order.total,
       payment: order.payment,
       fulfillment: order.fulfillment,
-      extra: order.extra
+      extra: order.extra,
+      details: <Button>Order Details</Button>
     }})
 
 

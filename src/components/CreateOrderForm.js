@@ -1,15 +1,22 @@
 import React, { useState } from 'react'
 import { Form, Button, Input, InputNumber, Select } from 'antd'
 import { createOrder } from '../services/orders'
+import { useHistory } from "react-router-dom";
+import { useContextInfo } from '../hooks/auth.hooks';
+
 
 export default function CreateOrderForm({ addOrder }){
     const [form] = Form.useForm()
+    const history = useHistory();
+    const { user, login } = useContextInfo()
 
     async function handleSubmit(values) {
     const order = {...values}
     const { data: newOrder } = await createOrder(order);
-    addOrder(newOrder);
-    form.resetFields()
+    console.log(newOrder)
+    // addOrder(newOrder)
+    login({...user, ordersID: [...user.ordersID, newOrder._id]})
+    return history.push("/orders")
     }
 
     return (

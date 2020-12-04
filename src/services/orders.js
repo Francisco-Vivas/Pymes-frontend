@@ -12,6 +12,6 @@ export const getAllOrders = () => ordersService.get()
 
 export const getOrderDetail = id => ordersService.get(`/${id}`)
 
-export const createOrder = order => ordersService.post('', order)
+export const createOrder = order => ordersService.post('/create-order', order)
 
 export const updateOrder = (id, order) => ordersService.put(`/${id}`, order)

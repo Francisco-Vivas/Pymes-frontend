@@ -21,7 +21,7 @@ const Login = ({ history }) => {
   const onFinish = async (value) => {
     const { data } = await loginFn(value);
     login(data);
-    history.push("/");
+    history.push("/dashboard");
   };
 
   return (
