@@ -1,5 +1,5 @@
 import { Link, useHistory } from "react-router-dom";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Divider } from "antd";
 import { logoutFn } from "../services/auth";
 import { useContextInfo } from "../hooks/auth.hooks";
 import { useEffect } from "react";
@@ -26,7 +26,7 @@ export default function MainLayout({ children }) {
         <Menu
           theme="dark"
           mode="horizontal"
-          style={{ backgroundColor: "#81A1C1", color: "#f0f2f5" }}
+          style={{ backgroundColor: "#81A1C1", color: "#f0f2f5", textAlign:"right" }}
         >
           {user ? (
             <>
@@ -78,6 +78,9 @@ export default function MainLayout({ children }) {
               </Menu.Item>
               <Menu.Item key="6" style={{ color: "#4D5768" }}>
                 Social
+              </Menu.Item>
+              <Menu.Item key="7" style={{ color: "#4D5768" }}>
+                <Link to="/profile">Profile</Link>
               </Menu.Item>
               {/* </SubMenu> */}
             </Menu>

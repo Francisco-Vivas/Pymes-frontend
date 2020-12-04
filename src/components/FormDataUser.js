@@ -208,6 +208,7 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
       </Form.Item>
 
       <ButtonS type="primary" htmlType="submit">
+
         {isSignup ? "Sign up" : "Edit Profile"}
       </ButtonS>
     </Form>

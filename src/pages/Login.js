@@ -15,7 +15,7 @@ const Login = ({ history }) => {
   if (user) history.goBack();
 
   useEffect(() => {
-    if (user) history.push("/");
+    if (user) history.push("/dashboard");
   }, []);
 
   const googleUrl =
@@ -26,7 +26,7 @@ const Login = ({ history }) => {
   const onFinish = async (value) => {
     const { data } = await loginFn(value);
     login(data);
-    history.push("/");
+    history.push("/dashboard");
   };
 
   return (

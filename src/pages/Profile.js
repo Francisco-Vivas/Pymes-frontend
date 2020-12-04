@@ -16,34 +16,46 @@ const Profile = ({ history }) => {
       };
 
   return user ? (
-    <>
-      <Row justify="Start" align="middle">
-        <Avatar
-          {...AvatarProperties}
-          shape="circle"
+    <Row>
+      <Col xs={24} sm={24} md={20} lg={15}>
+        <Col pull={6}>
+          <Avatar
+            {...AvatarProperties}
+             shape="circle"
           style={{ backgroundColor: "#4D5768", borderColor: "#4D5768" }}
           size={{ xs: 60, sm: 80, md: 100, lg: 120, xl: 150, xxl: 170 }}
         />
-        <TitleS level={1} style={{ marginLeft: "3rem" }}>
-          Welcome {user.companyName}!
-        </TitleS>
-      </Row>
-      <Row justify="center" align="middle">
-        <Space direction="vertical" align="start">
-          <TextS type="secondary">
-            Admin: {user.username} {user.userlastname}
-          </TextS>
-          <TextS>Phone: {user.cellphone}</TextS>
-          <TextS>Email: {user.email}</TextS>
-          <TextS>Address: {user.address}</TextS>
-        </Space>
-      </Row>
-      <Row justify="end" align="bottom">
+          <TitleS
+            level={1}
+            style={{ display: "inline-block", marginLeft: "1rem", color:"#4D5768"}}
+          >
+            Welcome {user.companyName}!
+          </TitleS>
+        </Col>
+        {/* <p style={{color:"#d3d3d3", textAlign:"left", paddingLeft:"114px"}}>This is all your information!</p> */}
+        <Divider />
+        <p style={{color:"#4D5768", textAlign:"left", paddingLeft:"110px"}}> 
+        Admin: {user.username} {user.userlastname}
+        <br/>
+        <br/>
+        Phone: {user.prefix} {user.cellphone}
+        <br/>
+        <br/>
+        Email: {user.email}
+        <br/>
+        <br/>
+        Address: {user.address}
+        <br/>
+        <br/>
+        </p>
+
+
         <Link to="/profile/edit">
-          <ButtonS type="primary">Edit profile</ButtonS>
+          <ButtonS shape="square" style={{float:"right"}}>
+            Edit profile
+          </ButtonS>
         </Link>
       </Row>
-    </>
   ) : (
     <Skeleton loading={!user} active></Skeleton>
   );
