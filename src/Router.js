@@ -10,9 +10,6 @@ import EditProfile from "./pages/EditProfile";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-//const Signup = () => <h1>Sign up</h1>;
-//const Profile = () => <h1>Profile</h1>;
-
 const Router = () => (
   <BrowserRouter>
     <Layout>

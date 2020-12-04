@@ -2,13 +2,13 @@ import { Link, useHistory } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import { logoutFn } from "../services/auth";
 import { useContextInfo } from "../hooks/auth.hooks";
+import { useEffect } from "react";
 
 const { Header, Content, Sider } = Layout;
 
 export default function MainLayout({ children }) {
-  const { logout } = useContextInfo();
+  const { user, logout } = useContextInfo();
   const history = useHistory();
-  const { user } = useContextInfo();
 
   const handleLogout = async () => {
     await logoutFn();
@@ -18,12 +18,15 @@ export default function MainLayout({ children }) {
 
   return (
     <Layout>
-      <Header className="header" style={{ backgroundColor: "#164166" }}>
+      <Header
+        className="header"
+        style={{ backgroundColor: "#81A1C1", color: "#f0f2f5" }}
+      >
         <div className="logo" />
         <Menu
           theme="dark"
           mode="horizontal"
-          style={{ backgroundColor: "#164166" }}
+          style={{ backgroundColor: "#81A1C1", color: "#f0f2f5" }}
         >
           {user ? (
             <>
@@ -51,42 +54,65 @@ export default function MainLayout({ children }) {
         </Menu>
       </Header>
       <Layout>
-        <Sider width={200} className="site-layout-background">
-          <Menu mode="inline" style={{ height: "100%", borderRight: 0 }}>
-            {/* <SubMenu key="sub1" title="subnav 1"> */}
-            <Menu.Item key="1" style={{ color: "#164166" }}>
-              <Link to="/">Home</Link>
-            </Menu.Item>
-            <Menu.Item key="2" style={{ color: "#164166" }}>
-              <Link to="/orders">Orders</Link>
-            </Menu.Item>
-            <Menu.Item key="3" style={{ color: "#164166" }}>
-              Products
-            </Menu.Item>
-            <Menu.Item key="4" style={{ color: "#164166" }}>
-              Suppliers
-            </Menu.Item>
-            <Menu.Item key="5" style={{ color: "#164166" }}>
-              Analytics
-            </Menu.Item>
-            <Menu.Item key="6" style={{ color: "#164166" }}>
-              Social
-            </Menu.Item>
-            {/* </SubMenu> */}
-          </Menu>
-        </Sider>
-        <Layout style={{ padding: "0 24px 24px" }}>
-          <Content
+        {user ? (
+          <Sider
+            width={150}
             className="site-layout-background"
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-            }}
+            style={{ backgroundColor: "#FFFFFF!important" }}
           >
-            <div className="site-layout-content">{children}</div>
-          </Content>
-        </Layout>
+            <Menu mode="inline" style={{ height: "100%", borderRight: 0 }}>
+              <Menu.Item key="1" style={{ color: "#4D5768" }}>
+                <Link to="/">Home</Link>
+              </Menu.Item>
+              <Menu.Item key="2" style={{ color: "#4D5768" }}>
+                <Link to="/orders">Orders</Link>
+              </Menu.Item>
+              <Menu.Item key="3" style={{ color: "#4D5768" }}>
+                Products
+              </Menu.Item>
+              <Menu.Item key="4" style={{ color: "#4D5768" }}>
+                Suppliers
+              </Menu.Item>
+              <Menu.Item key="5" style={{ color: "#4D5768" }}>
+                Analytics
+              </Menu.Item>
+              <Menu.Item key="6" style={{ color: "#4D5768" }}>
+                Social
+              </Menu.Item>
+              {/* </SubMenu> */}
+            </Menu>
+          </Sider>
+        ) : (
+          <> </>
+        )}
+        {user ? (
+          <Layout style={{ backgroundColor: "#F0F2F5" }}>
+            <Content
+              className="site-layout-background"
+              style={{
+                padding: 24,
+                margin: 0,
+                minHeight: 280,
+                backgroundColor: "#F0F2F5",
+              }}
+            >
+              <div className="site-layout-content">{children}</div>
+            </Content>
+          </Layout>
+        ) : (
+          <Layout style={{ padding: "0 24px 24px", backgroundColor: "#FFF" }}>
+            <Content
+              className="site-layout-background"
+              style={{
+                padding: 24,
+                margin: 0,
+                minHeight: 280,
+              }}
+            >
+              <div className="site-layout-content">{children}</div>
+            </Content>
+          </Layout>
+        )}
       </Layout>
     </Layout>
   );

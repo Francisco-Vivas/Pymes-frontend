@@ -1,13 +1,18 @@
 import { Link } from "react-router-dom";
-import { Row, Col, Form, Input, Typography, Button, Divider } from "antd";
+import { Row, Col, Form, Button, Divider } from "antd";
 import { loginFn } from "../services/auth";
 import { useContextInfo } from "../hooks/auth.hooks";
 import { useEffect } from "react";
-
-const { Title, Text } = Typography;
+import { TitleS, TextS } from "../components/styledComponents/Typography";
+import {
+  InputS,
+  InputPassS,
+  ButtonS,
+} from "../components/styledComponents/antdStyled";
 
 const Login = ({ history }) => {
   const { user, login } = useContextInfo();
+  if (user) history.goBack();
 
   useEffect(() => {
     if (user) history.push("/");
@@ -25,10 +30,10 @@ const Login = ({ history }) => {
   };
 
   return (
-    <Row>
-      <Col xs={24} sm={24} md={12} lg={8}>
-        <Title level={1}>Login</Title>
-        <Text type="secondary">Is awesome to see you again!</Text>
+    <Row justify="center" align="middle" gutter={[16, 16]}>
+      <Col>
+        <TitleS level={1}>LOGIN</TitleS>
+        <TextS type="secondary">Is awesome to see you again!</TextS>
         <Divider />
         <Form
           layout="vertical"
@@ -48,7 +53,7 @@ const Login = ({ history }) => {
               },
             ]}
           >
-            <Input />
+            <InputS />
           </Form.Item>
 
           <Form.Item
@@ -61,25 +66,23 @@ const Login = ({ history }) => {
               },
             ]}
           >
-            <Input.Password />
+            <InputPassS />
           </Form.Item>
 
           <Form.Item>
-            <Button block type="primary" htmlType="submit" shape="round">
+            <ButtonS type="primary" htmlType="submit">
               Login
-            </Button>
+            </ButtonS>
           </Form.Item>
 
-          <p>
+          <TextS>
             If you don't have an account yet, you can create an account{" "}
             <Link to="/signup">here</Link>.
-          </p>
+          </TextS>
         </Form>
         <Divider>or</Divider>
         <a href={googleUrl}>
-          <Button block shape="round">
-            Login with Google
-          </Button>
+          <Button>Login with Google</Button>
         </a>
       </Col>
     </Row>
