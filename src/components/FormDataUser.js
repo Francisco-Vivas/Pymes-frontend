@@ -1,5 +1,6 @@
 import { useHistory } from "react-router-dom";
-import { Form, Input, Button, Select, Upload, Skeleton } from "antd";
+import { Form, Button, Select, Upload, Skeleton } from "antd";
+import { InputS, InputPassS, ButtonS } from "./styledComponents/antdStyled";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import countryCodes from "country-codes-list";
@@ -121,6 +122,44 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
       onFinish={onFinish}
       initialValues={user}
     >
+      <Form.Item label="Company Name:" name="companyName">
+        <InputS />
+      </Form.Item>
+
+      <Form.Item
+        label="First Name:"
+        name="username"
+        rules={[
+          {
+            required: true,
+            message: "Please input your first name!",
+          },
+        ]}
+      >
+        <InputS />
+      </Form.Item>
+
+      <Form.Item
+        label="Last Name:"
+        name="userlastname"
+        rules={[
+          {
+            required: true,
+            message: "Please input your last name!",
+          },
+        ]}
+      >
+        <InputS />
+      </Form.Item>
+
+      <Form.Item label="Phone" name="cellphone">
+        <InputS addonBefore={prefixPhoneNum} maxLength="10" />
+      </Form.Item>
+
+      <Form.Item label="Address:" name="address">
+        <InputS />
+      </Form.Item>
+
       <Form.Item
         name="email"
         label="Email:"
@@ -131,7 +170,7 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
           },
         ]}
       >
-        <Input />
+        <InputS />
       </Form.Item>
       {isSignup ? (
         <Form.Item
@@ -144,38 +183,13 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
             },
           ]}
         >
-          <Input.Password />
+          <InputPassS />
         </Form.Item>
       ) : (
         <></>
       )}
 
-      <Form.Item
-        label="First Name"
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: "Please input your first name!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Last Name"
-        name="userlastname"
-        rules={[
-          {
-            required: true,
-            message: "Please input your last name!",
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item label="Image:">
+      <Form.Item label="Company Logo:">
         <ImgCrop rotate>
           <Upload
             showUploadList={false}
@@ -193,17 +207,10 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
         </ImgCrop>
       </Form.Item>
 
-      <Form.Item label="Company Name" name="companyName">
-        <Input />
-      </Form.Item>
+      <ButtonS type="primary" htmlType="submit">
 
-      <Form.Item label="Cellphone Number / WhatsApp" name="cellphone">
-        <Input addonBefore={prefixPhoneNum} maxLength="10" />
-      </Form.Item>
-
-      <Button shape="square" type="primary" htmlType="submit">
         {isSignup ? "Sign up" : "Edit Profile"}
-      </Button>
+      </ButtonS>
     </Form>
   ) : (
     <Skeleton loading={!Boolean(user)} active></Skeleton>

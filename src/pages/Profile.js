@@ -1,17 +1,13 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Typography, Button, Divider, Skeleton, Avatar } from "antd";
+import { Row, Col, Divider, Skeleton, Avatar, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useContextInfo } from "../hooks/auth.hooks";
-
-const { Title, Text } = Typography;
+import { ButtonS } from "../components/styledComponents/antdStyled";
+import { TextS, TitleS } from "../components/styledComponents/Typography";
 
 const Profile = ({ history }) => {
   const { user } = useContextInfo();
-
-  // useEffect(() => {
-  //   if (!user) history.push("/");
-  // }, []);
 
   const AvatarProperties = user
     ? { src: user.image }
@@ -25,14 +21,16 @@ const Profile = ({ history }) => {
         <Col pull={6}>
           <Avatar
             {...AvatarProperties}
-            size={{ xs: 40, sm: 60, md: 80, lg: 90, xl: 100, xxl: 150 }}
-          />
-          <Title
+             shape="circle"
+          style={{ backgroundColor: "#4D5768", borderColor: "#4D5768" }}
+          size={{ xs: 60, sm: 80, md: 100, lg: 120, xl: 150, xxl: 170 }}
+        />
+          <TitleS
             level={1}
             style={{ display: "inline-block", marginLeft: "1rem", color:"#4D5768"}}
           >
-            Hi, {user.companyName}
-          </Title>
+            Welcome {user.companyName}!
+          </TitleS>
         </Col>
         {/* <p style={{color:"#d3d3d3", textAlign:"left", paddingLeft:"114px"}}>This is all your information!</p> */}
         <Divider />
@@ -53,12 +51,11 @@ const Profile = ({ history }) => {
 
 
         <Link to="/profile/edit">
-          <Button shape="square" style={{float:"right"}}>
+          <ButtonS shape="square" style={{float:"right"}}>
             Edit profile
-          </Button>
+          </ButtonS>
         </Link>
-      </Col>
-    </Row>
+      </Row>
   ) : (
     <Skeleton loading={!user} active></Skeleton>
   );

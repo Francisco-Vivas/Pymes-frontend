@@ -12,11 +12,6 @@ import LandingPage from "./pages/LandingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 
-
-//--------------DUMMIES
-//const Signup = () => <h1>Sign up</h1>;
-//const Profile = () => <h1>Profile</h1>;
-
 const Router = () => (
   <BrowserRouter>
       <Switch>

@@ -9,13 +9,9 @@ const { Title, Text } = Typography;
 export default function EditProfile({ history }) {
   const { user, login } = useContextInfo();
 
-  // useEffect(() => {
-  //   if (!user) history.push("/");
-  // }, []);
-
   return user ? (
-    <Row>
-      <Col xs={24} sm={24} md={12} lg={8}>
+    <Row justify="center" align="middle">
+      <Col>
         <Title level={1}>Edit your profile</Title>
         <Text type="secondary">Update your data.</Text>
         <Divider />
