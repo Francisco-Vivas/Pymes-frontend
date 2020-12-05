@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "antd";
 import { Link } from "react-router-dom";
-import { getAllOrders } from "../services/orders";
-import { ButtonS } from "../components/styledComponents/antdStyled"
+import { getAllOrders } from "../../services/orders";
+import { ButtonS } from "../../components/styledComponents/antdStyled"
 
 
 export default function Orders() {

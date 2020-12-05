@@ -1,7 +1,7 @@
 import { Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllProductsFn } from "../services/products";
+import { getAllProductsFn } from "../../services/products";
 
 export default function Products() {
   const [products, setProducts] = useState(null);

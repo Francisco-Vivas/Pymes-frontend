@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Divider, Skeleton, Avatar, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { useContextInfo } from "../hooks/auth.hooks";
-import { ButtonS } from "../components/styledComponents/antdStyled";
-import { TextS, TitleS } from "../components/styledComponents/Typography";
+import { useContextInfo } from "../../hooks/auth.hooks";
+import { ButtonS } from "../../components/styledComponents/antdStyled";
+import { TextS, TitleS } from "../../components/styledComponents/Typography";
 
 const Profile = ({ history }) => {
   const { user } = useContextInfo();

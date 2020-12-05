@@ -20,7 +20,7 @@ export default function MainLayout({ children }) {
     <Layout>
       <Header
         className="header"
-        style={{ backgroundColor: "#81A1C1", color: "#f0f2f5", height:"8.5vh"}}
+        style={{ backgroundColor: "#81A1C1", color: "#f0f2f5", height:"8.75vh"}}
       >
         <div className="logo" />
         <Menu
