@@ -117,7 +117,8 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
 
   return isSignup || user ? (
     <Form
-      layout="vertical"
+      layout="horizontal"
+      wrapperCol={24}
       form={form}
       onFinish={onFinish}
       initialValues={user}
@@ -208,7 +209,6 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
       </Form.Item>
 
       <ButtonS type="primary" htmlType="submit">
-
         {isSignup ? "Sign up" : "Edit Profile"}
       </ButtonS>
     </Form>

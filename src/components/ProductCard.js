@@ -16,7 +16,7 @@ export default function ProductCard({ product }) {
   const boxShadow =
     product.quantity <= product.threshold
       ? {
-          style: { boxShadow: ` 0px 7px 15px 5px ${colorStatus}` }
+          style: { boxShadow: ` 0px 7px 15px -3px ${colorStatus}` },
         }
       : {};
 
@@ -28,22 +28,24 @@ export default function ProductCard({ product }) {
         actions={[
           <Link to={`/products/${product._id}`}>
             <TextS type="primary">Details</TextS>
-          </Link>
+          </Link>,
         ]}
       >
-        <Link to={`/products/${product._id}`} style={{ height: "100%" }}>
+        <Link to={`/products/${product._id}`}>
           <div>
             <div
               style={{
                 display: "flex",
-                boxSizing: "border-box"
+                margin: "auto",
               }}
             >
               <img
                 style={{
                   height: "8rem",
-                  width: "auto",
-                  margin: "0 auto 1rem"
+                  boxSizing: "border-box",
+                  width: "100%",
+                  margin: "0 auto 1rem",
+                  objectFit: "cover",
                 }}
                 alt={product.name}
                 src={product.image}
@@ -54,9 +56,17 @@ export default function ProductCard({ product }) {
               style={{ height: "100%" }}
               description={
                 <Space direction="vertical">
-                  <TextS>Quantity: {product.quantity}</TextS>
                   <TextS>
-                    <small>Sales price: {`$${product.salePrice}`}</small>
+                    Quantity: <br /> {product.quantity}
+                  </TextS>
+                  <TextS>
+                    <small>
+                      Sales price: <br />{" "}
+                      {`$${product.salePrice}`.replace(
+                        /\B(?=(\d{3})+(?!\d))/g,
+                        ","
+                      )}
+                    </small>
                   </TextS>
                 </Space>
               }

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Col, Row, Skeleton, Input } from "antd";
 import { Link } from "react-router-dom";
-import { getAllProductsFn, searchProductsFn } from "../services/products";
-import ProductCard from "../components/ProductCard";
+import { getAllProductsFn, searchProductsFn } from "../../services/products";
+import ProductCard from "../../components/ProductCard";
 
 const { Search } = Input;
 
@@ -89,7 +89,7 @@ export default function Products() {
           <br />
           <br />
         </Row>
-        <Row key="a" gutter={16} style={{ padding: "1rem" }}>
+        <Row key="a" gutter={[16, 16]} style={{ padding: "1rem" }}>
           {isSearching || products
             ? products.map((product, i) => (
                 <ProductCard key={(i + 6) * 7} product={product} />

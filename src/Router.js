@@ -12,10 +12,12 @@ import LandingPage from "./pages/LandingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import { useContextInfo } from "./hooks/auth.hooks";
-import Products from "./pages/Products";
+import Products from "./pages/Products/Products";
+import CreateProducts from "./pages/Products/CreateProduct";
 
 const Router = () => {
   const { user } = useContextInfo();
+
   return (
     <BrowserRouter>
       <Layout>
@@ -32,6 +34,11 @@ const Router = () => {
             component={CreateOrders}
           />
           <ProtectedRoute exact path="/products" component={Products} />
+          <ProtectedRoute
+            exact
+            path="/products/create"
+            component={CreateProducts}
+          />
           {/* <Route exact path="*" component={NotFound} /> */}
         </Switch>
       </Layout>
