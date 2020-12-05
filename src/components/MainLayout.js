@@ -60,9 +60,8 @@ export default function MainLayout({ children }) {
       <Layout>
         {user ? (
           <Sider
-            width={150}
             className="site-layout-background"
-            style={{ backgroundColor: "#FFFFFF!important" }}
+            style={{ width: "20%", backgroundColor: "#FFFFFF!important" }}
           >
             <Menu mode="inline" style={{ height: "100%", borderRight: 0 }}>
               <Menu.Item key="1" style={{ color: "#4D5768" }}>

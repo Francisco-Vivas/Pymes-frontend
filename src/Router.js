@@ -12,6 +12,7 @@ import LandingPage from "./pages/LandingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import { useContextInfo } from "./hooks/auth.hooks";
+import Products from "./pages/Products";
 
 const Router = () => {
   const { user } = useContextInfo();
@@ -30,6 +31,7 @@ const Router = () => {
             path="/orders/create-order"
             component={CreateOrders}
           />
+          <ProtectedRoute exact path="/products" component={Products} />
           {/* <Route exact path="*" component={NotFound} /> */}
         </Switch>
       </Layout>
