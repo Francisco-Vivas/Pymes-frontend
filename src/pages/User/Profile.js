@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Divider, Skeleton, Avatar, Space } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { useContextInfo } from "../hooks/auth.hooks";
-import { ButtonS } from "../components/styledComponents/antdStyled";
-import { TextS, TitleS } from "../components/styledComponents/Typography";
+import { useContextInfo } from "../../hooks/auth.hooks";
+import { ButtonS } from "../../components/styledComponents/antdStyled";
+import { TextS, TitleS } from "../../components/styledComponents/Typography";
 
 const Profile = ({ history }) => {
   const { user } = useContextInfo();
@@ -22,9 +22,9 @@ const Profile = ({ history }) => {
           <Avatar
             {...AvatarProperties}
             shape="circle"
-            style={{ backgroundColor: "#4D5768", borderColor: "#4D5768" }}
-            size={{ xs: 60, sm: 80, md: 100, lg: 120, xl: 150, xxl: 170 }}
-          />
+          style={{ backgroundColor: "#4D5768", borderColor: "#4D5768" }}
+          size={{ xs: 60, sm: 80, md: 100, lg: 120, xl: 150, xxl: 170 }}
+        />
           <TitleS
             level={1}
             style={{
@@ -56,7 +56,7 @@ const Profile = ({ history }) => {
         </p>
 
         <Link to="/profile/edit">
-          <ButtonS shape="square" style={{ float: "right" }}>
+          <ButtonS type='primary' style={{ float: "right" }}>
             Edit profile
           </ButtonS>
         </Link>

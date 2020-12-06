@@ -20,7 +20,11 @@ export default function MainLayout({ children }) {
     <Layout>
       <Header
         className="header"
-        style={{ backgroundColor: "#81A1C1", color: "#f0f2f5" }}
+        style={{
+          backgroundColor: "#81A1C1",
+          color: "#f0f2f5",
+          height: "8.75vh",
+        }}
       >
         <div className="logo" />
         <Menu
@@ -61,7 +65,11 @@ export default function MainLayout({ children }) {
         {user ? (
           <Sider
             className="site-layout-background"
-            style={{ width: "20%", backgroundColor: "#FFFFFF!important" }}
+            style={{
+              width: "20%",
+              backgroundColor: "#FFFFFF!important",
+              height: "91.5vh",
+            }}
           >
             <Menu mode="inline" style={{ height: "100%", borderRight: 0 }}>
               <Menu.Item key="1" style={{ color: "#4D5768" }}>
@@ -74,18 +82,15 @@ export default function MainLayout({ children }) {
                 <Link to="/products">Products</Link>
               </Menu.Item>
               <Menu.Item key="4" style={{ color: "#4D5768" }}>
-                Suppliers
+                <Link to="/suppliers">Suppliers</Link>
               </Menu.Item>
               <Menu.Item key="5" style={{ color: "#4D5768" }}>
                 Analytics
               </Menu.Item>
-              <Menu.Item key="6" style={{ color: "#4D5768" }}>
-                Social
-              </Menu.Item>
+              <Divider />
               <Menu.Item key="7" style={{ color: "#4D5768" }}>
                 <Link to="/profile">Profile</Link>
               </Menu.Item>
-              {/* </SubMenu> */}
             </Menu>
           </Sider>
         ) : (
