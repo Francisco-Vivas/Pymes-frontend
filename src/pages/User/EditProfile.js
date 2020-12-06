@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { Row, Col, Typography, Divider, Skeleton } from "antd";
-import { useContextInfo } from "../hooks/auth.hooks";
-import FormDataUser from "../components/FormDataUser";
-import { editUserFn } from "../services/user";
+import { useContextInfo } from "../../hooks/auth.hooks";
+import FormDataUser from "../../components/FormDataUser";
+import { editUserFn } from "../../services/user";
+import { TitleS } from '../../components/styledComponents/Typography'
 
 const { Title, Text } = Typography;
 
@@ -12,8 +13,8 @@ export default function EditProfile({ history }) {
   return user ? (
     <Row justify="center" align="middle">
       <Col>
-        <Title level={1}>Edit your profile</Title>
-        <Text type="secondary">Update your data.</Text>
+        <TitleS level={1}>Edit your profile</TitleS>
+        <Text type="secondary">Update your data</Text>
         <Divider />
         <FormDataUser
           onFinishFn={editUserFn}

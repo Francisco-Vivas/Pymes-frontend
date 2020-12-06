@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { Row, Col, Button, Divider } from "antd";
-import { signupFn } from "../services/auth";
-import { useContextInfo } from "../hooks/auth.hooks";
-import FormDataUser from "../components/FormDataUser";
-import { TitleS } from "../components/styledComponents/Typography";
+import { signupFn } from "../../services/auth";
+import { useContextInfo } from "../../hooks/auth.hooks";
+import FormDataUser from "../../components/FormDataUser";
+import { TitleS } from "../../components/styledComponents/Typography";
 
 const googleUrl =
   process.env.NODE_ENV === "development"

@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "antd";
-// import CreateOrder from '../pages/CreateOrderForm'
 import { Link } from "react-router-dom";
-import { getAllOrders } from "../services/orders";
+import { getAllOrders } from "../../services/orders";
+import { ButtonS } from "../../components/styledComponents/antdStyled"
+
 
 export default function Orders() {
   const [orders, setOrders] = useState(null);
 
   useEffect(() => {
-    async function getOrders() {
-      console.log("hola");
-      const { data } = await getAllOrders();
-      console.log("chao", data);
-      setOrders(data);
+    async function getOrders(){
+      const { data } = await getAllOrders()
+      setOrders(data)
     }
     getOrders();
   }, []);
@@ -86,7 +85,7 @@ export default function Orders() {
 
   const dataSource = orders?.map((order) => {
     return {
-      key: order.id,
+      key: order._id,
       orderNum: order.orderNum,
       date: order.date,
       customer: order.customer,
@@ -94,9 +93,9 @@ export default function Orders() {
       payment: order.payment,
       fulfillment: order.fulfillment,
       extra: order.extra,
-      details: <Button>Order Details</Button>,
-    };
-  });
+      details: <Link to={`/orders/${order._id}`}><ButtonS type="secondary">Order Details</ButtonS></Link>
+    }})
+    
 
   return (
     <div>
