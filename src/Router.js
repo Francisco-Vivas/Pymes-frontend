@@ -17,6 +17,7 @@ import Suppliers from "./pages/Suppliers/Suppliers";
 import { useContextInfo } from "./hooks/auth.hooks";
 import Products from "./pages/Products/Products";
 import CreateProducts from "./pages/Products/CreateProduct";
+import ProductDetail from "./pages/Products/ProductDetail";
 
 const Router = () => {
   const { user } = useContextInfo();
@@ -52,6 +53,11 @@ const Router = () => {
             exact
             path="/products/create"
             component={CreateProducts}
+          />
+          <ProtectedRoute
+            exact
+            path="/products/:productID"
+            component={ProductDetail}
           />
           {/* <Route exact path="*" component={NotFound} /> */}
         </Switch>

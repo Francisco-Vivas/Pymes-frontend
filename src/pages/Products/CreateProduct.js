@@ -69,7 +69,7 @@ export default function CreateProducts() {
   return (
     <Row justify="center" align="center">
       <Col xs={24} sm={18} md={12} lg={8}>
-        <TitleS>New Product</TitleS>
+        <TitleS style={{ margin: "2rem" }}>New Product</TitleS>
         <Form
           form={form}
           layout="horizontal"

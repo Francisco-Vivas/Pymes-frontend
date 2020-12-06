@@ -89,7 +89,17 @@ export default function Products() {
           <br />
           <br />
         </Row>
-        <Row key="a" gutter={[16, 16]} style={{ padding: "1rem" }}>
+        <Row
+          key="a"
+          gutter={[16, 16]}
+          style={{
+            padding: "1rem",
+            paddingBottom: "0",
+            marginTop: "1rem",
+            height: "auto",
+            overflowY: "scroll",
+          }}
+        >
           {isSearching || products
             ? products.map((product, i) => (
                 <ProductCard key={(i + 6) * 7} product={product} />
