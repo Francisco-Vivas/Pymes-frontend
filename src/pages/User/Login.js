@@ -25,19 +25,11 @@ const Login = ({ history }) => {
 
   const onFinish = async (value) => {
     try {
-<<<<<<< HEAD
-    const { data } = await loginFn(value);
-    login(data);
-    history.push("/");
-    } catch(err) {
-      message.error("Error with email or password")
-=======
       const { data } = await loginFn(value);
       login(data);
       history.push("/");
     } catch (err) {
       message.error("Error with email or password");
->>>>>>> 4ec568df3a0d1f914664939828c7a82c58ed4d11
     }
   };
 
