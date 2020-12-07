@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Row, Col, Form, Button, Divider } from "antd";
+import { Row, Col, Form, Button, Divider, message } from "antd";
 import { loginFn } from "../../services/auth";
 import { useContextInfo } from "../../hooks/auth.hooks";
 import { useEffect } from "react";
@@ -24,9 +24,13 @@ const Login = ({ history }) => {
       : "/auth/google";
 
   const onFinish = async (value) => {
+    try {
     const { data } = await loginFn(value);
     login(data);
     history.push("/");
+    } catch(err) {
+      message.error("Error with email or password")
+    }
   };
 
   return (

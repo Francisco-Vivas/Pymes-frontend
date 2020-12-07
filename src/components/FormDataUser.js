@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import { Form, Button, Select, Upload, Skeleton } from "antd";
+import { Form, Button, Select, Upload, Skeleton, message } from "antd";
 import { InputS, InputPassS, ButtonS } from "./styledComponents/antdStyled";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
@@ -43,12 +43,15 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
       cellphone: value.cellphone || "",
       image,
     };
-
-    await onFinishFn(dataUpdated);
-
-    if (logUpdate) logUpdate(dataUpdated);
-    if (isSignup) return history.push("/login");
-    return history.push("/profile");
+    try {
+      await onFinishFn(dataUpdated);
+      if (logUpdate) logUpdate(dataUpdated);
+      if (isSignup) return history.push("/login");
+      return history.push("/profile");
+    } catch (err){
+      console.dir(err.response.data.err.message)
+      message.error(err.response.data.err.message)
+    }
   }
 
   const onPreview = async (file) => {
