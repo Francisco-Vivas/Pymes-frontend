@@ -18,6 +18,7 @@ import { useContextInfo } from "./hooks/auth.hooks";
 import Products from "./pages/Products/Products";
 import CreateProducts from "./pages/Products/CreateProduct";
 import ProductDetail from "./pages/Products/ProductDetail";
+import FormProduct from "./components/FromProduct";
 
 const Router = () => {
   const { user } = useContextInfo();
@@ -52,7 +53,12 @@ const Router = () => {
           <ProtectedRoute
             exact
             path="/products/create"
-            component={CreateProducts}
+            component={() => <FormProduct isNew={true} />}
+          />
+          <ProtectedRoute
+            exact
+            path="/products/:productID/edit"
+            component={(props) => <FormProduct isNew={false} {...props} />}
           />
           <ProtectedRoute
             exact
