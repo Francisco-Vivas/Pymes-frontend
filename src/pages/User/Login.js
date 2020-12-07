@@ -36,7 +36,8 @@ const Login = ({ history }) => {
         <TextS type="secondary">Is awesome to see you again!</TextS>
         <Divider />
         <Form
-          layout="vertical"
+          layout="horizontal"
+          wrapperCol={24}
           name="basic"
           initialValues={{
             remember: true,

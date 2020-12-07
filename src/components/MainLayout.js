@@ -17,10 +17,13 @@ export default function MainLayout({ children }) {
   };
 
   return (
-    <Layout>
+    <Layout style={{ height: "100%" }}>
       <Header
         className="header"
-        style={{ backgroundColor: "#81A1C1", color: "#f0f2f5", height:"8.75vh"}}
+        style={{
+          backgroundColor: "#81A1C1",
+          color: "#f0f2f5",
+        }}
       >
         <div className="logo" />
         <Menu
@@ -57,13 +60,23 @@ export default function MainLayout({ children }) {
           )}
         </Menu>
       </Header>
-      <Layout>
+      <Layout style={{ height: "100%" }}>
         {user ? (
           <Sider
-            width={150}
             className="site-layout-background"
-            style={{ backgroundColor: "#FFFFFF!important", height:"91.5vh"}}>
-            <Menu mode="inline" style={{ height: "100%", borderRight: 0 }}>
+            style={{
+              width: "20%",
+              backgroundColor: "#FFFFFF!important",
+              height: "100%",
+            }}
+          >
+            <Menu
+              mode="inline"
+              style={{
+                height: "100%",
+                borderRight: 0,
+              }}
+            >
               <Menu.Item key="1" style={{ color: "#4D5768" }}>
                 <Link to="/">Home</Link>
               </Menu.Item>
@@ -76,10 +89,13 @@ export default function MainLayout({ children }) {
               <Menu.Item key="4" style={{ color: "#4D5768" }}>
                 <Link to="/suppliers">Suppliers</Link>
               </Menu.Item>
-              <Menu.Item key="5" style={{ color: "#4D5768" }}>
+              <Menu.Item
+                key="5"
+                style={{ color: "#4D5768", marginBottom: "100%" }}
+              >
                 Analytics
               </Menu.Item>
-              <Divider/>
+              <Divider />
               <Menu.Item key="7" style={{ color: "#4D5768" }}>
                 <Link to="/profile">Profile</Link>
               </Menu.Item>
