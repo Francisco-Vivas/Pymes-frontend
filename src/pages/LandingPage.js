@@ -3,6 +3,7 @@ import { Layout, Button, Row } from "antd";
 import { Link, useHistory } from "react-router-dom";
 import { useContextInfo } from "../hooks/auth.hooks";
 import { logoutFn } from "../services/auth";
+import { ButtonS } from '../components/styledComponents/antdStyled'
 
 const { Header, Content, Sider } = Layout;
 
@@ -39,8 +40,7 @@ export default function LandingPage() {
               paddingLeft: "150px",
             }}
           >
-            Pymes is your ally when it comes to the organization of your
-            business
+            Pymes is your ally when it comes to the organization of your business
             <br />
             Keep track of your orders, clients, suppliers and much more!
             <br />
@@ -51,14 +51,14 @@ export default function LandingPage() {
           <Link to="/signup">
             <Button
               shape="square"
-              style={{ float: "left", marginLeft: "150px" }}
+              style={{ float: "left", marginLeft: "150px", color:"white", backgroundColor:"#4D5768", border:"none" }}
             >
               Sign Up!
             </Button>
           </Link>
         </div>
         <div style={{ width: "50%" }}>
-          {/* IMAGEN PRINCIPAL DEL LANDING PAGE */}
+          <img src="/images/1.png" style={{height:"400px"}}/>
         </div>
       </div>
       <div style={{ backgroundColor: "#E7EEF5" }}>

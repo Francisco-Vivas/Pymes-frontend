@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "antd";
 import { Link } from "react-router-dom";
-import { getAllSuppliers } from "../../services/suppliers";
+import { getAllSuppliers, deleteSupplier } from "../../services/suppliers";
 import { ButtonS } from "../../components/styledComponents/antdStyled"
+import { useContextInfo } from '../../hooks/auth.hooks'
+import { useHistory } from 'react-router-dom'
 
 
-export default function Orders() {
+export default function Suppliers() {
+  // const { user } = useContextInfo()
   const [suppliers, setSuppliers] = useState(null);
+  const history = useHistory()
 
   useEffect(() => {
     async function getSuppliers(){
@@ -42,6 +46,11 @@ export default function Orders() {
       dataIndex: "lastOrder",
       key: "lastOrder",
     },
+    {
+      title: "",
+      dataIndex: "details",
+      key: "details",
+    },
   ];
  
   const dataSource = suppliers?.map((supplier) => {
@@ -52,7 +61,7 @@ export default function Orders() {
       email: supplier.email,
       channel: supplier.channel,
       lastOrder: supplier.lastOrder,
-      details: <Link to={`/suppliers/${supplier._id}`}><ButtonS type="secondary">Supplier Details</ButtonS></Link>
+      details: <Link to={`/suppliers/${supplier._id}`}><ButtonS type="secondary">Supplier Details</ButtonS></Link>,
     }})
     
 
@@ -64,10 +73,8 @@ export default function Orders() {
             float: "left",
             color: "#4D5768",
             border: "1px dashed #4D5768",
-          }}
-        >
-          {" "}
-          New Supplier{" "}
+          }}>
+          New Supplier
         </Button>
       </Link>
       <br />

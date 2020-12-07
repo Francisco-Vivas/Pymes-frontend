@@ -10,8 +10,6 @@ const OrderDetail = ({match: {params: {ordersID}}}) => {
     const [edit, setEdit] = useState(false)
     const [form] = Form.useForm()
     const history = useHistory()
-    // const [order, setOrder] = useState({})
-    // const { date, customer, payment, fulfillment, extra, _id } = order
 
     
     const [orders, setOrders] = useState({})
@@ -29,7 +27,6 @@ const OrderDetail = ({match: {params: {ordersID}}}) => {
         console.log(updatedOrder)
         const { data: newOrder } = await updateOrder(orders._id, updatedOrder)
         setOrders(newOrder)
-        // setEdit(false)
     }
 
     const { orderNum, date, customer, total, payment, fulfillment, items, extra } = orders
@@ -73,41 +70,11 @@ const OrderDetail = ({match: {params: {ordersID}}}) => {
                 </div>
                 <div>
                     <ButtonS type="secondary" style={{margin:"10px"}}>Export Invoice</ButtonS>
-                    <Link to={`/orders/${orders._id}/edit`}><ButtonS type="primary" style={{margin:"10px"}} 
-                    // onClick={() => {setEdit(true)}}
+                    <Link to={`/orders/${orders._id}/edit`}><ButtonS type="primary" style={{margin:"10px"}}
                     >Edit Order</ButtonS></Link>
                 </div>
             </div>
         </div>
-        // }
-        // {edit && <Form form={form} layout="vertical" onSubmit={handleSubmit} initialValues={orders}>
-        //     <Form.Item name="date" label="Date:">
-        //         <Input />
-        //     </Form.Item>
-        //     <Form.Item name="customer" label="Customer:">
-        //         <InputS />
-        //     </Form.Item>
-        //     <Form.Item name="payment" label="Payment:">
-        //         <Select>
-        //             <Select.Option value="UNPAID">UNPAID</Select.Option>
-        //             <Select.Option value="PAID">PAID</Select.Option>
-        //         </Select>
-        //     </Form.Item>
-        //     <Form.Item name="fulfillment" label="Fulfillment:">
-        //         <Select>
-        //             <Select.Option value="PENDING">PENDING</Select.Option>
-        //             <Select.Option value="FULFILLED">FULFILLED</Select.Option>
-        //             <Select.Option value="CANCELLED">CANCELLED</Select.Option>
-        //         </Select>
-        //     </Form.Item>
-        //     {/* <Form.Item name="items" label="Items:">
-        //         <InputNumber />
-        //     </Form.Item> */}
-        //     <Form.Item name="extra" label="Comments:">
-        //         <InputS />
-        //     </Form.Item>
-        //     <ButtonS type="primary" htmlType="submit" onClick={() => {setEdit(false)}}>Edit Order</ButtonS>
-        // </Form>}</>
     ) 
 }
 
