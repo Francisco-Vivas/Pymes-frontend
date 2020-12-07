@@ -16,7 +16,6 @@ import EditOrder from "./pages/Orders/EditOrder";
 import Suppliers from "./pages/Suppliers/Suppliers";
 import { useContextInfo } from "./hooks/auth.hooks";
 import Products from "./pages/Products/Products";
-import CreateProducts from "./pages/Products/CreateProduct";
 import ProductDetail from "./pages/Products/ProductDetail";
 import FormProduct from "./components/FromProduct";
 
