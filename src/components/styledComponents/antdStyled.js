@@ -2,8 +2,8 @@ import { Input, Button, Layout, Menu } from "antd";
 import styled from "styled-components";
 
 const InputStyled = styled(Input)`
-  background-color: #f0f2f5;
-  color: #4d5768;
+  background-color: #f0f2f5 !important;
+  color: #4d5768 !important;
 `;
 
 const InputPassStyled = styled(Input.Password)`
@@ -13,6 +13,13 @@ const InputPassStyled = styled(Input.Password)`
 
 export const InputS = (props) => <InputStyled {...props} />;
 export const InputPassS = (props) => <InputPassStyled {...props} />;
+
+const InputStyledWhite = styled(Input)`
+  background-color: #fff !important;
+  color: #4d5768 !important;
+`;
+export const InputSWhite = (props) => <InputStyledWhite {...props} />;
+
 export const ButtonS = (props) => {
   const color =
     props.type === "primary"

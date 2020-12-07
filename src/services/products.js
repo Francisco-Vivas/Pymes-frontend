@@ -5,19 +5,22 @@ const baseURL =
     ? "http://localhost:3000/api/products"
     : "/api/products";
 
-const authService = axios.create({
+const productService = axios.create({
   baseURL,
   withCredentials: true,
 });
 
-export const getAllProductsFn = () => authService.get();
-export const getAProductFn = (productID) => authService.get(`/${productID}`);
+export const getAllProductsFn = () => productService.get("/");
+export const getAProductFn = (productID) => productService.get(`/${productID}`);
 
 export const createProductFn = (newProduct) =>
-  authService.post("/create", newProduct);
+  productService.post("/create", newProduct);
 
-export const editProductFn = (productUpdated) =>
-  authService.put(`/${productID}`, productUpdated);
+export const editProductFn = (productID, productUpdated) =>
+  productService.put(`/${productID}`, productUpdated);
 
 export const deleteProductFn = (productID) =>
-  authService.delete(`/${productID}`);
+  productService.delete(`/${productID}`);
+
+export const searchProductsFn = (searchString) =>
+  productService.post("/search", searchString);

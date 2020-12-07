@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { updateOrder, getOrderDetail } from '../services/orders'
+import { updateOrder, getOrderDetail } from '../../services/orders'
 import { Link, useHistory } from 'react-router-dom'
 import { Form, Button, Input, InputNumber, Select, Typography, Divider } from 'antd'
-import { InputS, ButtonS } from '../components/styledComponents/antdStyled'
-import { TitleS } from '../components/styledComponents/Typography'
+import { InputS, ButtonS } from '../../components/styledComponents/antdStyled'
+import { TitleS } from '../../components/styledComponents/Typography'
 
 const { Text } = Typography
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { getOrderDetail, updateOrder } from '../services/orders'
+import { getOrderDetail, updateOrder } from '../../services/orders'
 import { Divider, Button, Skeleton, Typography, Form, Select, Input } from 'antd'
-import { TextS, TitleS } from "../components/styledComponents/Typography"
-import { ButtonS, InputS } from "../components/styledComponents/antdStyled"
+import { TextS, TitleS } from "../../components/styledComponents/Typography"
+import { ButtonS, InputS } from "../../components/styledComponents/antdStyled"
 import { Link, useHistory } from 'react-router-dom'
 
 

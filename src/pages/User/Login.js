@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { Row, Col, Form, Button, Divider, message } from "antd";
-import { loginFn } from "../services/auth";
-import { useContextInfo } from "../hooks/auth.hooks";
+import { loginFn } from "../../services/auth";
+import { useContextInfo } from "../../hooks/auth.hooks";
 import { useEffect } from "react";
-import { TitleS, TextS } from "../components/styledComponents/Typography";
+import { TitleS, TextS } from "../../components/styledComponents/Typography";
 import {
   InputS,
   InputPassS,
   ButtonS,
-} from "../components/styledComponents/antdStyled";
+} from "../../components/styledComponents/antdStyled";
 
 const Login = ({ history }) => {
   const { user, login } = useContextInfo();
@@ -28,10 +28,10 @@ const Login = ({ history }) => {
       const { data } = await loginFn(value);
       login(data);
       history.push("/");
-    } catch(err) {
-      message.error("Error with email or password")
+    } catch (err) {
+      message.error("Error with email or password");
     }
-    };
+  };
 
   return (
     <Row justify="center" align="middle" gutter={[16, 16]}>
@@ -40,7 +40,8 @@ const Login = ({ history }) => {
         <TextS type="secondary">Is awesome to see you again!</TextS>
         <Divider />
         <Form
-          layout="vertical"
+          layout="horizontal"
+          wrapperCol={24}
           name="basic"
           initialValues={{
             remember: true,
