@@ -25,11 +25,19 @@ const Login = ({ history }) => {
 
   const onFinish = async (value) => {
     try {
+<<<<<<< HEAD
     const { data } = await loginFn(value);
     login(data);
     history.push("/");
     } catch(err) {
       message.error("Error with email or password")
+=======
+      const { data } = await loginFn(value);
+      login(data);
+      history.push("/");
+    } catch (err) {
+      message.error("Error with email or password");
+>>>>>>> 4ec568df3a0d1f914664939828c7a82c58ed4d11
     }
   };
 
@@ -40,7 +48,8 @@ const Login = ({ history }) => {
         <TextS type="secondary">Is awesome to see you again!</TextS>
         <Divider />
         <Form
-          layout="vertical"
+          layout="horizontal"
+          wrapperCol={24}
           name="basic"
           initialValues={{
             remember: true,

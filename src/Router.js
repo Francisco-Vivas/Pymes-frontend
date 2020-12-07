@@ -11,13 +11,17 @@ import CreateOrders from "./pages/Orders/CreateOrders";
 import LandingPage from "./pages/LandingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
-import OrderDetail from './pages/Orders/OrderDetail';
-import EditOrder from './pages/Orders/EditOrder';
-import Suppliers from './pages/Suppliers/Suppliers';
+import OrderDetail from "./pages/Orders/OrderDetail";
+import EditOrder from "./pages/Orders/EditOrder";
+import Suppliers from "./pages/Suppliers/Suppliers";
 import { useContextInfo } from "./hooks/auth.hooks";
+import Products from "./pages/Products/Products";
+import ProductDetail from "./pages/Products/ProductDetail";
+import FormProduct from "./components/FromProduct";
 
 const Router = () => {
   const { user } = useContextInfo();
+
   return (
     <BrowserRouter>
       <Layout>
@@ -28,10 +32,38 @@ const Router = () => {
           <ProtectedRoute exact path="/profile/edit" component={EditProfile} />
           <ProtectedRoute exact path="/profile" component={Profile} />
           <ProtectedRoute exact path="/orders" component={Orders} />
-          <ProtectedRoute exact path="/orders/create-order" component={CreateOrders} />
-          <ProtectedRoute exact path="/orders/:ordersID/edit" component={EditOrder} />
-          <ProtectedRoute exact path="/orders/:ordersID" component={OrderDetail} />
+          <ProtectedRoute
+            exact
+            path="/orders/create-order"
+            component={CreateOrders}
+          />
+          <ProtectedRoute
+            exact
+            path="/orders/:ordersID/edit"
+            component={EditOrder}
+          />
+          <ProtectedRoute
+            exact
+            path="/orders/:ordersID"
+            component={OrderDetail}
+          />
           <ProtectedRoute exact path="/suppliers" component={Suppliers} />
+          <ProtectedRoute exact path="/products" component={Products} />
+          <ProtectedRoute
+            exact
+            path="/products/create"
+            component={() => <FormProduct isNew={true} />}
+          />
+          <ProtectedRoute
+            exact
+            path="/products/:productID/edit"
+            component={(props) => <FormProduct isNew={false} {...props} />}
+          />
+          <ProtectedRoute
+            exact
+            path="/products/:productID"
+            component={ProductDetail}
+          />
           {/* <Route exact path="*" component={NotFound} /> */}
         </Switch>
       </Layout>
