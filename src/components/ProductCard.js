@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Col, Card, Space } from "antd";
+import { Col, Card, Space, List } from "antd";
 import { TextS } from "./styledComponents/Typography";
 import { ButtonS } from "./styledComponents/antdStyled";
 const { Meta } = Card;
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, isSupplier = false }) {
   const colorStatus =
     product.quantity === 0
       ? "#BF616A"
@@ -20,41 +20,61 @@ export default function ProductCard({ product }) {
         }
       : {};
 
-  return (
-    <Col key={product._id} xs={24} sm={24} md={6} lg={4}>
-      <Card
-        {...boxShadow}
-        hoverable
-        actions={[
-          <Link to={`/products/${product._id}`}>
-            <TextS type="primary">Details</TextS>
-          </Link>,
-        ]}
-      >
+  const CardProduct = () => (
+    <Card
+      {...boxShadow}
+      hoverable
+      actions={[
         <Link to={`/products/${product._id}`}>
-          <div>
-            <div
-              style={{
-                display: "flex",
-                margin: "auto",
-              }}
-            >
-              <img
-                style={{
-                  height: "8rem",
-                  boxSizing: "border-box",
-                  width: "100%",
-                  margin: "0 auto 1rem",
-                  objectFit: "cover",
-                }}
-                alt={product.name}
-                src={product.image}
-              />
-            </div>
-            <Meta
-              title={product.name}
-              style={{ height: "100%" }}
-              description={
+          <TextS type="primary">Details</TextS>
+        </Link>,
+      ]}
+    >
+      <Link to={`/products/${product._id}`}>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              margin: "auto",
+            }}
+          >
+            <img
+              style={
+                isSupplier
+                  ? {
+                      boxSizing: "border-box",
+                      width: "100%",
+                      margin: "0 auto 1rem",
+                      objectFit: "cover",
+                      height: "4rem",
+                    }
+                  : {
+                      height: "8rem",
+                      boxSizing: "border-box",
+                      width: "100%",
+                      margin: "0 auto 1rem",
+                      objectFit: "cover",
+                    }
+              }
+              alt={product.name}
+              src={product.image}
+            />
+          </div>
+          <Meta
+            title={product.name}
+            style={{ height: "100%" }}
+            description={
+              isSupplier ? (
+                <TextS>
+                  <small>
+                    Wholeales price: <br />{" "}
+                    {`$${product.wholesalePrice}`.replace(
+                      /\B(?=(\d{3})+(?!\d))/g,
+                      ","
+                    )}
+                  </small>
+                </TextS>
+              ) : (
                 <Space direction="vertical">
                   <TextS>
                     Quantity: <br /> {product.quantity}
@@ -69,11 +89,21 @@ export default function ProductCard({ product }) {
                     </small>
                   </TextS>
                 </Space>
-              }
-            />
-          </div>
-        </Link>
-      </Card>
+              )
+            }
+          />
+        </div>
+      </Link>
+    </Card>
+  );
+
+  return isSupplier ? (
+    <List.Item style={{}}>
+      <CardProduct />
+    </List.Item>
+  ) : (
+    <Col key={product._id} xs={24} sm={24} md={6} lg={4}>
+      <CardProduct />
     </Col>
   );
 }
