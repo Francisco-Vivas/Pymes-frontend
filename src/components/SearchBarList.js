@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Col, Row, List } from "antd";
 import Search from "antd/lib/input/Search";
-import { getAllProductsFn, searchProductsFn } from "../services/products";
+import { getAvailableProductsFn, searchProductsFn } from "../services/products";
 import ProductListItem from "./ProductListItem";
 
 const SearchBarList = ({ HandlerAddQuantity }) => {
@@ -11,7 +11,7 @@ const SearchBarList = ({ HandlerAddQuantity }) => {
 
   useEffect(() => {
     async function getProducts() {
-      const { data } = await getAllProductsFn();
+      const { data } = await getAvailableProductsFn();
       setProducts(data);
     }
     getProducts();
@@ -27,7 +27,7 @@ const SearchBarList = ({ HandlerAddQuantity }) => {
         });
         dataOut = data;
       } else {
-        const { data } = await getAllProductsFn();
+        const { data } = await getAvailableProductsFn();
         dataOut = data;
       }
       setProducts(dataOut);

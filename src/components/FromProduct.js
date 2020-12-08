@@ -1,8 +1,8 @@
-import { Form, Input, InputNumber, Upload, Row, Col, Skeleton } from "antd";
+import { Form, InputNumber, Upload, Row, Col, Skeleton } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { ButtonS, InputS, InputSWhite } from "./styledComponents/antdStyled";
+import { ButtonS, InputSWhite } from "./styledComponents/antdStyled";
 import { TitleS } from "./styledComponents/Typography";
 import { useContextInfo } from "../hooks/auth.hooks";
 import { createProductFn, getAProductFn } from "../services/products";

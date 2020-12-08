@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Form, Button, Modal, Avatar, List, Select } from "antd";
+import { Form, Modal, Avatar, List, Select, DatePicker } from "antd";
 import { createOrder } from "../services/orders";
 import { useHistory } from "react-router-dom";
 import { useContextInfo } from "../hooks/auth.hooks";
-import { ButtonS, InputS, InputSWhite } from "./styledComponents/antdStyled";
+import { ButtonS, InputSWhite } from "./styledComponents/antdStyled";
 import SearchBarList from "./SearchBarList";
 import { TextS, TitleS } from "./styledComponents/Typography";
+import moment from "moment";
 
 function AddProduct({ isModal = false, setIsModal, HandlerAddQuantity }) {
   const [modalForm] = Form.useForm();
@@ -29,7 +30,13 @@ export default function CreateOrderForm({ addOrder }) {
   const { user, login } = useContextInfo();
   const [isModal, setIsModal] = useState(false);
   const [productsList, setProductsList] = useState([]);
-  console.log(productsList);
+  const [totalValue, setTotalValue] = useState(0);
+
+  const [items, setItems] = useState([]);
+  const [itemsQuantity, setItemsQuantity] = useState([]);
+  const [itemsSalePrice, setItemsSalePrice] = useState([]);
+  const [itemsSubtotal, setItemsSubtotal] = useState([]);
+
   const HandlerAddQuantity = (value) => {
     let isInTheArray = false;
     let newUserItem = productsList.map((e) => {
@@ -42,19 +49,45 @@ export default function CreateOrderForm({ addOrder }) {
     });
     newUserItem = isInTheArray ? newUserItem : [...productsList, value];
     setProductsList([...newUserItem]);
+    setTotalValue(
+      productsList.reduce((acc, cv) => acc + cv.salePrice * cv.quantity, 0)
+    );
+    for (let item of productsList) {
+      setItems([...items, item._id]);
+      setItemsQuantity([...itemsQuantity, item.quantity]);
+      setItemsSalePrice([...itemsSalePrice, item.salePrice]);
+      setItemsSubtotal([...itemsSubtotal, item.salePrice * item.quantity]);
+    }
   };
 
   async function handleSubmit(values) {
-    const order = { ...values };
+    const order = {
+      ...values,
+      items,
+      itemsQuantity,
+      itemsSalePrice,
+      itemsSubtotal,
+      total: totalValue,
+      date: values.date.format("YYYY-MM-DD"),
+    };
     const { data: newOrder } = await createOrder(order);
     login({ ...user, ordersID: [...user.ordersID, newOrder._id] });
     return history.push("/orders");
   }
 
   return (
-    <Form form={form} layout="horizontal" onFinish={handleSubmit}>
+    <Form
+      form={form}
+      layout="horizontal"
+      onFinish={handleSubmit}
+      initialValues={{
+        fulfillment: "PENDING",
+        payment: "UNPAID",
+      }}
+    >
       <Form.Item name="date" label="Date:">
-        <InputSWhite />
+        {/* <InputSWhite /> */}
+        <DatePicker style={{ width: "100%" }} />
       </Form.Item>
       <Form.Item name="customer" label="Customer:">
         <InputSWhite />
@@ -65,12 +98,17 @@ export default function CreateOrderForm({ addOrder }) {
           <Select.Option value="PAID">PAID</Select.Option>
         </Select>
       </Form.Item>
+
       <Form.Item name="fulfillment" label="Fulfillment:">
         <Select>
           <Select.Option value="PENDING">PENDING</Select.Option>
           <Select.Option value="FULFILLED">FULFILLED</Select.Option>
           <Select.Option value="CANCELLED">CANCELLED</Select.Option>
         </Select>
+      </Form.Item>
+
+      <Form.Item name="extra" label="Comments:">
+        <InputSWhite />
       </Form.Item>
 
       <AddProduct
@@ -80,63 +118,63 @@ export default function CreateOrderForm({ addOrder }) {
       />
 
       <List
-        style={{ margin: "1rem" }}
+        style={{
+          margin: "0.5rem",
+        }}
+        pagination={{
+          pageSize: 3,
+        }}
         itemLayout="horizontal"
         dataSource={productsList}
-        renderItem={(item) => (
-          <List.Item
-            actions={[
-              <p>
-                Subtotal:{" "}
-                {`$${item.quantity * item.salePrice}`.replace(
-                  /\B(?=(\d{3})+(?!\d))/g,
-                  ","
-                )}
-              </p>,
-            ]}
-          >
-            <List.Item.Meta
-              avatar={<Avatar src={item.image} style={{ marin: "auto" }} />}
-              title={<a href="https://ant.design">{item.name}</a>}
-              description={
-                <TextS>
-                  <small>
-                    {`Price: $${item.salePrice}`.replace(
-                      /\B(?=(\d{3})+(?!\d))/g,
-                      ","
-                    )}{" "}
-                    <br />
-                    Quantity: {item.quantity}
-                  </small>
-                </TextS>
-              }
-            />
-          </List.Item>
-        )}
+        renderItem={(item) => {
+          return (
+            <List.Item
+              actions={[
+                <p>
+                  Subtotal:{" "}
+                  {`$${item.quantity * item.salePrice}`.replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    ","
+                  )}
+                </p>,
+              ]}
+            >
+              <List.Item.Meta
+                avatar={<Avatar src={item.image} style={{ marin: "auto" }} />}
+                title={<a href="https://ant.design">{item.name}</a>}
+                description={
+                  <TextS>
+                    <small>
+                      {`Price: $${item.salePrice}`.replace(
+                        /\B(?=(\d{3})+(?!\d))/g,
+                        ","
+                      )}{" "}
+                      <br />
+                      Quantity: {item.quantity}
+                    </small>
+                  </TextS>
+                }
+              />
+            </List.Item>
+          );
+        }}
       />
       <TitleS level={5}>
-        TOTAL : $
-        {`${productsList.reduce(
-          (acc, cv) => acc + cv.salePrice * cv.quantity,
-          0
-        )}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+        TOTAL : ${`${totalValue}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
       </TitleS>
+      <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <ButtonS
+          type="secondary"
+          style={{ marginBottom: "1.5rem" }}
+          onClick={() => setIsModal(!isModal)}
+        >
+          Add Items
+        </ButtonS>
 
-      <ButtonS
-        type="secondary"
-        style={{ marginBottom: "1.5rem" }}
-        onClick={() => setIsModal(!isModal)}
-      >
-        Add Items
-      </ButtonS>
-
-      <Form.Item name="extra" label="Comments:">
-        <InputSWhite />
-      </Form.Item>
-
-      <ButtonS type="primary" htmlType="submit" size="middle">
-        Create Order
-      </ButtonS>
+        <ButtonS type="primary" htmlType="submit" size="middle">
+          Create Order
+        </ButtonS>
+      </div>
     </Form>
   );
 }
