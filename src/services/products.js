@@ -11,6 +11,7 @@ const productService = axios.create({
 });
 
 export const getAllProductsFn = () => productService.get("/");
+export const getAvailableProductsFn = () => productService.get("/available");
 export const getAProductFn = (productID) => productService.get(`/${productID}`);
 
 export const createProductFn = (newProduct) =>
