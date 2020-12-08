@@ -100,10 +100,10 @@ export default function MainLayout({ children }) {
               <Menu.Item key="4" style={{ color: "#4D5768" }}>
                 <Link to="/suppliers">Suppliers</Link>
               </Menu.Item>
-              <Menu.Item
-                key="5"
-                style={{ color: "#4D5768", marginBottom: "100%" }}
-              >
+              <Menu.Item key="5" style={{ color: "#4D5768" }}>
+                <Link to="/clients">Clients</Link>
+              </Menu.Item>
+              <Menu.Item key="6" style={{ color: "#4D5768", marginBottom: "100%" }}>
                 Analytics
               </Menu.Item>
               <Divider />

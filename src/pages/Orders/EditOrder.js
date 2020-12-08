@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { updateOrder, getOrderDetail } from '../../services/orders'
 import { Link, useHistory } from 'react-router-dom'
-import { Form, Button, Input, InputNumber, Select, Typography, Divider } from 'antd'
-import { InputS, ButtonS } from '../../components/styledComponents/antdStyled'
+import { Form, Button, Input, InputNumber, Select, Typography, Divider, Row, Col } from 'antd'
+import { InputSWhite, ButtonS } from '../../components/styledComponents/antdStyled'
 import { TitleS } from '../../components/styledComponents/Typography'
 
 const { Text } = Typography
@@ -30,16 +30,17 @@ export default function UpdateOrder({ match:{ params:{ ordersID }}}){
 
 
     return order && (
-        <div>
+        <Row align="center">
+            <Col xs={24} sm={18} md={12} lg={8}>
         <TitleS level={1}>Edit your order</TitleS>
         <Text type="secondary">Update your order details</Text>
         <Divider />
         <Form form={form} layout="vertical" onFinish={handleSubmit} initialValues={order}>
             <Form.Item name="date" label="Date:">
-                <Input />
+                <InputSWhite />
             </Form.Item>
             <Form.Item name="customer" label="Customer:">
-                <InputS />
+                <InputSWhite />
             </Form.Item>
             <Form.Item name="payment" label="Payment:">
                 <Select>
@@ -58,10 +59,11 @@ export default function UpdateOrder({ match:{ params:{ ordersID }}}){
                 <InputNumber />
             </Form.Item> */}
             <Form.Item name="extra" label="Comments:">
-                <InputS />
+                <InputSWhite />
             </Form.Item>
             <ButtonS type="primary" size="middle" htmlType="submit">Edit Order</ButtonS>
         </Form>
-        </div>
+        </Col>
+        </Row>
     )
 }
