@@ -44,15 +44,15 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
     image,
     };
     try {
-    await onFinishFn(dataUpdated);
-    if (logUpdate) logUpdate(dataUpdated);
-    if (isSignup) return history.push("/login");
-    return history.push("/profile");
+      await onFinishFn(dataUpdated);
+      if (logUpdate) logUpdate(dataUpdated);
+      if (isSignup) return history.push("/login");
+      return history.push("/profile");
     } catch (err){
-    console.dir(err.response.data.err.message)
-    message.error(err.response.data.err.message)
+      console.dir(err.response.data.err.message)
+      message.error(err.response.data.err.message)
     }
-    }
+  }
 
   const onPreview = async (file) => {
     let src = file.url;

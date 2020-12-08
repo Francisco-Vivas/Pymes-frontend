@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button } from "antd";
 import { Link } from "react-router-dom";
-import { getAllSuppliers, deleteSupplier } from "../../services/suppliers";
+import { getAllClients, deleteClient } from "../../services/clients";
 import { ButtonS } from "../../components/styledComponents/antdStyled"
 import { useContextInfo } from '../../hooks/auth.hooks'
 import { useHistory } from 'react-router-dom'
 
 
-export default function Suppliers() {
+export default function Clients() {
   // const { user } = useContextInfo()
-  const [suppliers, setSuppliers] = useState(null);
+  const [clients, setClients] = useState(null);
   const history = useHistory()
+  const [showModal, setShowModal] = useState(false)
+
 
   useEffect(() => {
-    async function getSuppliers(){
-      const { data } = await getAllSuppliers()
-      setSuppliers(data)
+    async function getClients(){
+      const { data } = await getAllClients()
+      setClients(data)
     }
-    getSuppliers();
+    getClients();
   }, []);
 
   const columns = [
@@ -37,44 +39,38 @@ export default function Suppliers() {
       key: "email",
     },
     {
-      title: "Channel",
-      dataIndex: "channel",
-      key: "channel",
-    },
-    {
-      title: "Last Order",
-      dataIndex: "lastOrder",
-      key: "lastOrder",
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
     },
     {
       title: "",
-      dataIndex: "details",
-      key: "details",
+      dataIndex: "edit",
+      key: "edit",
     },
   ];
  
-  const dataSource = suppliers?.map((supplier) => {
+  const dataSource = clients?.map((client) => {
     return {
-      key: supplier._id,
-      name: supplier.name,
-      phone: supplier.phone,
-      email: supplier.email,
-      channel: supplier.channel,
-      lastOrder: supplier.lastOrder,
-      details: <Link to={`/suppliers/${supplier._id}`}><ButtonS type="secondary">Supplier Details</ButtonS></Link>,
-    }})
+      key: client._id,
+      name: client.name,
+      phone: client.phone,
+      email: client.email,
+      address: client.address,
+      edit: <Link to={`/clients/${client._id}/edit`}><ButtonS type="secondary">Edit Client</ButtonS></Link>,
+    }
+})
     
-
-  return (
+    return (
     <div>
-      <Link to="/suppliers/create-supplier">
+      <Link to="/clients/create-client">
         <Button
           style={{
             float: "left",
             color: "#4D5768",
             border: "1px dashed #4D5768",
           }}>
-          New Supplier
+          New Client
         </Button>
       </Link>
       <br />

@@ -8,12 +8,18 @@ import Signup from "./pages/User/Signup";
 import EditProfile from "./pages/User/EditProfile";
 import Profile from "./pages/User/Profile";
 import CreateOrders from "./pages/Orders/CreateOrders";
+import CreateClients from "./pages/Clients/CreateClients";
+import CreateSupplier from "./pages/Suppliers/CreateSupplier";
 import LandingPage from "./pages/LandingPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import OrderDetail from "./pages/Orders/OrderDetail";
+import SupplierDetail from "./pages/Suppliers/SupplierDetail";
 import EditOrder from "./pages/Orders/EditOrder";
+import EditSupplier from "./pages/Suppliers/EditSupplier";
+import UpdateClient from "./pages/Clients/EditClients";
 import Suppliers from "./pages/Suppliers/Suppliers";
+import Clients from "./pages/Clients/Clients";
 import { useContextInfo } from "./hooks/auth.hooks";
 import Products from "./pages/Products/Products";
 import ProductDetail from "./pages/Products/ProductDetail";
@@ -48,6 +54,12 @@ const Router = () => {
             component={OrderDetail}
           />
           <ProtectedRoute exact path="/suppliers" component={Suppliers} />
+          <ProtectedRoute exact path="/suppliers/create-supplier" component={CreateSupplier} />
+          <ProtectedRoute exact path="/suppliers/:suppliersID" component={SupplierDetail} />
+          <ProtectedRoute exact path="/suppliers/:suppliersID/edit" component={EditSupplier} />
+          <ProtectedRoute exact path="/clients" component={Clients} />
+          <ProtectedRoute exact path="/clients/create-client" component={CreateClients} />
+          <ProtectedRoute exact path="/clients/:clientsID/edit" component={UpdateClient} />
           <ProtectedRoute exact path="/products" component={Products} />
           <ProtectedRoute
             exact
