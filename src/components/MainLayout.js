@@ -35,7 +35,17 @@ export default function MainLayout({ children }) {
             textAlign: "right",
           }}
         >
-          <img src='/images/Pymes-logo.png' style={{height:"50px", float:"left", marginTop:"7px", paddingLeft:"20px"}}/>
+          <Link to="/">
+            <img
+              src="/images/Pymes-logo.png"
+              style={{
+                height: "50px",
+                float: "left",
+                marginTop: "7px",
+                paddingLeft: "20px",
+              }}
+            />
+          </Link>
           {user ? (
             <>
               <Menu.Item key="1" style={{ color: "#dce9ed" }}>

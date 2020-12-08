@@ -1,6 +1,11 @@
 import { useHistory } from "react-router-dom";
 import { Form, Button, Select, Upload, Skeleton, message } from "antd";
-import { InputS, InputPassS, ButtonS } from "./styledComponents/antdStyled";
+import {
+  InputS,
+  InputSWhite,
+  InputPassS,
+  ButtonS,
+} from "./styledComponents/antdStyled";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import countryCodes from "country-codes-list";
@@ -39,18 +44,18 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
 
   async function onFinish(value) {
     const dataUpdated = {
-    ...value,
-    cellphone: value.cellphone || "",
-    image,
+      ...value,
+      cellphone: value.cellphone || "",
+      image,
     };
     try {
       await onFinishFn(dataUpdated);
       if (logUpdate) logUpdate(dataUpdated);
       if (isSignup) return history.push("/login");
       return history.push("/profile");
-    } catch (err){
-      console.dir(err.response.data.err.message)
-      message.error(err.response.data.err.message)
+    } catch (err) {
+      console.dir(err.response.data.err.message);
+      message.error(err.response.data.err.message);
     }
   }
 
@@ -127,7 +132,7 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
       initialValues={user}
     >
       <Form.Item label="Company Name:" name="companyName">
-        <InputS />
+        {isSignup ? <InputS /> : <InputSWhite />}
       </Form.Item>
 
       <Form.Item
@@ -140,7 +145,7 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
           },
         ]}
       >
-        <InputS />
+        {isSignup ? <InputS /> : <InputSWhite />}
       </Form.Item>
 
       <Form.Item
@@ -153,15 +158,19 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
           },
         ]}
       >
-        <InputS />
+        {isSignup ? <InputS /> : <InputSWhite />}
       </Form.Item>
 
       <Form.Item label="Phone" name="cellphone">
-        <InputS addonBefore={prefixPhoneNum} maxLength="10" />
+        {isSignup ? (
+          <InputS />
+        ) : (
+          <InputSWhite addonBefore={prefixPhoneNum} maxLength="10" />
+        )}
       </Form.Item>
 
       <Form.Item label="Address:" name="address">
-        <InputS />
+        {isSignup ? <InputS /> : <InputSWhite />}
       </Form.Item>
 
       <Form.Item
@@ -174,7 +183,7 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
           },
         ]}
       >
-        <InputS />
+        {isSignup ? <InputS /> : <InputSWhite />}
       </Form.Item>
       {isSignup ? (
         <Form.Item
