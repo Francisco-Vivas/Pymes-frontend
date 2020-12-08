@@ -90,7 +90,7 @@ const OrderDetail = ({
                         style={{ marin: "auto" }}
                       />
                     }
-                    title={<a href="https://ant.design">{item.name}</a>}
+                    title={item.name}
                     description={
                       <TextS>
                         <small>

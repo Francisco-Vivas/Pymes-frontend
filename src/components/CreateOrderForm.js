@@ -1,30 +1,13 @@
 import React, { useState } from "react";
-import { Form, Modal, Avatar, List, Select, DatePicker } from "antd";
+import { Form, Avatar, List, Select, DatePicker } from "antd";
 import { createOrder } from "../services/orders";
 import { useHistory } from "react-router-dom";
 import { useContextInfo } from "../hooks/auth.hooks";
 import { ButtonS, InputSWhite } from "./styledComponents/antdStyled";
-import SearchBarList from "./SearchBarList";
 import { TextS, TitleS } from "./styledComponents/Typography";
-import moment from "moment";
+import AddProductModal from "./AddProductModal";
 
-function AddProduct({ isModal = false, setIsModal, HandlerAddQuantity }) {
-  const [modalForm] = Form.useForm();
-  return (
-    <Modal
-      visible={isModal}
-      title="Add your products"
-      okText="Done"
-      cancelText="Cancel"
-      onCancel={() => setIsModal(false)}
-      onOk={() => setIsModal(false)}
-    >
-      <SearchBarList HandlerAddQuantity={HandlerAddQuantity} />
-    </Modal>
-  );
-}
-
-export default function CreateOrderForm({ addOrder }) {
+export default function CreateOrderForm() {
   const [form] = Form.useForm();
   const history = useHistory();
   const { user, login } = useContextInfo();
@@ -111,7 +94,7 @@ export default function CreateOrderForm({ addOrder }) {
         <InputSWhite />
       </Form.Item>
 
-      <AddProduct
+      <AddProductModal
         isModal={isModal}
         setIsModal={setIsModal}
         HandlerAddQuantity={HandlerAddQuantity}
@@ -159,6 +142,7 @@ export default function CreateOrderForm({ addOrder }) {
           );
         }}
       />
+
       <TitleS level={5}>
         TOTAL : ${`${totalValue}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
       </TitleS>
