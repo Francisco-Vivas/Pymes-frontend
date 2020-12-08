@@ -1,4 +1,4 @@
-import { Form, InputNumber, Upload, Row, Col, Skeleton } from "antd";
+import { Form, InputNumber, Upload, Row, Col, Skeleton, Select } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -7,6 +7,7 @@ import { TitleS } from "./styledComponents/Typography";
 import { useContextInfo } from "../hooks/auth.hooks";
 import { createProductFn, getAProductFn } from "../services/products";
 import axios from "axios";
+import { getAllSuppliers } from "../services/suppliers";
 
 const cloudinaryAPI =
   "https://api.cloudinary.com/v1_1/franciscovivascodes/image/upload";
@@ -26,12 +27,19 @@ export default function FormProduct(props) {
   const history = useHistory();
   const { user, login } = useContextInfo();
   const [product, setProduct] = useState(null);
+  const [suppliers, setSuppliers] = useState([]);
+
   useEffect(() => {
     async function getProduct() {
       const { data } = await getAProductFn(productID);
       setProduct(data);
     }
+    async function getSuppliers() {
+      const { data: suppliersData } = await getAllSuppliers();
+      setSuppliers(suppliersData);
+    }
     if (productID) getProduct();
+    getSuppliers();
   }, []);
 
   async function handleSubmit(values) {
@@ -157,6 +165,14 @@ export default function FormProduct(props) {
 
           <Form.Item name="threshold" label="Alert Low Quantity:">
             <InputNumber style={{ width: "100%" }} />
+          </Form.Item>
+
+          <Form.Item label="Suppliers" name="supplierID">
+            <Select>
+              {suppliers?.map((e) => (
+                <Select.Option value={e._id}>{e.name}</Select.Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item name="sku" label="SKU:">

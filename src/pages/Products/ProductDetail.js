@@ -26,7 +26,7 @@ export default function ProductDetail({
       : product?.quantity <= product?.threshold
       ? "#EBCB8B"
       : "#4d5768";
-
+  console.log(product);
   return product ? (
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={24} md={12} lg={12}>
@@ -48,7 +48,14 @@ export default function ProductDetail({
             <TextS style={{ color: colorQuantity }}>
               Quantity {product.quantity}{" "}
             </TextS>
-            <TextS>Supplier: {product.supplier || "No info."}</TextS>
+            <TextS>
+              Supplier:{" "}
+              {(
+                <Link to={`/suppliers/${product.supplierID?._id}`}>
+                  {product.supplierID?.name}
+                </Link>
+              ) || "No info."}
+            </TextS>
             <TextS style={{ marginTop: "2rem" }}>
               Wholesale Price:{" "}
               <span style={{ marginLeft: "2rem" }}>

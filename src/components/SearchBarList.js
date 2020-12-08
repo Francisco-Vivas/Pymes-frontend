@@ -4,7 +4,7 @@ import Search from "antd/lib/input/Search";
 import { getAvailableProductsFn, searchProductsFn } from "../services/products";
 import ProductListItem from "./ProductListItem";
 
-const SearchBarList = ({ HandlerAddQuantity }) => {
+const SearchBarList = ({ HandlerAddQuantity, isSupplier = false }) => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchString, setSearchString] = useState(null);
   const [products, setProducts] = useState(null);
@@ -68,6 +68,7 @@ const SearchBarList = ({ HandlerAddQuantity }) => {
               <ProductListItem
                 HandlerAddQuantity={HandlerAddQuantity}
                 product={item}
+                isSupplier={isSupplier}
               />
             )}
           />
