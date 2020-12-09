@@ -11,7 +11,7 @@ const ProductListItem = ({
   const onNumberChange = (value) => {
     setQuantity(value);
   };
-  
+
   return isSupplier ? (
     <List.Item
       actions={[
@@ -35,7 +35,12 @@ const ProductListItem = ({
   ) : (
     <List.Item
       actions={[
-        <InputNumber min={1} value={quantity} onChange={onNumberChange} />,
+        <InputNumber
+          min={1}
+          max={product.quantity}
+          value={quantity}
+          onChange={onNumberChange}
+        />,
         <ButtonS
           type="primary"
           onClick={() => HandlerAddQuantity({ ...product, quantity })}

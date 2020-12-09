@@ -7,7 +7,7 @@ const { Meta } = Card;
 
 export default function ProductCard({ product, isSupplier = false }) {
   const colorStatus =
-    product.quantity === 0
+    product.quantity <= 0
       ? "#BF616A"
       : product.quantity <= product.threshold
       ? "#EBCB8B"

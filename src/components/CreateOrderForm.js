@@ -28,11 +28,6 @@ export default function CreateOrderForm() {
   const [clients, setClients] = useState([]);
   const [isModalClient, setIsModalClient] = useState(false);
 
-  const [items, setItems] = useState([]);
-  const [itemsQuantity, setItemsQuantity] = useState([]);
-  const [itemsSalePrice, setItemsSalePrice] = useState([]);
-  const [itemsSubtotal, setItemsSubtotal] = useState([]);
-
   useEffect(() => {
     async function getClients() {
       const { data } = await getAllClients();
@@ -56,21 +51,12 @@ export default function CreateOrderForm() {
     setTotalValue(
       productsList.reduce((acc, cv) => acc + cv.salePrice * cv.quantity, 0)
     );
-    for (let item of productsList) {
-      setItems([...items, item._id]);
-      setItemsQuantity([...itemsQuantity, item.quantity]);
-      setItemsSalePrice([...itemsSalePrice, item.salePrice]);
-      setItemsSubtotal([...itemsSubtotal, item.salePrice * item.quantity]);
-    }
   };
 
   async function handleSubmit(values) {
     const order = {
       ...values,
-      items,
-      itemsQuantity,
-      itemsSalePrice,
-      itemsSubtotal,
+      productsList,
       total: totalValue,
       date: values.date.format("YYYY-MM-DD"),
     };
