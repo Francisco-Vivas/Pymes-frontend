@@ -5,7 +5,11 @@ import { useHistory } from "react-router-dom";
 import { ButtonS, InputSWhite } from "./styledComponents/antdStyled";
 import { TitleS } from "./styledComponents/Typography";
 import { useContextInfo } from "../hooks/auth.hooks";
-import { createProductFn, getAProductFn } from "../services/products";
+import {
+  createProductFn,
+  getAProductFn,
+  editProductFn,
+} from "../services/products";
 import axios from "axios";
 import { getAllSuppliers } from "../services/suppliers";
 
@@ -33,6 +37,7 @@ export default function FormProduct(props) {
     async function getProduct() {
       const { data } = await getAProductFn(productID);
       setProduct(data);
+      setImage(data.image);
     }
     async function getSuppliers() {
       const { data: suppliersData } = await getAllSuppliers();
@@ -43,8 +48,11 @@ export default function FormProduct(props) {
   }, []);
 
   async function handleSubmit(values) {
-    const { data: newProduct } = await createProductFn({ ...values, image });
-    login({ ...user, productsID: [...user.productsID, newProduct._id] });
+    const { data: newProduct } = isNew
+      ? await createProductFn({ ...values, image })
+      : await editProductFn(product._id, { ...values, image });
+    isNew &&
+      login({ ...user, productsID: [...user.productsID, newProduct._id] });
     return history.push("/products");
   }
 
@@ -93,7 +101,7 @@ export default function FormProduct(props) {
 
   form.setFieldsValue(
     isNew
-      ? { salePrice: 1000, wholesalePrice: 5000, quantity: 1, threshold: 0 }
+      ? { salePrice: 5000, wholesalePrice: 1000, quantity: 1, threshold: 0 }
       : product
   );
 

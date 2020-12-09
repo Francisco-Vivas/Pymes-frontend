@@ -2,16 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Table, Button } from "antd";
 import { Link } from "react-router-dom";
 import { getAllOrders } from "../../services/orders";
-import { ButtonS } from "../../components/styledComponents/antdStyled"
-
+import { ButtonS } from "../../components/styledComponents/antdStyled";
 
 export default function Orders() {
   const [orders, setOrders] = useState(null);
 
   useEffect(() => {
-    async function getOrders(){
-      const { data } = await getAllOrders()
-      setOrders(data)
+    async function getOrders() {
+      const { data } = await getAllOrders();
+      setOrders(data);
     }
     getOrders();
   }, []);
@@ -28,9 +27,9 @@ export default function Orders() {
       key: "date",
     },
     {
-      title: "Customer",
-      dataIndex: "customer",
-      key: "customer",
+      title: "Client",
+      dataIndex: "clientID",
+      key: "clientID",
     },
     {
       title: "Total",
@@ -41,35 +40,11 @@ export default function Orders() {
       title: "Payment",
       dataIndex: "payment",
       key: "payment",
-      // render: payments => (
-      //   <span>
-      //     {payments?.map(payment => {
-      //       let color = payment === "PAID" ? 'green' : 'red';
-      //       return (
-      //         <Tag color={color} key={payment}>
-      //           {payment.toUpperCase()}
-      //         </Tag>
-      //       );
-      //     })}
-      //   </span>
-      // ),
     },
     {
       title: "Fulfillment",
       dataIndex: "fulfillment",
       key: "fulfillment",
-      // render: fulfillments => (
-      //   <span>
-      //     {fulfillments.map(fulfillment => {
-      //       let color = fulfillment === "FULFILLED" ? 'green' : 'red';
-      //       return (
-      //         <Tag color={color} key={fulfillment}>
-      //           {fulfillment.toUpperCase()}
-      //         </Tag>
-      //       );
-      //     })}
-      //   </span>
-      // ),
     },
     {
       title: "Comments",
@@ -88,14 +63,18 @@ export default function Orders() {
       key: order._id,
       orderNum: order.orderNum,
       date: order.date,
-      customer: order.customer,
+      clientID: order.clientID?.name,
       total: order.total,
       payment: order.payment,
       fulfillment: order.fulfillment,
       extra: order.extra,
-      details: <Link to={`/orders/${order._id}`}><ButtonS type="secondary">Order Details</ButtonS></Link>
-    }})
-    
+      details: (
+        <Link to={`/orders/${order._id}`}>
+          <ButtonS type="secondary">Order Details</ButtonS>
+        </Link>
+      ),
+    };
+  });
 
   return (
     <div>
@@ -114,13 +93,6 @@ export default function Orders() {
       <br />
       <br />
       <Table dataSource={dataSource} columns={columns}></Table>
-      {/* <Modal
-        visible={showModal}
-        title="Create New Order"
-        onOk={() => setShowModal(false)}
-        onCancel={() => setShowModal(false)}
-        footer={null}>
-      </Modal> */}
     </div>
   );
 }

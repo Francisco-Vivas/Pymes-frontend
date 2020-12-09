@@ -33,6 +33,7 @@ export default function EditSupplier({
 
   async function handleSubmit(values) {
     const newValues = { ...values, products: productsList.map((e) => e._id) };
+    console.log(newValues);
     const { data: newSupplier } = await updateSupplier(supplier._id, newValues);
     setSupplier(newSupplier);
     history.push(`/suppliers/${suppliersID}`);
