@@ -55,12 +55,17 @@ code {
 
 #basic_password,
 #password,
-.ant-input,
-.ant-input-group-addon {
+input.signin {
   background-color: #f0f2f5 !important;
   color: #4d5768 !important;
 }
 
-.ant-layout {
+.ant-layout,
+input[placeholder="Search"],
+#clientID {
   background-color: #ffffff !important;
+}
+
+span.ant-input-group-addon {
+  padding: 0;
 }

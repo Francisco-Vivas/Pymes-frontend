@@ -163,9 +163,17 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
 
       <Form.Item label="Phone" name="cellphone">
         {isSignup ? (
-          <InputS />
+          <InputS
+            className="signin"
+            addonBefore={prefixPhoneNum}
+            maxLength="10"
+          />
         ) : (
-          <InputSWhite addonBefore={prefixPhoneNum} maxLength="10" />
+          <InputSWhite
+            addonBefore={prefixPhoneNum}
+            maxLength="10"
+            style={{ backgroundColor: "#f0f2f5" }}
+          />
         )}
       </Form.Item>
 

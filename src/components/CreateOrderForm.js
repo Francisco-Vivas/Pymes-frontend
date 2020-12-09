@@ -1,11 +1,22 @@
-import React, { useState } from "react";
-import { Form, Avatar, List, Select, DatePicker } from "antd";
+import React, { useState, useEffect } from "react";
+import {
+  Form,
+  Avatar,
+  List,
+  Select,
+  DatePicker,
+  Input,
+  Divider,
+  Modal,
+} from "antd";
 import { createOrder } from "../services/orders";
+import { getAllClients } from "../services/clients";
 import { useHistory } from "react-router-dom";
 import { useContextInfo } from "../hooks/auth.hooks";
 import { ButtonS, InputSWhite } from "./styledComponents/antdStyled";
 import { TextS, TitleS } from "./styledComponents/Typography";
 import AddProductModal from "./AddProductModal";
+import CreateClient from "../pages/Clients/CreateClients";
 
 export default function CreateOrderForm() {
   const [form] = Form.useForm();
@@ -14,11 +25,16 @@ export default function CreateOrderForm() {
   const [isModal, setIsModal] = useState(false);
   const [productsList, setProductsList] = useState([]);
   const [totalValue, setTotalValue] = useState(0);
+  const [clients, setClients] = useState([]);
+  const [isModalClient, setIsModalClient] = useState(false);
 
-  const [items, setItems] = useState([]);
-  const [itemsQuantity, setItemsQuantity] = useState([]);
-  const [itemsSalePrice, setItemsSalePrice] = useState([]);
-  const [itemsSubtotal, setItemsSubtotal] = useState([]);
+  useEffect(() => {
+    async function getClients() {
+      const { data } = await getAllClients();
+      setClients(data);
+    }
+    getClients();
+  }, [isModalClient]);
 
   const HandlerAddQuantity = (value) => {
     let isInTheArray = false;
@@ -35,21 +51,12 @@ export default function CreateOrderForm() {
     setTotalValue(
       productsList.reduce((acc, cv) => acc + cv.salePrice * cv.quantity, 0)
     );
-    for (let item of productsList) {
-      setItems([...items, item._id]);
-      setItemsQuantity([...itemsQuantity, item.quantity]);
-      setItemsSalePrice([...itemsSalePrice, item.salePrice]);
-      setItemsSubtotal([...itemsSubtotal, item.salePrice * item.quantity]);
-    }
   };
 
   async function handleSubmit(values) {
     const order = {
       ...values,
-      items,
-      itemsQuantity,
-      itemsSalePrice,
-      itemsSubtotal,
+      productsList,
       total: totalValue,
       date: values.date.format("YYYY-MM-DD"),
     };
@@ -57,6 +64,33 @@ export default function CreateOrderForm() {
     login({ ...user, ordersID: [...user.ordersID, newOrder._id] });
     return history.push("/orders");
   }
+
+  const AddClientButton = (menu) => (
+    <div>
+      {menu}
+      <Divider style={{ margin: "4px 0" }} />
+      <ModalClient />
+      <ButtonS
+        type="secondary"
+        onClick={() => setIsModalClient(!isModalClient)}
+      >
+        New Client
+      </ButtonS>
+    </div>
+  );
+
+  const ModalClient = () => (
+    <Modal
+      visible={isModalClient}
+      title="New Client"
+      okText="Done"
+      cancelText="Cancel"
+      onCancel={() => setIsModalClient(false)}
+      onOk={() => setIsModalClient(false)}
+    >
+      <CreateClient inAModal={true} setIsModalClient={setIsModalClient} />
+    </Modal>
+  );
 
   return (
     <Form
@@ -69,12 +103,17 @@ export default function CreateOrderForm() {
       }}
     >
       <Form.Item name="date" label="Date:">
-        {/* <InputSWhite /> */}
         <DatePicker style={{ width: "100%" }} />
       </Form.Item>
-      <Form.Item name="customer" label="Customer:">
-        <InputSWhite />
+
+      <Form.Item name="clientID" label="Client:">
+        <Select dropdownRender={(menu) => AddClientButton(menu)}>
+          {clients?.map((e) => (
+            <Select.Option value={e._id}>{e.name}</Select.Option>
+          ))}
+        </Select>
       </Form.Item>
+
       <Form.Item name="payment" label="Payment:">
         <Select>
           <Select.Option value="UNPAID">UNPAID</Select.Option>
@@ -123,8 +162,14 @@ export default function CreateOrderForm() {
               ]}
             >
               <List.Item.Meta
-                avatar={<Avatar src={item.image} style={{ marin: "auto" }} />}
-                title={<a href="https://ant.design">{item.name}</a>}
+                avatar={
+                  <Avatar
+                    src={item.image}
+                    size="large"
+                    style={{ marin: "auto" }}
+                  />
+                }
+                title={item.name}
                 description={
                   <TextS>
                     <small>

@@ -7,7 +7,7 @@ const { Meta } = Card;
 
 export default function ProductCard({ product, isSupplier = false }) {
   const colorStatus =
-    product.quantity === 0
+    product.quantity <= 0
       ? "#BF616A"
       : product.quantity <= product.threshold
       ? "#EBCB8B"
@@ -102,8 +102,8 @@ export default function ProductCard({ product, isSupplier = false }) {
       <CardProduct />
     </List.Item>
   ) : (
-    <Col key={product._id} xs={24} sm={24} md={6} lg={4}>
+    <List.Item style={{}}>
       <CardProduct />
-    </Col>
+    </List.Item>
   );
 }
