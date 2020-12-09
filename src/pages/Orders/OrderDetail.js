@@ -20,10 +20,10 @@ const OrderDetail = ({
     }
     getDetails();
   }, [ordersID]);
-
+  console.log(orders);
   const {
     date,
-    customer,
+    clientID,
     total,
     payment,
     fulfillment,
@@ -46,7 +46,7 @@ const OrderDetail = ({
       >
         <div>
           <TitleS level={2}>ORDER # {orderNum}</TitleS>
-          <TitleS level={5}>Customer: {customer}</TitleS>
+          <TitleS level={5}>Client: {clientID?.name}</TitleS>
         </div>
         <div>
           <TitleS level={5}>{date}</TitleS>
@@ -110,11 +110,11 @@ const OrderDetail = ({
           />
         </div>
         <br />
-        <TitleS level={4} style={{ float: "right" }}>
-          TOTAL ${total}
-        </TitleS>
       </div>
       <br />
+      <TitleS level={4} style={{ textAlign: "right" }}>
+        TOTAL ${total}
+      </TitleS>
       <br />
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ display: "flex" }}>
