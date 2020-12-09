@@ -102,8 +102,8 @@ export default function ProductCard({ product, isSupplier = false }) {
       <CardProduct />
     </List.Item>
   ) : (
-    <Col key={product._id} xs={24} sm={24} md={6} lg={4}>
+    <List.Item style={{}}>
       <CardProduct />
-    </Col>
+    </List.Item>
   );
 }
