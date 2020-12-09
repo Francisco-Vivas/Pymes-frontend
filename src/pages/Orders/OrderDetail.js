@@ -20,7 +20,7 @@ const OrderDetail = ({
     }
     getDetails();
   }, [ordersID]);
-  console.log(orders);
+
   const {
     date,
     clientID,
@@ -71,6 +71,7 @@ const OrderDetail = ({
             renderItem={(item, index) => {
               return (
                 <List.Item
+                  key={index._id}
                   actions={[
                     <p>
                       Subtotal:{" "}

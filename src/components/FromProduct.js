@@ -32,6 +32,7 @@ export default function FormProduct(props) {
   useEffect(() => {
     async function getProduct() {
       const { data } = await getAProductFn(productID);
+      console.log({ data });
       setProduct(data);
     }
     async function getSuppliers() {

@@ -59,7 +59,6 @@ export default function Orders() {
   ];
 
   const dataSource = orders?.map((order) => {
-    console.log(order);
     return {
       key: order._id,
       orderNum: order.orderNum,

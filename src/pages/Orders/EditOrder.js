@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { updateOrder, getOrderDetail } from "../../services/orders";
 import { useHistory } from "react-router-dom";
-import { Form, Select, Typography, Divider, Row, Col } from "antd";
+import {
+  Form,
+  Select,
+  Typography,
+  Divider,
+  Row,
+  Col,
+  Modal,
+  List,
+  Avatar,
+  DatePicker,
+  Input,
+} from "antd";
 import {
   InputSWhite,
   ButtonS,
 } from "../../components/styledComponents/antdStyled";
-import { TitleS } from "../../components/styledComponents/Typography";
+import { TextS, TitleS } from "../../components/styledComponents/Typography";
+import CreateClient from "../Clients/CreateClients";
+import { getAllClients } from "../../services/clients";
+import AddProductModal from "../../components/AddProductModal";
 
 const { Text } = Typography;
 
@@ -19,14 +34,69 @@ export default function UpdateOrder({
   const history = useHistory();
   const [order, setOrder] = useState({});
   const [isModalClient, setIsModalClient] = useState(false);
+  const [clients, setClients] = useState([]);
+  const [productsList, setProductsList] = useState([]);
+  const [isModal, setIsModal] = useState(false);
+  const [totalValue, setTotalValue] = useState(0);
+
+  const [items, setItems] = useState([]);
+  const [itemsQuantity, setItemsQuantity] = useState([]);
+  const [itemsSalePrice, setItemsSalePrice] = useState([]);
+  const [itemsSubtotal, setItemsSubtotal] = useState([]);
 
   useEffect(() => {
     async function getData() {
       const { data } = await getOrderDetail(ordersID);
       setOrder(data);
+      const { data: clientes } = await getAllClients();
+      setClients(clientes);
+      setProductsList(data.items);
+      setItems(data.items);
+      setItemsQuantity(data.itemsQuantity);
+      setItemsSalePrice(data.itemsSalePrice);
+      setItemsSubtotal(data.itemsSubtotal);
+      form.setFieldsValue({
+        ...data,
+        clientID: data.clientID._id,
+      });
     }
     getData();
   }, []);
+
+  useEffect(() => {
+    async function getClients() {
+      const { data } = await getAllClients();
+      setClients(data);
+    }
+    getClients();
+  }, [isModalClient]);
+
+  const HandlerAddQuantity = (value) => {
+    let isInTheArray = false;
+    let newUserItem = productsList.map((e) => {
+      if (e.name === value.name) {
+        isInTheArray = true;
+        return { ...e, quantity: e.quantity + value.quantity };
+      } else {
+        return e;
+      }
+    });
+    newUserItem = isInTheArray ? newUserItem : [...productsList, value];
+    setProductsList([...newUserItem]);
+    setTotalValue(
+      productsList.reduce((acc, cv) => acc + cv.salePrice * cv.quantity, 0)
+    );
+    for (let item of productsList) {
+      setItems([...items, item._id]);
+      setItemsQuantity([...itemsQuantity, item.quantity]);
+      setItemsSalePrice([...itemsSalePrice, item.salePrice]);
+      setItemsSubtotal([...itemsSubtotal, item.salePrice * item.quantity]);
+    }
+  };
+
+  const handlerRemoveItem = (id) => {
+    setProductsList(productsList.filter((e) => e._id !== id));
+  };
 
   const AddClientButton = (menu) => (
     <div>
@@ -42,8 +112,29 @@ export default function UpdateOrder({
     </div>
   );
 
+  const ModalClient = () => (
+    <Modal
+      visible={isModalClient}
+      title="New Client"
+      okText="Done"
+      cancelText="Cancel"
+      onCancel={() => setIsModalClient(false)}
+      onOk={() => setIsModalClient(false)}
+    >
+      <CreateClient inAModal={true} setIsModalClient={setIsModalClient} />
+    </Modal>
+  );
+
   async function handleSubmit(values) {
-    const { data: newOrder } = await updateOrder(order._id, values);
+    const updatedOrder = {
+      ...values,
+      items,
+      itemsQuantity,
+      itemsSalePrice,
+      itemsSubtotal,
+      total: totalValue,
+    };
+    const { data: newOrder } = await updateOrder(order._id, updatedOrder);
     setOrder(newOrder);
     history.push(`/orders/${ordersID}`);
   }
@@ -51,23 +142,23 @@ export default function UpdateOrder({
   return (
     order && (
       <Row align="center">
-        <Col xs={24} sm={18} md={12} lg={8}>
+        <Col xs={24} sm={18} md={12} lg={12}>
           <TitleS level={1}>Edit your order</TitleS>
           <Text type="secondary">Update your order details</Text>
           <Divider />
           <Form
             form={form}
-            layout="vertical"
+            layout="horizontal"
             onFinish={handleSubmit}
             initialValues={order}
           >
             <Form.Item name="date" label="Date:">
-              <InputSWhite />
+              <Input active disabled />
             </Form.Item>
 
             <Form.Item name="clientID" label="Client:">
               <Select dropdownRender={(menu) => AddClientButton(menu)}>
-                {clients?.map((e) => (
+                {clients.map((e) => (
                   <Select.Option value={e._id}>{e.name}</Select.Option>
                 ))}
               </Select>
@@ -86,13 +177,88 @@ export default function UpdateOrder({
                 <Select.Option value="CANCELLED">CANCELLED</Select.Option>
               </Select>
             </Form.Item>
-            {/* PRODUCTSSSSSSSSSS*/}
             <Form.Item name="extra" label="Comments:">
               <InputSWhite />
             </Form.Item>
-            <ButtonS type="primary" size="middle" htmlType="submit">
-              Edit Order
-            </ButtonS>
+
+            <AddProductModal
+              isModal={isModal}
+              setIsModal={setIsModal}
+              HandlerAddQuantity={HandlerAddQuantity}
+            />
+
+            <List
+              style={{
+                margin: "0.5rem",
+              }}
+              pagination={{
+                pageSize: 3,
+              }}
+              itemLayout="horizontal"
+              dataSource={productsList}
+              renderItem={(item) => {
+                return (
+                  <List.Item
+                    key={item._id}
+                    actions={[
+                      <p>
+                        Subtotal:{" "}
+                        {`$${item.quantity * item.salePrice}`.replace(
+                          /\B(?=(\d{3})+(?!\d))/g,
+                          ","
+                        )}
+                      </p>,
+                      <ButtonS
+                        onClick={() => handlerRemoveItem(item._id)}
+                        danger
+                      >
+                        Remove
+                      </ButtonS>,
+                    ]}
+                  >
+                    <List.Item.Meta
+                      avatar={
+                        <Avatar
+                          src={item.image}
+                          size="large"
+                          style={{ marin: "auto" }}
+                        />
+                      }
+                      title={item.name}
+                      description={
+                        <TextS>
+                          <small>
+                            {`Price: $${item.salePrice}`.replace(
+                              /\B(?=(\d{3})+(?!\d))/g,
+                              ","
+                            )}{" "}
+                            <br />
+                            Quantity: {item.quantity}
+                          </small>
+                        </TextS>
+                      }
+                    />
+                  </List.Item>
+                );
+              }}
+            />
+
+            <TitleS level={5}>
+              TOTAL : ${`${totalValue}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </TitleS>
+            <div style={{ display: "flex", justifyContent: "space-around" }}>
+              <ButtonS
+                type="secondary"
+                style={{ marginBottom: "1.5rem" }}
+                onClick={() => setIsModal(!isModal)}
+              >
+                Add Items
+              </ButtonS>
+
+              <ButtonS type="primary" htmlType="submit" size="middle">
+                Edit Order
+              </ButtonS>
+            </div>
           </Form>
         </Col>
       </Row>
