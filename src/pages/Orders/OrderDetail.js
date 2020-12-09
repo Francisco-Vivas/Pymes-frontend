@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { getOrderDetail } from "../../services/orders";
+import { useReactToPrint } from 'react-to-print';
+import PrintInvoice from '../../components/PrintInvoice'
 import { Divider, List } from "antd";
 import { TextS, TitleS } from "../../components/styledComponents/Typography";
 import { ButtonS } from "../../components/styledComponents/antdStyled";
@@ -12,6 +14,16 @@ const OrderDetail = ({
   },
 }) => {
   const [orders, setOrders] = useState({});
+  
+  const componentRef = useRef();
+  
+  const reactToPrintContent = useCallback(() => {
+    return componentRef.current
+  }, [componentRef.current])
+  
+  const handlePrint = useReactToPrint({
+    content: reactToPrintContent
+  });
 
   useEffect(() => {
     async function getDetails() {
@@ -20,6 +32,8 @@ const OrderDetail = ({
     }
     getDetails();
   }, [ordersID]);
+
+ 
 
   const {
     date,
@@ -188,7 +202,8 @@ const OrderDetail = ({
               justifyContent: "space-between",
             }}
           >
-            <ButtonS type="secondary" style={{ margin: "10px" }}>
+            <div style={{display:"none"}}><PrintInvoice ref={componentRef} orders={orders} /> </div>
+            <ButtonS type="secondary" style={{ margin: "10px" }} onClick={handlePrint}>
               Export Invoice
             </ButtonS>
             <Link to={`/orders/${orders._id}/edit`}>
