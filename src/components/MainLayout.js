@@ -126,7 +126,7 @@ export default function MainLayout({ children }) {
                 backgroundColor: "#F0F2F5",
               }}
             >
-              <div className="site-layout-content">{children}</div>
+              <div className="site-layout-content" style={{backgroundColor:"#F0F2F5"}}>{children}</div>
             </Content>
           </Layout>
         ) : (
@@ -139,7 +139,7 @@ export default function MainLayout({ children }) {
                 minHeight: 280,
               }}
             >
-              <div className="site-layout-content">{children}</div>
+              <div className="site-layout-content" >{children}</div>
             </Content>
           </Layout>
         )}
