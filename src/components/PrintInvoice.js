@@ -28,23 +28,21 @@ export default class PrintInvoice extends Component {
                 dataIndex: "subtotal",
                 key: "subtotal"
             }], 
-            dataSource: props.orders.items?.map(product => {
-                return {
-                    key: product._id,
-                    product: product.name,
-                    price: product.price,
-                    quantity: product.quantity
-            }}),
-            ...props}
-        }
-        componentWillMount(props){
-            console.log(this.state)   
+            }
         }
 
     render(){
-        const {user, orders, dataSource, columns} = this.state
-        console.log(orders);
-        console.log(user);
+        const { user, orders } = this.props
+        const { columns } = this.state
+
+        const dataSource = orders.items.map((element, index) => {
+            return {
+                key: orders.items[index]._id,
+                product: orders.items[index].name,
+                price: orders.itemsSalePrice[index],
+                quantity: orders.itemsQuantity[index],
+                subtotal: orders.itemsSubtotal[index]
+        }})
 
         return (
             <div stlye={{height:"750px", width:"563px", margin:"48px", display:"flex", flexDirection:"column"}}>
@@ -64,8 +62,9 @@ export default class PrintInvoice extends Component {
                         <Divider/>
                         <br/>
                         <br/>
-                        <Table dataSource={dataSource} columns={columns} style={{color:"grey"}}>
+                        <Table dataSource={dataSource} columns={columns} style={{color:"grey"}} pagination={false}>
                         </Table>
+                        <Divider/>
                         <h4 style={{textAlign:"right"}}><b>TOTAL</b> ${orders.total}</h4>
                         <Divider/>
                         <br/>
