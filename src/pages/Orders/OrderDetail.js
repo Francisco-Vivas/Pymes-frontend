@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { getOrderDetail } from "../../services/orders";
-import { Divider, List } from "antd";
+import ReactToPrint from 'react-to-print';
+import PrintInvoice from '../../components/PrintInvoice'
+import { Divider, List, Skeleton } from "antd";
 import { TextS, TitleS } from "../../components/styledComponents/Typography";
 import { ButtonS } from "../../components/styledComponents/antdStyled";
 import { Link } from "react-router-dom";
 import Avatar from "antd/lib/avatar/avatar";
+import { useContextInfo } from "../../hooks/auth.hooks";
+
 
 const OrderDetail = ({
   match: {
     params: { ordersID },
   },
 }) => {
-  const [orders, setOrders] = useState({});
+  const [orders, setOrders] = useState(null);
+  const { user } = useContextInfo();
+
+
+  const componentRef = useRef();
 
   useEffect(() => {
     async function getDetails() {
@@ -19,8 +27,9 @@ const OrderDetail = ({
       setOrders(data);
     }
     getDetails();
-  }, [ordersID]);
+  }, []);
 
+  
   const {
     date,
     clientID,
@@ -33,9 +42,9 @@ const OrderDetail = ({
     itemsSalePrice,
     itemsSubtotal,
     orderNum,
-  } = orders;
-
-  return (
+  } = orders || {};
+  
+  return orders ? (
     <div>
       <div
         style={{
@@ -189,9 +198,14 @@ const OrderDetail = ({
               justifyContent: "space-between",
             }}
           >
-            <ButtonS type="secondary" style={{ margin: "10px" }}>
-              Export Invoice
-            </ButtonS>
+            <div>
+            <ReactToPrint 
+                trigger={() => <ButtonS type="secondary" style={{ margin: "10px" }}>Export Invoice</ButtonS> } 
+                content={() => componentRef.current}/>
+                <div style={{display:"none"}}>
+                  <PrintInvoice ref={componentRef} orders={orders} user={user}/>
+                </div>
+            </div>
             <Link to={`/orders/${orders._id}/edit`}>
               <ButtonS type="primary" style={{ margin: "10px" }}>
                 Edit Order
@@ -201,7 +215,7 @@ const OrderDetail = ({
         </div>
       </div>
     </div>
-  );
+  ) : (<Skeleton/>);
 };
 
 export default OrderDetail;
