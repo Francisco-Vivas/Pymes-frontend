@@ -16,7 +16,7 @@ const OrderDetail = ({
   useEffect(() => {
     async function getDetails() {
       const { data } = await getOrderDetail(ordersID);
-      setOrders(data);
+      setOrders({ ...data });
     }
     getDetails();
   }, [ordersID]);

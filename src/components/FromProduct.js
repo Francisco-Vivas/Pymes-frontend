@@ -38,6 +38,11 @@ export default function FormProduct(props) {
       const { data } = await getAProductFn(productID);
       setProduct(data);
       setImage(data.image);
+      form.setFieldsValue(
+        isNew
+          ? { salePrice: 5000, wholesalePrice: 1000, quantity: 1, threshold: 0 }
+          : data
+      );
     }
     async function getSuppliers() {
       const { data: suppliersData } = await getAllSuppliers();
@@ -45,11 +50,6 @@ export default function FormProduct(props) {
     }
     if (productID) getProduct();
     getSuppliers();
-    form.setFieldsValue(
-      isNew
-        ? { salePrice: 5000, wholesalePrice: 1000, quantity: 1, threshold: 0 }
-        : product
-    );
   }, []);
 
   async function handleSubmit(values) {

@@ -49,7 +49,7 @@ export default function CreateOrderForm() {
     newUserItem = isInTheArray ? newUserItem : [...productsList, value];
     setProductsList([...newUserItem]);
     setTotalValue(
-      productsList.reduce((acc, cv) => acc + cv.salePrice * cv.quantity, 0)
+      newUserItem.reduce((acc, cv) => acc + cv.salePrice * cv.quantity, 0)
     );
   };
 
