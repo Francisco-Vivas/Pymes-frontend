@@ -45,6 +45,11 @@ export default function FormProduct(props) {
     }
     if (productID) getProduct();
     getSuppliers();
+    form.setFieldsValue(
+      isNew
+        ? { salePrice: 5000, wholesalePrice: 1000, quantity: 1, threshold: 0 }
+        : product
+    );
   }, []);
 
   async function handleSubmit(values) {
@@ -97,12 +102,6 @@ export default function FormProduct(props) {
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
-  );
-
-  form.setFieldsValue(
-    isNew
-      ? { salePrice: 5000, wholesalePrice: 1000, quantity: 1, threshold: 0 }
-      : product
   );
 
   return product || isNew ? (

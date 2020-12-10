@@ -92,17 +92,18 @@ export default function Products() {
         <Row
           gutter={[16, 16]}
           style={{
-            padding: "1rem",
             paddingBottom: "0",
-            marginTop: "1rem",
-            height: "auto",
-            overflowY: "scroll",
+            margin: "1rem 0 0",
+            height: "90%",
           }}
         >
           {isSearching || products ? (
             <List
               style={{
-                margin: "0.5rem",
+                width: "100%",
+                height: "100%",
+                overflowY: "scroll",
+                overflowX: "hidden",
               }}
               pagination={{
                 pageSize: 8,
@@ -112,7 +113,7 @@ export default function Products() {
                 return <ProductCard product={item} />;
               }}
               grid={{
-                gutter: 16,
+                gutter: [16, 16],
                 xs: 1,
                 sm: 2,
                 md: 4,

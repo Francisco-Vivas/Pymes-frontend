@@ -26,7 +26,6 @@ export default function ProductDetail({
       : product?.quantity <= product?.threshold
       ? "#EBCB8B"
       : "#4d5768";
-  console.log(product);
   return product ? (
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={24} md={12} lg={12}>
