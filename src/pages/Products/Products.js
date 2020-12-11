@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Row, Skeleton, Input, List, Spin } from "antd";
+import { Button, Card, Col, Row, Skeleton, Input, List } from "antd";
 import { Link } from "react-router-dom";
 import { getAllProductsFn, searchProductsFn } from "../../services/products";
 import ProductCard from "../../components/ProductCard";
-import { LoadingOutlined } from "@ant-design/icons";
 import { TitleS } from "../../components/styledComponents/Typography";
-
-const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const { Search } = Input;
 
@@ -120,7 +117,7 @@ export default function Products() {
               }}
             />
           ) : !products ? (
-            <TitleS level={3}>Try to add some products!</TitleS>
+            <TitleS level={4}>Try to add some products!</TitleS>
           ) : (
             new Array(8).fill(null).map((e, i) => (
               <Col key={(i + 5) ** 5} style={{ display: "flex" }}>

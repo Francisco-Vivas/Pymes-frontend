@@ -25,24 +25,32 @@ export default function LandingPage() {
         span={24}
         style={{ display: "flex", height: "600px", alignItems: "center" }}
       >
-        <div style={{ display: "flex", flexDirection: "column", width: "50%" }}>
+        <Col
+          xs={24}
+          sm={24}
+          md={12}
+          lg={12}
+          span={12}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
           <TitleS
             level={1}
             style={{
               textAlign: "left",
               color: "#4D5768",
-              paddingLeft: "150px",
+              paddingLeft: "9rem",
               fontSize: "2.5rem",
             }}
           >
             HELPING YOUR MICROBUSINESS <br />
             WORK IN MACRO WAYS
           </TitleS>
-          <h4
+          <TitleS
+            level={5}
             style={{
               textAlign: "left",
               color: "#4D5768",
-              paddingLeft: "150px",
+              paddingLeft: "9rem",
             }}
           >
             Pymes is your ally when it comes to the organization of your
@@ -51,7 +59,7 @@ export default function LandingPage() {
             Keep track of your orders, clients, suppliers and much more!
             <br />
             What are your waiting to sign up?!
-          </h4>
+          </TitleS>
           <br />
           <br />
           <Link to="/signup">
@@ -68,48 +76,70 @@ export default function LandingPage() {
               Sign Up!
             </Button>
           </Link>
-        </div>
-        <div style={{ width: "50%" }}>
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} span={12} style={{}}>
           <img src="/images/1.png" style={{ height: "400px" }} />
-        </div>
+        </Col>
       </Col>
-      <div style={{ backgroundColor: "#E7EEF5" }}>
-        <h1 style={{ paddingTop: "25px", color: "#4D5768", fontSize: "2rem" }}>
-          PARTNERS
-        </h1>
-        <div
+      <Col span={24} style={{ backgroundColor: "#E7EEF5" }}>
+        <TitleS
+          level={1}
           style={{
-            display: "flex",
-            height: "200px",
-            alignItems: "center",
-            justifyContent: "space-around",
+            paddingTop: "1.5rem",
+            color: "#4D5768",
+            fontSize: "2rem",
+            width: "100%",
           }}
         >
-          <img src="/images/Amarea.png" style={{ height: "150px" }} />
-          <img src="/images/Area.png" style={{ height: "100px" }} />
-          <img src="/images/CS.png" style={{ height: "150px" }} />
-          <img src="/images/4.png" style={{ height: "150px" }} />
-          <img src="/images/5.png" style={{ height: "150px" }} />
-        </div>
-      </div>
-      <div style={{ padding: "30px", backgroundColor: "#88C0D0" }}>
+          PARTNERS
+        </TitleS>
+        <Row justify="space-around" align="middle">
+          <Col xs={24} sm={12} md={12} lg={4} xl={4} span={4}>
+            <img src="/images/Amarea.png" style={{ height: "150px" }} />
+          </Col>
+          <Col xs={24} sm={12} md={12} lg={4} xl={4} span={4}>
+            <img src="/images/Area.png" style={{ height: "100px" }} />
+          </Col>
+          <Col xs={24} sm={12} md={12} lg={4} xl={4} span={4}>
+            <img src="/images/4.png" style={{ height: "150px" }} />
+          </Col>
+          <Col xs={24} sm={12} md={12} lg={4} xl={4} span={4}>
+            <img src="/images/CS.png" style={{ height: "150px" }} />
+          </Col>
+          <Col xs={24} sm={12} md={12} lg={4} xl={4} span={4}>
+            <img src="/images/5.png" style={{ height: "150px" }} />
+          </Col>
+        </Row>
+      </Col>
+      <Col span={24} style={{ padding: "30px", backgroundColor: "#88C0D0" }}>
         <h1 style={{ textAlign: "center", color: "white", fontSize: "2rem" }}>
           FOCUS ON YOUR GROWTH, LET US TAKE CARE OF THE REST
         </h1>
-      </div>
+      </Col>
 
-      <div
+      <Col
+        span={24}
         style={{
           backgroundColor: "white",
-          height: "400px",
+          padding: "4rem",
           display: "flex",
           alignItems: "center",
         }}
       >
-        <div style={{ paddingLeft: "150px" }}>
-          <h1 style={{ fontSize: "2rem", color: "#4D5768", textAlign: "left" }}>
+        <Col
+          xs={24}
+          sm={24}
+          md={12}
+          lg={12}
+          xl={12}
+          style={{ paddingLeft: "10rem" }}
+        >
+          <TitleS
+            level={1}
+            style={{ fontSize: "2rem", color: "#4D5768", textAlign: "left" }}
+          >
             GET EVERYTHING IN ONE PLACE
-          </h1>
+          </TitleS>
           <h4 style={{ color: "#4D5768", textAlign: "left" }}>
             Get notifications when inventory is below a specific quantity, which
             <br />
@@ -121,26 +151,38 @@ export default function LandingPage() {
             top products, and get all your orders, clients, suppliers and
             products' information in one useful place.
           </h4>
-        </div>
-        <img
-          src="/images/2.png"
-          style={{ height: "250px", paddingLeft: "150px" }}
-        />
-      </div>
-      <div
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+          <img src="/images/2.png" style={{ height: "17rem" }} />
+        </Col>
+      </Col>
+      <Col
+        span={24}
         style={{
           backgroundColor: "#81A1C1",
-          height: "400px",
+          padding: "5rem",
           display: "flex",
           alignItems: "center",
-          paddingLeft: "150px",
         }}
       >
-        <img src="/images/3.png" style={{ height: "350px" }} />
-        <div style={{ paddingLeft: "150px" }}>
-          <h1 style={{ fontSize: "2rem", color: "white", textAlign: "left" }}>
+        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+          <img src="/images/3.png" style={{ height: "20rem" }} />
+        </Col>
+
+        <Col
+          xs={24}
+          sm={24}
+          md={12}
+          lg={12}
+          xl={12}
+          style={{ paddingLeft: "150px" }}
+        >
+          <TitleS
+            level={1}
+            style={{ fontSize: "2rem", color: "white", textAlign: "left" }}
+          >
             PREMIUM ANALYTICS{" "}
-          </h1>
+          </TitleS>
           <h4 style={{ color: "white", textAlign: "left" }}>
             Get detailed analytics and projections from your sales and
             customers.
@@ -149,8 +191,8 @@ export default function LandingPage() {
             <br />
             among many other usefull information.
           </h4>
-        </div>
-      </div>
+        </Col>
+      </Col>
 
       <div style={{ backgroundColor: "#E7EEF5", height: "30px" }}>
         <p style={{ fontSize: "11px", paddingTop: "5px" }}>
