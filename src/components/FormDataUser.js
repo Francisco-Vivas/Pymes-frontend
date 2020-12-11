@@ -1,5 +1,5 @@
 import { useHistory } from "react-router-dom";
-import { Form, Button, Select, Upload, Skeleton, message } from "antd";
+import { Form, Select, Upload, Skeleton, message, Spin } from "antd";
 import {
   InputS,
   InputSWhite,
@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import { useContextInfo } from "../hooks/auth.hooks";
 import axios from "axios";
 
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
 const cloudinaryAPI =
   "https://api.cloudinary.com/v1_1/franciscovivascodes/image/upload";
 
@@ -25,6 +27,7 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
   const history = useHistory();
   const [form] = Form.useForm();
   const { user } = useContextInfo();
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
     async function getCountryCodes() {
@@ -43,6 +46,7 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
   }, []);
 
   async function onFinish(value) {
+    setIsDone(true);
     const dataUpdated = {
       ...value,
       cellphone: value.cellphone || "",
@@ -227,10 +231,13 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
           </Upload>
         </ImgCrop>
       </Form.Item>
-
-      <ButtonS type="primary" htmlType="submit">
-        {isSignup ? "Sign up" : "Edit Profile"}
-      </ButtonS>
+      {isDone ? (
+        <Spin indicator={antIcon} style={{ margin: "auto" }} />
+      ) : (
+        <ButtonS type="primary" htmlType="submit">
+          {isSignup ? "Sign up" : "Edit Profile"}
+        </ButtonS>
+      )}
     </Form>
   ) : (
     <Skeleton loading={!Boolean(user)} active></Skeleton>
