@@ -1,4 +1,5 @@
 import { Modal } from "antd";
+import { useState } from "react";
 import SearchBarList from "./SearchBarList";
 
 export default function AddProduct({
@@ -7,17 +8,29 @@ export default function AddProduct({
   HandlerAddQuantity,
   isSupplier = false,
 }) {
+  const [productsObjValues, setProductsObjValues] = useState({});
+  const onOk = () => {
+    setIsModal(false);
+    HandlerAddQuantity(productsObjValues);
+  };
+
+  const onCancel = () => {
+    setIsModal(false);
+  };
+
+  const objProductsObjValues = { productsObjValues, setProductsObjValues };
+
   return (
     <Modal
       visible={isModal}
       title="Select the products"
       okText="Done"
       cancelText="Cancel"
-      onCancel={() => setIsModal(false)}
-      onOk={() => setIsModal(false)}
+      onCancel={onCancel}
+      onOk={onOk}
     >
       <SearchBarList
-        HandlerAddQuantity={HandlerAddQuantity}
+        objProductsObjValues={objProductsObjValues}
         isSupplier={isSupplier}
       />
     </Modal>

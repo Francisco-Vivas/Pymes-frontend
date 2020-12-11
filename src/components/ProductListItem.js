@@ -4,21 +4,32 @@ import { ButtonS } from "./styledComponents/antdStyled";
 
 const ProductListItem = ({
   product,
-  HandlerAddQuantity,
+  objProductsObjValues,
   isSupplier = false,
 }) => {
-  const [quantity, setQuantity] = useState(1);
-  const onNumberChange = (value) => {
+  const [quantity, setQuantity] = useState(0);
+
+  const { productsObjValues, setProductsObjValues } = objProductsObjValues;
+
+  const onChange = (value) => {
     setQuantity(value);
+    console.log(value, product._id, product);
+
+    setProductsObjValues({
+      ...productsObjValues,
+      [product._id]: {
+        image: product.image,
+        _id: product._id,
+        quantity: value,
+        salePrice: product.salePrice,
+      },
+    });
   };
 
   return isSupplier ? (
     <List.Item
       actions={[
-        <ButtonS
-          type="primary"
-          onClick={() => HandlerAddQuantity({ ...product })}
-        >
+        <ButtonS type="primary" onClick={onChange}>
           Add Product
         </ButtonS>,
       ]}
@@ -36,17 +47,11 @@ const ProductListItem = ({
     <List.Item
       actions={[
         <InputNumber
-          min={1}
+          min={0}
           max={product.quantity}
           value={quantity}
-          onChange={onNumberChange}
+          onChange={onChange}
         />,
-        <ButtonS
-          type="primary"
-          onClick={() => HandlerAddQuantity({ ...product, quantity })}
-        >
-          +
-        </ButtonS>,
       ]}
     >
       <List.Item.Meta

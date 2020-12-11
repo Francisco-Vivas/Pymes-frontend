@@ -16,8 +16,7 @@ import { getAllSuppliers } from "../services/suppliers";
 const cloudinaryAPI =
   "https://api.cloudinary.com/v1_1/franciscovivascodes/image/upload";
 
-export default function FormProduct(props) {
-  const { isNew = true, match } = props;
+export default function FormProduct({ isNew = true, match }) {
   let productID;
   if (match) {
     productID = match.params.productID;
@@ -36,19 +35,25 @@ export default function FormProduct(props) {
   useEffect(() => {
     async function getProduct() {
       const { data } = await getAProductFn(productID);
-      setProduct(data);
-      setImage(data.image);
-      form.setFieldsValue(
-        isNew
-          ? { salePrice: 5000, wholesalePrice: 1000, quantity: 1, threshold: 0 }
-          : data
-      );
+      const setData = { ...data, supplierID: data.supplierID._id };
+      setProduct(setData);
+      setImage(setData.image);
+      form.setFieldsValue(setData);
     }
     async function getSuppliers() {
       const { data: suppliersData } = await getAllSuppliers();
       setSuppliers(suppliersData);
     }
-    if (productID) getProduct();
+    if (productID) {
+      getProduct();
+    } else {
+      form.setFieldsValue({
+        salePrice: 5000,
+        wholesalePrice: 1000,
+        quantity: 1,
+        threshold: 0,
+      });
+    }
     getSuppliers();
   }, []);
 
@@ -123,7 +128,6 @@ export default function FormProduct(props) {
               {
                 required: true,
                 message: "Please input the product name!",
-                min: 0,
               },
             ]}
           >

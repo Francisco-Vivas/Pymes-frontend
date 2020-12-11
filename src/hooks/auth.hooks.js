@@ -8,7 +8,11 @@ export const AppCtxProvider = (props) => {
   useEffect(() => {
     async function getSessionData() {
       const { data: currentUser } = await currentUserFn();
-      if (currentUser) setUser(currentUser);
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
     }
     getSessionData();
   }, []);

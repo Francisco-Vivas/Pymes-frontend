@@ -190,7 +190,6 @@ export default function Analytics() {
           >
             <VictoryLabel text={``} x={50} y={30} />
             <VictoryAxis dependentAxis />
-            {console.log(dataPlot)}
             <VictoryAxis style={{ tickLabels: { angle: -90, fontSize: 10 } }} />
             <VictoryBar
               labelComponent={<VictoryTooltip />}

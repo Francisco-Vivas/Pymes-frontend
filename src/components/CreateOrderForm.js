@@ -36,18 +36,14 @@ export default function CreateOrderForm() {
     getClients();
   }, [isModalClient]);
 
-  const HandlerAddQuantity = (value) => {
-    let isInTheArray = false;
-    let newUserItem = productsList.map((e) => {
-      if (e.name === value.name) {
-        isInTheArray = true;
-        return { ...e, quantity: e.quantity + value.quantity };
-      } else {
-        return e;
-      }
-    });
-    newUserItem = isInTheArray ? newUserItem : [...productsList, value];
-    setProductsList([...newUserItem]);
+  const HandlerAddQuantity = (values) => {
+    const newUserItem = Object.keys(values)
+      .map((key) => {
+        return values[key];
+      })
+      .filter((e) => e.quantity);
+
+    setProductsList(newUserItem);
     setTotalValue(
       newUserItem.reduce((acc, cv) => acc + cv.salePrice * cv.quantity, 0)
     );

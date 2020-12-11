@@ -4,11 +4,10 @@ import Search from "antd/lib/input/Search";
 import { getAvailableProductsFn, searchProductsFn } from "../services/products";
 import ProductListItem from "./ProductListItem";
 
-const SearchBarList = ({ HandlerAddQuantity, isSupplier = false }) => {
+const SearchBarList = ({ objProductsObjValues, isSupplier = false }) => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchString, setSearchString] = useState(null);
   const [products, setProducts] = useState(null);
-
   useEffect(() => {
     async function getProducts() {
       const { data } = await getAvailableProductsFn();
@@ -65,7 +64,7 @@ const SearchBarList = ({ HandlerAddQuantity, isSupplier = false }) => {
             style={{ height: "50%" }}
             renderItem={(item) => (
               <ProductListItem
-                HandlerAddQuantity={HandlerAddQuantity}
+                objProductsObjValues={objProductsObjValues}
                 product={item}
                 isSupplier={isSupplier}
               />
