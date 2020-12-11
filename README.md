@@ -15,3 +15,7 @@ $ npm install
 ### Live Test
 Access to the deployed application, [https://pymes-app.herokuapp.com/](https://pymes-app.herokuapp.com/). <br>
 Sign up with your account for better user experience.
+
+To try out our app, login with this credentials:
+email: area@gmail.com
+password:123
