@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Col, Row, Divider, List } from "antd";
+import { Form, Col, Row, Divider, List, DatePicker } from "antd";
 import { createSupplier } from "../../services/suppliers";
 import { useHistory } from "react-router-dom";
 import { useContextInfo } from "../../hooks/auth.hooks";
@@ -55,7 +55,7 @@ export default function CreateSupplier({}) {
             <InputSWhite />
           </Form.Item>
           <Form.Item name="lastOrder" label="Last Order:">
-            <InputSWhite />
+            <DatePicker />
           </Form.Item>
 
           <AddProductModal
