@@ -91,7 +91,7 @@ const AnalyticsTimeSettings = ({ form, setConfigs }) => {
         <Form.Item name="rangePicker">
           <RangePicker onCalendarChange={handleChangeRangePicker} />
         </Form.Item>
-        <ButtonS type="primary" htmlType="submit">
+        <ButtonS type="secondary" htmlType="submit">
           Apply
         </ButtonS>
       </Form>

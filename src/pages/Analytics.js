@@ -79,6 +79,17 @@ export default function Analytics() {
     }
   }, [keys, configs]);
 
+  function getAndSetDataToPlot(data, range, dateRange) {
+    const momentsFiltered = filterOrders(data, range);
+    const [allMoments, formated] = generateAllMoments(range, dateRange);
+    const momentsToPlot = settingMomentsToPlot(
+      momentsFiltered,
+      allMoments,
+      formated[1]
+    );
+    setDataPlot(momentsToPlot);
+  }
+
   /* Generates all dates between two moments */
   function generateAllMoments(
     range = moment.range(moment().subtract(8, "days"), moment()),
@@ -150,17 +161,6 @@ export default function Analytics() {
 
   function filterOrders(orders, range) {
     return orders.filter((e) => range.contains(moment(e.date)));
-  }
-
-  function getAndSetDataToPlot(data, range, dateRange) {
-    const momentsFiltered = filterOrders(data, range);
-    const [allMoments, formated] = generateAllMoments(range, dateRange);
-    const momentsToPlot = settingMomentsToPlot(
-      momentsFiltered,
-      allMoments,
-      formated[1]
-    );
-    setDataPlot(momentsToPlot);
   }
 
   return (
