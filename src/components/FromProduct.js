@@ -35,7 +35,8 @@ export default function FormProduct({ isNew = true, match }) {
   useEffect(() => {
     async function getProduct() {
       const { data } = await getAProductFn(productID);
-      const setData = { ...data, supplierID: data.supplierID._id };
+      const supplierID = data.supplierID?._id;
+      const setData = { ...data, supplierID };
       setProduct(setData);
       setImage(setData.image);
       form.setFieldsValue(setData);
