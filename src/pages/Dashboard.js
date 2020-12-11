@@ -43,7 +43,15 @@ export default function Dashboard() {
         <Divider />
       </Row>
       <Row style={{ width: "100%" }} justify="space-between">
-        <Col>
+        <Col
+          xs={24}
+          sm={24}
+          md={12}
+          lg={12}
+          xl={12}
+          span={12}
+          style={{ overflowY: "scroll", margin: "auto" }}
+        >
           {products?.map((product) =>
             product.quantity < product.threshold && product.quantity > 0 ? (
               <LowInventory sku={product.sku} key={product._id} />
@@ -59,7 +67,15 @@ export default function Dashboard() {
             )
           )}
         </Col>
-        <Col style={{ display: "flex" }}>
+        <Col
+          xs={24}
+          sm={24}
+          md={12}
+          lg={12}
+          xl={12}
+          span={12}
+          style={{ display: "flex" }}
+        >
           <Card style={{ margin: "10px", width: "155px" }}>
             <Statistic
               title="Total Suppliers"
