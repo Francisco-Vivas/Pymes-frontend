@@ -96,7 +96,6 @@ export default function Products() {
             paddingBottom: "0",
             marginTop: "1rem",
             height: "auto",
-            overflowY: "scroll",
           }}
         >
           {isSearching || products ? (
