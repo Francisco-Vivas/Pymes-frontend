@@ -28,7 +28,7 @@ export default function Analytics() {
     rangePicker: moment.range(moment().subtract(7, "d"), moment()),
   });
   const [textButton1, setTextButton1] = useState("Last 7 days");
-  const [keysPlot1, setKeysPlot1] = useState({ one: "date", two: "price" });
+  const [keysPlot1, setKeysPlot1] = useState({ one: "date", two: "total" });
   const [dataPlot1Actual, setDataPlot1Actual] = useState([]);
   const [dataPlot1Atras, setDataPlot1Atras] = useState([]);
 
@@ -54,6 +54,13 @@ export default function Analytics() {
         configs1.dateRange,
         setDataPlot1Actual,
         keysPlot1
+      );
+      getAndSetDataToPlot(
+        data,
+        configs2.rangePicker,
+        configs2.dateRange,
+        setDataPlot2Actual,
+        keysPlot2
       );
       /* END */
     }
@@ -103,37 +110,21 @@ export default function Analytics() {
         keysPlot1
       );
       updateTextButton(configs1.dateRange, setTextButton1);
-      // switch (configs1.dateRange) {
-      //   case "last7days":
-      //     setTextButton1("Last 7 days");
-      //     break;
-      //   case "last15days":
-      //     setTextButton1("Last 15 days");
-      //     break;
-      //   case "last30days":
-      //     setTextButton1("Last 30 days");
-      //     break;
-      //   case "lastMonth":
-      //     setTextButton1("Last Month");
-      //     break;
-      //   case "weekToDate":
-      //     setTextButton1("Week to date");
-      //     break;
-      //   case "monthToDate":
-      //     setTextButton1("Month to date");
-      //     break;
-      //   case "quarterToDate":
-      //     setTextButton1("Year to date");
-      //     break;
-      //   case "yearToDate":
-      //     setTextButton1("Year to date");
-      //     break;
-      //   case "custom":
-      //     setTextButton1("Custom");
-      //     break;
-      // }
     }
   }, [keysPlot1, configs1]);
+
+  useEffect(() => {
+    if (orders) {
+      getAndSetDataToPlot(
+        orders,
+        configs2.rangePicker,
+        configs2.dateRange,
+        setDataPlot2Actual,
+        keysPlot2
+      );
+      updateTextButton(configs2.dateRange, setTextButton2);
+    }
+  }, [keysPlot2, configs2]);
 
   function getAndSetDataToPlot(
     data,
@@ -180,7 +171,7 @@ export default function Analytics() {
       arrOut.push({
         [keys.one]: momentStart.add(1, formated[0]).format(formated[1]),
         [keys.two]: 0,
-        label: momentStart.format(formated[1]),
+        //label: momentStart.format(formated[1]),
       });
     }
 
@@ -209,22 +200,50 @@ export default function Analytics() {
       dataExtract.forEach((value, index, array) => {
         const arrIndex = array.indexOf(value);
         if (index === arrIndex) {
-          toData.push({ [keys.one]: value, [keys.two]: 1 });
+          if (keys.two === "total") {
+          } else {
+            toData.push({ [keys.one]: value, [keys.two]: 1, label: "1" });
+          }
         } else {
-          toData[arrIndex][keys.two] += 1;
+          if (keys.two === "total") {
+          } else {
+            const newValue = toData[arrIndex][keys.two] + 1;
+            toData[arrIndex][keys.two] = newValue;
+            toData[arrIndex].label = `${newValue}`;
+          }
         }
       });
     } else {
       /* Extract just the key.one of the baseArr  */
       const baseKeyOne = baseArr.map((e) => e[keys.one]);
-
       dataExtract.forEach((value, index, array) => {
         const arrIndex = array.indexOf(value);
         const baseIndex = baseKeyOne.indexOf(value);
+        let newValue;
         if (baseIndex + 1 && index === arrIndex) {
-          toData[baseIndex][keys.two] = 1;
+          if (keys.two === "total") {
+            newValue = filtered[index][keys.two];
+            toData[baseIndex][keys.two] = newValue;
+          } else {
+            newValue = 1;
+            toData[baseIndex][keys.two] = newValue;
+          }
         } else if (baseIndex + 1) {
-          toData[baseIndex][keys.two] += 1;
+          if (keys.two === "total") {
+            newValue = toData[baseIndex][keys.two] + filtered[index][keys.two];
+            toData[baseIndex][keys.two] = newValue;
+          } else {
+            newValue = toData[baseIndex][keys.two] + 1;
+            toData[baseIndex][keys.two] = newValue;
+          }
+        }
+        if (keys.two === "total") {
+          toData[baseIndex].label = `$ ${newValue}`.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ","
+          );
+        } else {
+          toData[baseIndex].label = `Qty: ${newValue}`;
         }
       });
     }
@@ -245,14 +264,14 @@ export default function Analytics() {
           <Col span={12}>
             <Dropdown
               overlay={() => (
-                <AnalyticsTimeSettings form={form} setConfigs1={setConfigs1} />
+                <AnalyticsTimeSettings form={form} setConfigs={setConfigs1} />
               )}
               placement="bottomLeft"
               trigger={["click"]}
             >
               <ButtonS type="primary">
                 <CalendarOutlined />
-                {textButton2}
+                {textButton1}
               </ButtonS>
             </Dropdown>
           </Col>
@@ -266,7 +285,7 @@ export default function Analytics() {
               animate={{ duration: 500 }}
               height={250}
             >
-              <VictoryLabel text={textButton2} x={50} y={30} />
+              <VictoryLabel text={textButton1} x={50} y={30} />
               <VictoryAxis
                 dependentAxis
                 label={"Quantity"}
@@ -274,7 +293,6 @@ export default function Analytics() {
                   tickLabels: { fontSize: 10 },
                 }}
               />
-              {console.log(dataPlot1Actual)}
               <VictoryAxis
                 style={{ tickLabels: { angle: -90, fontSize: 9 } }}
               />
@@ -325,6 +343,7 @@ export default function Analytics() {
           )}
         </Col>
       </Col>
+
       <Col xs={24} sm={24} md={12} lg={12} xl={12}>
         <Row>
           <Col span={12}>
@@ -335,14 +354,14 @@ export default function Analytics() {
           <Col span={12}>
             <Dropdown
               overlay={() => (
-                <AnalyticsTimeSettings form={form} setConfigs2={setConfigs2} />
+                <AnalyticsTimeSettings form={form} setConfigs={setConfigs2} />
               )}
               placement="bottomLeft"
               trigger={["click"]}
             >
               <ButtonS type="primary">
                 <CalendarOutlined />
-                {textButton1}
+                {textButton2}
               </ButtonS>
             </Dropdown>
           </Col>
@@ -356,7 +375,7 @@ export default function Analytics() {
               animate={{ duration: 500 }}
               height={250}
             >
-              <VictoryLabel text={textButton1} x={50} y={30} />
+              <VictoryLabel text={textButton2} x={50} y={30} />
               <VictoryAxis
                 dependentAxis
                 label={"Quantity"}
@@ -364,15 +383,14 @@ export default function Analytics() {
                   tickLabels: { fontSize: 10 },
                 }}
               />
-              {console.log(dataPlot1Actual)}
               <VictoryAxis
                 style={{ tickLabels: { angle: -90, fontSize: 9 } }}
               />
               <VictoryBar
                 labelComponent={<VictoryTooltip />}
-                data={dataPlot1Actual}
-                x={[keysPlot1.one]}
-                y={[keysPlot1.two]}
+                data={dataPlot2Actual}
+                x={[keysPlot2.one]}
+                y={[keysPlot2.two]}
                 alignment="start"
                 title={`Total orders`}
                 events={[
