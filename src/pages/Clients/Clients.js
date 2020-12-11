@@ -11,8 +11,6 @@ export default function Clients() {
   // const { user } = useContextInfo()
   const [clients, setClients] = useState(null);
   const history = useHistory()
-  const [showModal, setShowModal] = useState(false)
-
 
   useEffect(() => {
     async function getClients(){
@@ -20,6 +18,7 @@ export default function Clients() {
       setClients(data)
     }
     getClients();
+    
   }, []);
 
   const columns = [
@@ -60,7 +59,7 @@ export default function Clients() {
       edit: <Link to={`/clients/${client._id}/edit`}><ButtonS type="secondary">Edit Client</ButtonS></Link>,
     }
 })
-    
+  
     return (
     <div>
       <Link to="/clients/create-client">
