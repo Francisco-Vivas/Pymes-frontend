@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Dropdown, Form, Row, Skeleton } from "antd";
+import { Col, Divider, Dropdown, Form, Row, Skeleton } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
 import { TitleS } from "../components/styledComponents/Typography";
 import { getAllOrders } from "../services/orders";
@@ -20,8 +20,6 @@ const moment = extendMoment(Moment);
 
 export default function Analytics() {
   const [orders, setOrders] = useState(null);
-  const [dataPlot, setDataPlot] = useState([]);
-  const [keys, setKeys] = useState({ one: "date", two: "quantity" });
   const [form] = Form.useForm();
   const [configs, setConfigs] = useState({
     dateRange: "last7days",
@@ -29,16 +27,25 @@ export default function Analytics() {
   });
   const [textButton, setTextButton] = useState("Last 7 days");
 
+  /*  First plot */
+  const [keysPlot1, setKeysPlot1] = useState({ one: "date", two: "quantity" });
+  const [dataPlot1Actual, setDataPlot1Actual] = useState([]);
+  const [dataPlot1Atras, setDataPlot1Atras] = useState([]);
+
   useEffect(() => {
     async function getOrders() {
       const { data } = await getAllOrders();
       setOrders(data);
-      if (true) {
-        /* MOMENTS VERSION */
-        getAndSetDataToPlot(data, configs.rangePicker, configs.dateRange);
-        /* END */
-      } else {
-      }
+
+      /* MOMENTS VERSION */
+      getAndSetDataToPlot(
+        data,
+        configs.rangePicker,
+        configs.dateRange,
+        setDataPlot1Actual,
+        keysPlot1
+      );
+      /* END */
     }
     getOrders();
   }, []);
@@ -46,7 +53,13 @@ export default function Analytics() {
   /* ############### UPDATING KEYS ####################*/
   useEffect(() => {
     if (orders) {
-      getAndSetDataToPlot(orders, configs.rangePicker, configs.dateRange);
+      getAndSetDataToPlot(
+        orders,
+        configs.rangePicker,
+        configs.dateRange,
+        setDataPlot1Actual,
+        keysPlot1
+      );
       switch (configs.dateRange) {
         case "last7days":
           setTextButton("Last 7 days");
@@ -77,23 +90,35 @@ export default function Analytics() {
           break;
       }
     }
-  }, [keys, configs]);
+  }, [keysPlot1, configs]);
 
-  function getAndSetDataToPlot(data, range, dateRange) {
+  function getAndSetDataToPlot(
+    data,
+    range,
+    dateRange,
+    updateFunctionState,
+    keys
+  ) {
     const momentsFiltered = filterOrders(data, range);
-    const [allMoments, formated] = generateAllMoments(range, dateRange);
-    const momentsToPlot = settingMomentsToPlot(
-      momentsFiltered,
-      allMoments,
-      formated[1]
-    );
-    setDataPlot(momentsToPlot);
+    const [allMoments, formated] = generateAllMoments(range, dateRange, keys);
+    const momentsToPlot = settingMomentsToPlot({
+      filtered: momentsFiltered,
+      baseArr: allMoments,
+      formated: formated[1],
+      keys,
+    });
+    updateFunctionState(momentsToPlot);
+  }
+
+  function filterOrders(orders, range) {
+    return orders.filter((e) => range.contains(moment(e.date)));
   }
 
   /* Generates all dates between two moments */
   function generateAllMoments(
     range = moment.range(moment().subtract(8, "days"), moment()),
-    dateRange = "last7days"
+    dateRange = "last7days",
+    keys
   ) {
     let formated = [],
       iterate = "",
@@ -124,7 +149,12 @@ export default function Analytics() {
     @filtered [arr] : data to be counted.
     @baseArr [arr] : data to fit the values.
   */
-  function settingMomentsToPlot(filtered, baseArr = [], formated = "M Do") {
+  function settingMomentsToPlot({
+    filtered,
+    baseArr = [],
+    formated = "M Do",
+    keys,
+  }) {
     const toData = !baseArr.length ? [] : baseArr;
     const dataExtract = filtered.map((e) => {
       return moment(e[keys.one]).format(formated);
@@ -159,88 +189,98 @@ export default function Analytics() {
     return toData;
   }
 
-  function filterOrders(orders, range) {
-    return orders.filter((e) => range.contains(moment(e.date)));
-  }
-
   return (
     <Row justify="center" align="middle" style={{ height: "100%" }}>
       <Col xs={24} sm={24} md={12} lg={12} xl={12}>
         <TitleS style={{ textAlign: "left" }}>Analytics</TitleS>
-        <Dropdown
-          overlay={() => (
-            <AnalyticsTimeSettings form={form} setConfigs={setConfigs} />
-          )}
-          placement="bottomLeft"
-          trigger={["click"]}
-        >
-          <ButtonS type="primary">
-            <CalendarOutlined />
-            {textButton}
-          </ButtonS>
-        </Dropdown>
-        <TitleS level={3} style={{ textAlign: "left", margin: 0 }}>
-          Total orders
-        </TitleS>
-        {orders ? (
-          <VictoryChart
-            domainPadding={5}
-            theme={VictoryNordTheme}
-            animate={{ duration: 500 }}
-          >
-            <VictoryLabel text={``} x={50} y={30} />
-            <VictoryAxis dependentAxis />
-            <VictoryAxis style={{ tickLabels: { angle: -90, fontSize: 10 } }} />
-            <VictoryBar
-              labelComponent={<VictoryTooltip />}
-              data={dataPlot}
-              x={[keys.one]}
-              y={[keys.two]}
-              alignment="start"
-              title={`Total orders`}
-              animate={{
-                onExit: {
-                  duration: 250,
-                },
-              }}
-              events={[
-                {
-                  target: "data",
-                  eventHandlers: {
-                    onMouseOver: () => {
-                      return [
-                        {
-                          target: "data",
-                          mutation: () => ({
-                            style: { fill: "#88C0D0" },
-                          }),
-                        },
-                        {
-                          target: "label",
-                          mutation: () => ({ active: true }),
-                        },
-                      ];
-                    },
-                    onMouseOut: () => {
-                      return [
-                        {
-                          target: "data",
-                          mutation: () => {},
-                        },
-                        {
-                          target: "label",
-                          mutation: () => ({ active: false }),
-                        },
-                      ];
+        <Divider />
+        <Row>
+          <Col span={12}>
+            <TitleS level={3} style={{ textAlign: "left", margin: 0 }}>
+              Total orders
+            </TitleS>
+          </Col>
+          <Col span={12}>
+            <Dropdown
+              overlay={() => (
+                <AnalyticsTimeSettings form={form} setConfigs={setConfigs} />
+              )}
+              placement="bottomLeft"
+              trigger={["click"]}
+            >
+              <ButtonS type="primary">
+                <CalendarOutlined />
+                {textButton}
+              </ButtonS>
+            </Dropdown>
+          </Col>
+        </Row>
+        <Col style={{ height: "40%" }}>
+          {orders ? (
+            <VictoryChart
+              domainPadding={10}
+              theme={VictoryNordTheme}
+              animate={{ duration: 500 }}
+              height={250}
+            >
+              <VictoryLabel text={textButton} x={50} y={30} />
+              <VictoryAxis
+                dependentAxis
+                label={"Quantity"}
+                style={{
+                  tickLabels: { fontSize: 10 },
+                }}
+              />
+              {console.log(dataPlot1Actual)}
+              <VictoryAxis
+                style={{ tickLabels: { angle: -90, fontSize: 9 } }}
+              />
+              <VictoryBar
+                labelComponent={<VictoryTooltip />}
+                data={dataPlot1Actual}
+                x={[keysPlot1.one]}
+                y={[keysPlot1.two]}
+                alignment="start"
+                title={`Total orders`}
+                events={[
+                  {
+                    target: "data",
+                    eventHandlers: {
+                      onMouseOver: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => ({
+                              style: { fill: "#88C0D0" },
+                            }),
+                          },
+                          {
+                            target: "labels",
+                            mutation: () => ({ active: true }),
+                          },
+                        ];
+                      },
+                      onMouseOut: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => {},
+                          },
+                          {
+                            target: "labels",
+                            mutation: () => ({ active: false }),
+                          },
+                        ];
+                      },
                     },
                   },
-                },
-              ]}
-            />
-          </VictoryChart>
-        ) : (
-          <Skeleton active />
-        )}
+                ]}
+              />
+            </VictoryChart>
+          ) : (
+            <Skeleton active />
+          )}
+        </Col>
       </Col>
       <Col xs={24} sm={24} md={12} lg={12} xl={12}>
         <Col></Col>
