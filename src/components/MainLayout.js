@@ -78,7 +78,6 @@ export default function MainLayout({ children }) {
             style={{
               width: "20%",
               backgroundColor: "#FFFFFF!important",
-              height: "100%",
             }}
           >
             <Menu
