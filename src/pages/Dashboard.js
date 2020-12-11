@@ -43,9 +43,9 @@ useEffect(() => {
                 {products.map((product) => product.quantity === 0 ? <OutOfStock sku={product.sku} key={product._id}/> : <></>)}
                 </div>
                 <div style={{display:"flex"}}>
-                    <Card style={{margin:"10px", width:"155px"}}><Statistic title="Total Suppliers" value={user.suppliersID.length} /></Card>
-                    <Card style={{margin:"10px", width:"155px"}}><Statistic title="Total Clients" value={user.clientsID.length} /></Card>
-                    <Card style={{margin:"10px", width:"155px"}}><Statistic title="Total Sales" value={user.ordersID.length} /></Card>
+                    <Card style={{margin:"10px", width:"200px"}}><Statistic title="Total Suppliers" value={user.suppliersID.length} /></Card>
+                    <Card style={{margin:"10px", width:"200px"}}><Statistic title="Total Clients" value={user.clientsID.length} /></Card>
+                    <Card style={{margin:"10px", width:"200px"}}><Statistic title="Total Sales" value={user.ordersID.length} /></Card>
                 </div>
             </div>
         
