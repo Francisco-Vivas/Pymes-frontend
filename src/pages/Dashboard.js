@@ -40,7 +40,7 @@ useEffect(() => {
             <div style={{display:"flex", justifyContent:"space-between"}}>
                 <div>
                 {products.map((product) => product.quantity < product.threshold && product.quantity > 0 ? <LowInventory sku={product.sku} key={product._id}/> : <></>)}
-                {products.map((product) => product.quantity == 0 ? <OutOfStock sku={product.sku} key={product._id}/> : <></>)}
+                {products.map((product) => product.quantity === 0 ? <OutOfStock sku={product.sku} key={product._id}/> : <></>)}
                 </div>
                 <div style={{display:"flex"}}>
                     <Card style={{margin:"10px", width:"155px"}}><Statistic title="Total Suppliers" value={user.suppliersID.length} /></Card>
