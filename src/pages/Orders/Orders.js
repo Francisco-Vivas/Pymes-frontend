@@ -64,7 +64,7 @@ export default function Orders() {
       orderNum: order.orderNum,
       date: order.date,
       clientID: order.clientID?.name,
-      total: order.total,
+      total: `$ ${order.total}`.replace(/\B(?=(\d{3})+(?!\d))/g, ","),
       payment: order.payment,
       fulfillment: order.fulfillment,
       extra: order.extra,
