@@ -1,13 +1,12 @@
-import { useEffect } from "react";
 import { Row, Col, Typography, Divider, Skeleton } from "antd";
 import { useContextInfo } from "../../hooks/auth.hooks";
 import FormDataUser from "../../components/FormDataUser";
 import { editUserFn } from "../../services/user";
-import { TitleS } from '../../components/styledComponents/Typography'
+import { TitleS } from "../../components/styledComponents/Typography";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
-export default function EditProfile({ history }) {
+export default function EditProfile() {
   const { user, login } = useContextInfo();
 
   return user ? (

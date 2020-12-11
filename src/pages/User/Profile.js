@@ -22,9 +22,9 @@ const Profile = ({ history }) => {
           <Avatar
             {...AvatarProperties}
             shape="circle"
-          style={{ backgroundColor: "#4D5768", borderColor: "#4D5768" }}
-          size={{ xs: 60, sm: 80, md: 100, lg: 120, xl: 150, xxl: 170 }}
-        />
+            style={{ backgroundColor: "#4D5768", borderColor: "#4D5768" }}
+            size={{ xs: 60, sm: 80, md: 100, lg: 120, xl: 150, xxl: 170 }}
+          />
           <TitleS
             level={1}
             style={{
@@ -33,7 +33,7 @@ const Profile = ({ history }) => {
               color: "#4D5768",
             }}
           >
-            Welcome {user.companyName}!
+            {user.companyName}'s profile!
           </TitleS>
         </Col>
         {/* <p style={{color:"#d3d3d3", textAlign:"left", paddingLeft:"114px"}}>This is all your information!</p> */}
@@ -56,7 +56,7 @@ const Profile = ({ history }) => {
         </p>
 
         <Link to="/profile/edit">
-          <ButtonS type='primary' style={{ float: "right" }}>
+          <ButtonS type="primary" style={{ float: "right" }}>
             Edit profile
           </ButtonS>
         </Link>

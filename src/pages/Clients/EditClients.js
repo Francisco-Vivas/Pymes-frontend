@@ -4,26 +4,16 @@ import {
   getClientDetail,
   deleteClient,
 } from "../../services/clients";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { Form, Button, Spin, Divider, Row, Col } from "antd";
 import {
-  Form,
-  Button,
-  Input,
-  InputNumber,
-  Select,
-  Typography,
-  Divider,
-  Row,
-  Col,
-} from "antd";
-import {
-  InputS,
   ButtonS,
   InputSWhite,
 } from "../../components/styledComponents/antdStyled";
 import { TitleS } from "../../components/styledComponents/Typography";
+import { LoadingOutlined } from "@ant-design/icons";
 
-const { Text } = Typography;
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 export default function UpdateClient({
   match: {
@@ -33,8 +23,7 @@ export default function UpdateClient({
   const [form] = Form.useForm();
   const history = useHistory();
   const [client, setClient] = useState({});
-  const { name, phone, email, address, _id } = client;
-
+  const [isDone, setIsDone] = useState(false);
   useEffect(() => {
     async function getData() {
       const { data } = await getClientDetail(clientsID);
@@ -45,6 +34,7 @@ export default function UpdateClient({
   }, []);
 
   async function handleSubmit(values) {
+    setIsDone(true);
     const { data: newClient } = await updateClient(client._id, values);
     setClient(newClient);
     history.push(`/clients`);
@@ -56,30 +46,36 @@ export default function UpdateClient({
 
   return (
     <Row align="center">
-      <Col xs={24} sm={18} md={12} lg={8}>
-        <TitleS style={{ margin: "2rem" }}> Edit Client </TitleS>
-        <Form form={form} layout="horizontal" onFinish={handleSubmit}>
-          <Form.Item name="name" label="Name:">
-            <InputSWhite />
-          </Form.Item>
-          <Form.Item name="phone" label="Phone:">
-            <InputSWhite />
-          </Form.Item>
-          <Form.Item name="email" label="Email:">
-            <InputSWhite />
-          </Form.Item>
-          <Form.Item name="address" label="Address:">
-            <InputSWhite />
-          </Form.Item>
-          <ButtonS type="primary" size="middle" htmlType="submit">
-            Edit Client
-          </ButtonS>
-        </Form>
-        <Divider />
-        <Button type="primary" danger onClick={handleDelete}>
-          Delete Client
-        </Button>
-      </Col>
+      {isDone ? (
+        <Col xs={24} sm={18} md={12} lg={8} style={{ height: "100%" }}>
+          <Spin indicator={antIcon} style={{ margin: "auto" }} />
+        </Col>
+      ) : (
+        <Col xs={24} sm={18} md={12} lg={8}>
+          <TitleS style={{ margin: "2rem" }}> Edit Client </TitleS>
+          <Form form={form} layout="horizontal" onFinish={handleSubmit}>
+            <Form.Item name="name" label="Name:">
+              <InputSWhite />
+            </Form.Item>
+            <Form.Item name="phone" label="Phone:">
+              <InputSWhite />
+            </Form.Item>
+            <Form.Item name="email" label="Email:">
+              <InputSWhite />
+            </Form.Item>
+            <Form.Item name="address" label="Address:">
+              <InputSWhite />
+            </Form.Item>
+            <ButtonS type="primary" size="middle" htmlType="submit">
+              Edit Client
+            </ButtonS>
+          </Form>
+          <Divider />
+          <Button type="primary" danger onClick={handleDelete}>
+            Delete Client
+          </Button>
+        </Col>
+      )}
     </Row>
   );
 }

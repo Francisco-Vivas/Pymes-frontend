@@ -21,8 +21,6 @@ const ProductListItem = ({
   const onChange = (value) => {
     setQuantity(value);
     setIsInTheList(true);
-    console.log(productsObjValues[product._id]);
-
     setProductsObjValues({
       ...productsObjValues,
       [product._id]: {

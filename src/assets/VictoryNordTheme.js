@@ -35,7 +35,7 @@ const baseProps = {
 // * Labels
 const baseLabelStyles = {
   fontFamily: sansSerif,
-  fontSize,
+  fontSize: 10,
   letterSpacing,
   padding,
   fill: blueGrey700,
@@ -87,7 +87,7 @@ const theme = {
         },
         ticks: {
           fill: "transparent",
-          size: 5,
+          size: 2,
           stroke: blueGrey300,
           strokeWidth: 1,
           strokeLinecap,
@@ -95,6 +95,7 @@ const theme = {
         },
         tickLabels: assign({}, baseLabelStyles, {
           fill: blueGrey700,
+          padding: 13,
         }),
       },
     },

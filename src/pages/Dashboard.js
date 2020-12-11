@@ -96,6 +96,13 @@ export default function Dashboard() {
           </Card>
         </Col>
       </Row>
+      <Row style={{ width: "100%" }} justify="space-between">
+        {/* #################### EL DISEÑO DE LOS PRODUCTOS VAN AQUÍ ####################*/}
+        {/* #################### EL DISEÑO DE LOS PRODUCTOS VAN AQUÍ ####################*/}
+        {/* #################### EL DISEÑO DE LOS PRODUCTOS VAN AQUÍ ####################*/}
+        {/* #################### EL DISEÑO DE LOS PRODUCTOS VAN AQUÍ ####################*/}
+        {/* #################### EL DISEÑO DE LOS PRODUCTOS VAN AQUÍ ####################*/}
+      </Row>
     </Row>
   ) : (
     <Skeleton active />

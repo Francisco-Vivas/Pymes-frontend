@@ -5,9 +5,10 @@ import {
   List,
   Select,
   DatePicker,
-  Input,
+  Spin,
   Divider,
   Modal,
+  Col,
 } from "antd";
 import { createOrder } from "../services/orders";
 import { getAllClients } from "../services/clients";
@@ -17,6 +18,9 @@ import { ButtonS, InputSWhite } from "./styledComponents/antdStyled";
 import { TextS, TitleS } from "./styledComponents/Typography";
 import AddProductModal from "./AddProductModal";
 import CreateClient from "../pages/Clients/CreateClients";
+import { LoadingOutlined } from "@ant-design/icons";
+
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 export default function CreateOrderForm() {
   const [form] = Form.useForm();
@@ -27,6 +31,7 @@ export default function CreateOrderForm() {
   const [totalValue, setTotalValue] = useState(0);
   const [clients, setClients] = useState([]);
   const [isModalClient, setIsModalClient] = useState(false);
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
     async function getClients() {
@@ -50,6 +55,7 @@ export default function CreateOrderForm() {
   };
 
   async function handleSubmit(values) {
+    setIsDone(true);
     const order = {
       ...values,
       productsList,
@@ -88,7 +94,11 @@ export default function CreateOrderForm() {
     </Modal>
   );
 
-  return (
+  return isDone ? (
+    <Col span={24} style={{ height: "100%" }}>
+      <Spin indicator={antIcon} style={{ margin: "auto" }} />
+    </Col>
+  ) : (
     <Form
       form={form}
       layout="horizontal"

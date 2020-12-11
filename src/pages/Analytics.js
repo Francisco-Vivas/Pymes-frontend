@@ -288,7 +288,8 @@ export default function Analytics() {
               <VictoryLabel text={textButton1} x={50} y={30} />
               <VictoryAxis
                 dependentAxis
-                label={"Quantity"}
+                label={"Total Price ($)"}
+                tickFormat={(x) => `$${x / 1000}k`}
                 style={{
                   tickLabels: { fontSize: 10 },
                 }}

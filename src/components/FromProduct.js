@@ -1,4 +1,13 @@
-import { Form, InputNumber, Upload, Row, Col, Skeleton, Select } from "antd";
+import {
+  Form,
+  InputNumber,
+  Upload,
+  Row,
+  Col,
+  Skeleton,
+  Select,
+  Spin,
+} from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -12,6 +21,8 @@ import {
 } from "../services/products";
 import axios from "axios";
 import { getAllSuppliers } from "../services/suppliers";
+
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const cloudinaryAPI =
   "https://api.cloudinary.com/v1_1/franciscovivascodes/image/upload";
@@ -31,6 +42,7 @@ export default function FormProduct({ isNew = true, match }) {
   const { user, login } = useContextInfo();
   const [product, setProduct] = useState(null);
   const [suppliers, setSuppliers] = useState([]);
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
     async function getProduct() {
@@ -59,6 +71,7 @@ export default function FormProduct({ isNew = true, match }) {
   }, []);
 
   async function handleSubmit(values) {
+    setIsDone(true);
     const { data: newProduct } = isNew
       ? await createProductFn({ ...values, image })
       : await editProductFn(product._id, { ...values, image });
@@ -112,109 +125,115 @@ export default function FormProduct({ isNew = true, match }) {
 
   return product || isNew ? (
     <Row justify="center" align="center">
-      <Col xs={24} sm={18} md={12} lg={8}>
-        <TitleS style={{ margin: "2rem" }}>
-          {isNew ? "New Product" : "Edit Product"}
-        </TitleS>
-        <Form
-          form={form}
-          layout="horizontal"
-          wrapperCol={24}
-          onFinish={handleSubmit}
-        >
-          <Form.Item
-            name="name"
-            label="Product Name:"
-            rules={[
-              {
-                required: true,
-                message: "Please input the product name!",
-              },
-            ]}
+      {isDone ? (
+        <Col xs={24} sm={18} md={12} lg={8}>
+          <Spin indicator={antIcon} style={{ margin: "auto" }} />
+        </Col>
+      ) : (
+        <Col xs={24} sm={18} md={12} lg={8}>
+          <TitleS style={{ margin: "2rem" }}>
+            {isNew ? "New Product" : "Edit Product"}
+          </TitleS>
+          <Form
+            form={form}
+            layout="horizontal"
+            wrapperCol={24}
+            onFinish={handleSubmit}
           >
-            <InputSWhite style={{ backgroundColor: "white" }} />
-          </Form.Item>
-          <Form.Item
-            name="salePrice"
-            label="Sale Price:"
-            rules={[
-              {
-                required: true,
-                message: "Please input a valid value!",
-              },
-            ]}
-          >
-            <InputNumber
-              style={{ width: "100%" }}
-              formatter={(value) =>
-                `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              }
-              parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-            />
-          </Form.Item>
-
-          <Form.Item name="wholesalePrice" label="Wholesale Price:">
-            <InputNumber
-              style={{ width: "100%" }}
-              formatter={(value) =>
-                `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              }
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="quantity"
-            label="Quantity:"
-            rules={[
-              {
-                required: true,
-                message: "Please input a valid quantity!",
-              },
-            ]}
-          >
-            <InputNumber style={{ width: "100%" }} />
-          </Form.Item>
-
-          <Form.Item name="threshold" label="Alert Low Quantity:">
-            <InputNumber style={{ width: "100%" }} />
-          </Form.Item>
-
-          <Form.Item label="Suppliers" name="supplierID">
-            <Select>
-              {suppliers?.map((e) => (
-                <Select.Option value={e._id}>{e.name}</Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item name="sku" label="SKU:">
-            <InputSWhite />
-          </Form.Item>
-
-          <Form.Item name="image" label="Product Image:">
-            <Upload
-              showUploadList={false}
-              listType="picture-card"
-              beforeUpload={handleUploadFile}
-              onPreview={onPreview}
-              name="image"
+            <Form.Item
+              name="name"
+              label="Product Name:"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input the product name!",
+                },
+              ]}
             >
-              {image ? (
-                <img
-                  src={image}
-                  alt="product-image"
-                  style={{ width: "100%" }}
-                />
-              ) : (
-                uploadButton
-              )}
-            </Upload>
-          </Form.Item>
-          <ButtonS type="primary" size="middle" htmlType="submit">
-            {isNew ? "Create Product" : "Update Product"}
-          </ButtonS>
-        </Form>
-      </Col>
+              <InputSWhite style={{ backgroundColor: "white" }} />
+            </Form.Item>
+            <Form.Item
+              name="salePrice"
+              label="Sale Price:"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input a valid value!",
+                },
+              ]}
+            >
+              <InputNumber
+                style={{ width: "100%" }}
+                formatter={(value) =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+              />
+            </Form.Item>
+
+            <Form.Item name="wholesalePrice" label="Wholesale Price:">
+              <InputNumber
+                style={{ width: "100%" }}
+                formatter={(value) =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+              />
+            </Form.Item>
+
+            <Form.Item
+              name="quantity"
+              label="Quantity:"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input a valid quantity!",
+                },
+              ]}
+            >
+              <InputNumber style={{ width: "100%" }} />
+            </Form.Item>
+
+            <Form.Item name="threshold" label="Alert Low Quantity:">
+              <InputNumber style={{ width: "100%" }} />
+            </Form.Item>
+
+            <Form.Item label="Suppliers" name="supplierID">
+              <Select>
+                {suppliers?.map((e) => (
+                  <Select.Option value={e._id}>{e.name}</Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+
+            <Form.Item name="sku" label="SKU:">
+              <InputSWhite />
+            </Form.Item>
+
+            <Form.Item name="image" label="Product Image:">
+              <Upload
+                showUploadList={false}
+                listType="picture-card"
+                beforeUpload={handleUploadFile}
+                onPreview={onPreview}
+                name="image"
+              >
+                {image ? (
+                  <img
+                    src={image}
+                    alt="product-image"
+                    style={{ width: "100%" }}
+                  />
+                ) : (
+                  uploadButton
+                )}
+              </Upload>
+            </Form.Item>
+            <ButtonS type="primary" size="middle" htmlType="submit">
+              {isNew ? "Create Product" : "Update Product"}
+            </ButtonS>
+          </Form>
+        </Col>
+      )}
     </Row>
   ) : (
     <Skeleton active />

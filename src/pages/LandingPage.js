@@ -1,9 +1,10 @@
 import React from "react";
-import { Layout, Button, Row } from "antd";
+import { Layout, Button, Row, Col } from "antd";
 import { Link, useHistory } from "react-router-dom";
 import { useContextInfo } from "../hooks/auth.hooks";
 import { logoutFn } from "../services/auth";
-import { ButtonS } from '../components/styledComponents/antdStyled'
+import { ButtonS } from "../components/styledComponents/antdStyled";
+import { TitleS } from "../components/styledComponents/Typography";
 
 const { Header, Content, Sider } = Layout;
 
@@ -19,10 +20,14 @@ export default function LandingPage() {
   };
 
   return (
-    <div>
-      <div style={{ display: "flex", height: "600px", alignItems: "center" }}>
+    <Row justify="center" align="middle">
+      <Col
+        span={24}
+        style={{ display: "flex", height: "600px", alignItems: "center" }}
+      >
         <div style={{ display: "flex", flexDirection: "column", width: "50%" }}>
-          <h1
+          <TitleS
+            level={1}
             style={{
               textAlign: "left",
               color: "#4D5768",
@@ -32,7 +37,7 @@ export default function LandingPage() {
           >
             HELPING YOUR MICROBUSINESS <br />
             WORK IN MACRO WAYS
-          </h1>
+          </TitleS>
           <h4
             style={{
               textAlign: "left",
@@ -40,7 +45,8 @@ export default function LandingPage() {
               paddingLeft: "150px",
             }}
           >
-            Pymes is your ally when it comes to the organization of your business
+            Pymes is your ally when it comes to the organization of your
+            business
             <br />
             Keep track of your orders, clients, suppliers and much more!
             <br />
@@ -51,18 +57,26 @@ export default function LandingPage() {
           <Link to="/signup">
             <Button
               shape="square"
-              style={{ float: "left", marginLeft: "150px", color:"white", backgroundColor:"#4D5768", border:"none" }}
+              style={{
+                float: "left",
+                marginLeft: "150px",
+                color: "white",
+                backgroundColor: "#4D5768",
+                border: "none",
+              }}
             >
               Sign Up!
             </Button>
           </Link>
         </div>
         <div style={{ width: "50%" }}>
-          <img src="/images/1.png" style={{height:"400px"}}/>
+          <img src="/images/1.png" style={{ height: "400px" }} />
         </div>
-      </div>
+      </Col>
       <div style={{ backgroundColor: "#E7EEF5" }}>
-        <h1 style={{ paddingTop: "25px", color: "#4D5768", fontSize:"2rem" }}>PARTNERS</h1>
+        <h1 style={{ paddingTop: "25px", color: "#4D5768", fontSize: "2rem" }}>
+          PARTNERS
+        </h1>
         <div
           style={{
             display: "flex",
@@ -71,18 +85,9 @@ export default function LandingPage() {
             justifyContent: "space-around",
           }}
         >
-          <img
-            src="/images/Amarea.png"
-            style={{ height: "150px" }}
-          />
-          <img
-            src="/images/Area.png"
-            style={{ height: "100px" }}
-          />
-          <img
-            src="/images/CS.png"
-            style={{ height: "150px" }}
-          />
+          <img src="/images/Amarea.png" style={{ height: "150px" }} />
+          <img src="/images/Area.png" style={{ height: "100px" }} />
+          <img src="/images/CS.png" style={{ height: "150px" }} />
           <img
             src="https://cdn.logojoy.com/wp-content/uploads/2018/08/23162125/apple-logo-1024x728.png"
             style={{ height: "150px" }}
@@ -93,19 +98,45 @@ export default function LandingPage() {
           />
         </div>
       </div>
-      <div style={{ backgroundColor: "#4D5768", height: "400px", display:"flex", alignItems:"center", paddingLeft:"150px"}}>
-        <img src='/images/3.png' style={{height:"350px"}}/>
-        <div style={{paddingLeft:"150px"}}>
-          <h1 style={{fontSize:"2rem", color:"white", textAlign:"left"}}>PREMIUM ANALYTICS </h1>
-          <h4 style={{color:"white"}}>Get detailed analytics and projections from your sales and customers</h4>
+      <div
+        style={{
+          backgroundColor: "#4D5768",
+          height: "400px",
+          display: "flex",
+          alignItems: "center",
+          paddingLeft: "150px",
+        }}
+      >
+        <img src="/images/3.png" style={{ height: "350px" }} />
+        <div style={{ paddingLeft: "150px" }}>
+          <h1 style={{ fontSize: "2rem", color: "white", textAlign: "left" }}>
+            PREMIUM ANALYTICS{" "}
+          </h1>
+          <h4 style={{ color: "white" }}>
+            Get detailed analytics and projections from your sales and customers
+          </h4>
         </div>
       </div>
-      <div style={{ backgroundColor: "white", height: "500px", display:"flex", alignItems:"center" }}>
-        <div style={{paddingLeft:"150px"}}>
-          <h1 style={{fontSize:"2rem", color:"#4D5768", textAlign:"left"}}>GET NOTIFICATIONS </h1>
-          <h4 style={{color:"#4D5768"}}>Get notifications when inventory is low, payments are due, and more!</h4>
+      <div
+        style={{
+          backgroundColor: "white",
+          height: "500px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ paddingLeft: "150px" }}>
+          <h1 style={{ fontSize: "2rem", color: "#4D5768", textAlign: "left" }}>
+            GET NOTIFICATIONS{" "}
+          </h1>
+          <h4 style={{ color: "#4D5768" }}>
+            Get notifications when inventory is low, payments are due, and more!
+          </h4>
         </div>
-        <img src='/images/2.png' style={{height:"250px", paddingLeft:"150px"}}/>
+        <img
+          src="/images/2.png"
+          style={{ height: "250px", paddingLeft: "150px" }}
+        />
       </div>
       <div style={{ backgroundColor: "#E7EEF5", height: "500px" }}>
         {/* Caracteristica 3 */}
@@ -113,6 +144,6 @@ export default function LandingPage() {
       <div style={{ backgroundColor: "white", height: "500px" }}>
         {/* Call to action */}
       </div>
-    </div>
+    </Row>
   );
 }
