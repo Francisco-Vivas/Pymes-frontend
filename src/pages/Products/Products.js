@@ -102,32 +102,25 @@ export default function Products() {
               style={{
                 width: "100%",
                 height: "100%",
-                overflowY: "scroll",
                 overflowX: "hidden",
               }}
               pagination={{
-                pageSize: 8,
+                pageSize: 4,
               }}
               dataSource={products}
               renderItem={(item) => {
                 return <ProductCard product={item} />;
               }}
               grid={{
-                gutter: [16, 16],
-                xs: 1,
-                sm: 2,
-                md: 4,
-                lg: 4,
-                xl: 6,
-                xxl: 8,
+                gutter: [8, 8],
               }}
             />
           ) : !products ? (
-            "Add smth"
+            "Add your products!"
           ) : (
             new Array(8).fill(null).map((e, i) => (
-              <Col key={(i + 5) ** 5}>
-                <Card style={{ width: 300, marginTop: 16 }}>
+              <Col key={(i + 5) ** 5} style={{display:"flex"}}>
+                <Card style={{ width:"25%"}}>
                   <Skeleton loading={!products} avatar active></Skeleton>
                 </Card>
               </Col>
