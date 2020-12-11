@@ -20,9 +20,6 @@ export default function Dashboard() {
     getAllProducts();
   }, []);
 
-  console.log(products);
-  console.log(user);
-
   return products ? (
     <div>
       <div style={{ display: "flex", alignContent: "center" }}>

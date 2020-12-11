@@ -67,7 +67,7 @@ export default function ProductCard({ product, isSupplier = false }) {
               isSupplier ? (
                 <TextS>
                   <small>
-                    Wholeales price: <br />{" "}
+                    Wholesales price: <br />{" "}
                     {`$${product.wholesalePrice}`.replace(
                       /\B(?=(\d{3})+(?!\d))/g,
                       ","
