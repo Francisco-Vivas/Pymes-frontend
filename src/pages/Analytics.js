@@ -21,16 +21,26 @@ const moment = extendMoment(Moment);
 export default function Analytics() {
   const [orders, setOrders] = useState(null);
   const [form] = Form.useForm();
-  const [configs, setConfigs] = useState({
+
+  /*  First plot */
+  const [configs1, setConfigs1] = useState({
     dateRange: "last7days",
     rangePicker: moment.range(moment().subtract(7, "d"), moment()),
   });
-  const [textButton, setTextButton] = useState("Last 7 days");
-
-  /*  First plot */
-  const [keysPlot1, setKeysPlot1] = useState({ one: "date", two: "quantity" });
+  const [textButton1, setTextButton1] = useState("Last 7 days");
+  const [keysPlot1, setKeysPlot1] = useState({ one: "date", two: "price" });
   const [dataPlot1Actual, setDataPlot1Actual] = useState([]);
   const [dataPlot1Atras, setDataPlot1Atras] = useState([]);
+
+  /*  Second plot */
+  const [configs2, setConfigs2] = useState({
+    dateRange: "last7days",
+    rangePicker: moment.range(moment().subtract(7, "d"), moment()),
+  });
+  const [textButton2, setTextButton2] = useState("Last 7 days");
+  const [keysPlot2, setKeysPlot2] = useState({ one: "date", two: "quantity" });
+  const [dataPlot2Actual, setDataPlot2Actual] = useState([]);
+  const [dataPlot2Atras, setDataPlot2Atras] = useState([]);
 
   useEffect(() => {
     async function getOrders() {
@@ -40,8 +50,8 @@ export default function Analytics() {
       /* MOMENTS VERSION */
       getAndSetDataToPlot(
         data,
-        configs.rangePicker,
-        configs.dateRange,
+        configs1.rangePicker,
+        configs1.dateRange,
         setDataPlot1Actual,
         keysPlot1
       );
@@ -50,47 +60,80 @@ export default function Analytics() {
     getOrders();
   }, []);
 
+  function updateTextButton(dateRange, setTextFn) {
+    switch (dateRange) {
+      case "last7days":
+        setTextFn("Last 7 days");
+        break;
+      case "last15days":
+        setTextFn("Last 15 days");
+        break;
+      case "last30days":
+        setTextFn("Last 30 days");
+        break;
+      case "lastMonth":
+        setTextFn("Last Month");
+        break;
+      case "weekToDate":
+        setTextFn("Week to date");
+        break;
+      case "monthToDate":
+        setTextFn("Month to date");
+        break;
+      case "quarterToDate":
+        setTextFn("Year to date");
+        break;
+      case "yearToDate":
+        setTextFn("Year to date");
+        break;
+      case "custom":
+        setTextFn("Custom");
+        break;
+    }
+  }
+
   /* ############### UPDATING KEYS ####################*/
   useEffect(() => {
     if (orders) {
       getAndSetDataToPlot(
         orders,
-        configs.rangePicker,
-        configs.dateRange,
+        configs1.rangePicker,
+        configs1.dateRange,
         setDataPlot1Actual,
         keysPlot1
       );
-      switch (configs.dateRange) {
-        case "last7days":
-          setTextButton("Last 7 days");
-          break;
-        case "last15days":
-          setTextButton("Last 15 days");
-          break;
-        case "last30days":
-          setTextButton("Last 30 days");
-          break;
-        case "lastMonth":
-          setTextButton("Last Month");
-          break;
-        case "weekToDate":
-          setTextButton("Week to date");
-          break;
-        case "monthToDate":
-          setTextButton("Month to date");
-          break;
-        case "quarterToDate":
-          setTextButton("Year to date");
-          break;
-        case "yearToDate":
-          setTextButton("Year to date");
-          break;
-        case "custom":
-          setTextButton("Custom");
-          break;
-      }
+      updateTextButton(configs1.dateRange, setTextButton1);
+      // switch (configs1.dateRange) {
+      //   case "last7days":
+      //     setTextButton1("Last 7 days");
+      //     break;
+      //   case "last15days":
+      //     setTextButton1("Last 15 days");
+      //     break;
+      //   case "last30days":
+      //     setTextButton1("Last 30 days");
+      //     break;
+      //   case "lastMonth":
+      //     setTextButton1("Last Month");
+      //     break;
+      //   case "weekToDate":
+      //     setTextButton1("Week to date");
+      //     break;
+      //   case "monthToDate":
+      //     setTextButton1("Month to date");
+      //     break;
+      //   case "quarterToDate":
+      //     setTextButton1("Year to date");
+      //     break;
+      //   case "yearToDate":
+      //     setTextButton1("Year to date");
+      //     break;
+      //   case "custom":
+      //     setTextButton1("Custom");
+      //     break;
+      // }
     }
-  }, [keysPlot1, configs]);
+  }, [keysPlot1, configs1]);
 
   function getAndSetDataToPlot(
     data,
@@ -191,30 +234,30 @@ export default function Analytics() {
 
   return (
     <Row justify="center" align="middle" style={{ height: "100%" }}>
+      <TitleS style={{ textAlign: "left", width: "100%" }}>Analytics</TitleS>
       <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-        <TitleS style={{ textAlign: "left" }}>Analytics</TitleS>
-        <Divider />
         <Row>
           <Col span={12}>
             <TitleS level={3} style={{ textAlign: "left", margin: 0 }}>
-              Total orders
+              Total sales
             </TitleS>
           </Col>
           <Col span={12}>
             <Dropdown
               overlay={() => (
-                <AnalyticsTimeSettings form={form} setConfigs={setConfigs} />
+                <AnalyticsTimeSettings form={form} setConfigs1={setConfigs1} />
               )}
               placement="bottomLeft"
               trigger={["click"]}
             >
               <ButtonS type="primary">
                 <CalendarOutlined />
-                {textButton}
+                {textButton2}
               </ButtonS>
             </Dropdown>
           </Col>
         </Row>
+        <Divider />
         <Col style={{ height: "40%" }}>
           {orders ? (
             <VictoryChart
@@ -223,7 +266,7 @@ export default function Analytics() {
               animate={{ duration: 500 }}
               height={250}
             >
-              <VictoryLabel text={textButton} x={50} y={30} />
+              <VictoryLabel text={textButton2} x={50} y={30} />
               <VictoryAxis
                 dependentAxis
                 label={"Quantity"}
@@ -283,7 +326,94 @@ export default function Analytics() {
         </Col>
       </Col>
       <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-        <Col></Col>
+        <Row>
+          <Col span={12}>
+            <TitleS level={3} style={{ textAlign: "left", margin: 0 }}>
+              Total orders
+            </TitleS>
+          </Col>
+          <Col span={12}>
+            <Dropdown
+              overlay={() => (
+                <AnalyticsTimeSettings form={form} setConfigs2={setConfigs2} />
+              )}
+              placement="bottomLeft"
+              trigger={["click"]}
+            >
+              <ButtonS type="primary">
+                <CalendarOutlined />
+                {textButton1}
+              </ButtonS>
+            </Dropdown>
+          </Col>
+        </Row>
+        <Divider />
+        <Col style={{ height: "40%" }}>
+          {orders ? (
+            <VictoryChart
+              domainPadding={10}
+              theme={VictoryNordTheme}
+              animate={{ duration: 500 }}
+              height={250}
+            >
+              <VictoryLabel text={textButton1} x={50} y={30} />
+              <VictoryAxis
+                dependentAxis
+                label={"Quantity"}
+                style={{
+                  tickLabels: { fontSize: 10 },
+                }}
+              />
+              {console.log(dataPlot1Actual)}
+              <VictoryAxis
+                style={{ tickLabels: { angle: -90, fontSize: 9 } }}
+              />
+              <VictoryBar
+                labelComponent={<VictoryTooltip />}
+                data={dataPlot1Actual}
+                x={[keysPlot1.one]}
+                y={[keysPlot1.two]}
+                alignment="start"
+                title={`Total orders`}
+                events={[
+                  {
+                    target: "data",
+                    eventHandlers: {
+                      onMouseOver: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => ({
+                              style: { fill: "#88C0D0" },
+                            }),
+                          },
+                          {
+                            target: "labels",
+                            mutation: () => ({ active: true }),
+                          },
+                        ];
+                      },
+                      onMouseOut: () => {
+                        return [
+                          {
+                            target: "data",
+                            mutation: () => {},
+                          },
+                          {
+                            target: "labels",
+                            mutation: () => ({ active: false }),
+                          },
+                        ];
+                      },
+                    },
+                  },
+                ]}
+              />
+            </VictoryChart>
+          ) : (
+            <Skeleton active />
+          )}
+        </Col>
       </Col>
     </Row>
   );
