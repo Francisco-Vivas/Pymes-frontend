@@ -90,15 +90,16 @@ export default function ProductDetail({
                 alt={product.name}
                 style={{
                   height: "auto",
-                  width: "84%",
+                  width: "50%",
                   boxSizing: "border-box",
+                  textAlign:"right"
                 }}
               />
             ) : (
               <TextS>No image available (but you can always edit it).</TextS>
             )}
           </div>
-          <div style={{ textAlign: "right", margin: "2rem 4rem" }}>
+          <div style={{ textAlign: "right", margin: "2rem 9rem" }}>
             <Link to={`/products/${product._id}/edit`}>
               <ButtonS type="primary">Edit Product</ButtonS>
             </Link>

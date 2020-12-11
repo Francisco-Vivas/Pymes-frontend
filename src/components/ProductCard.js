@@ -29,6 +29,7 @@ export default function ProductCard({ product, isSupplier = false }) {
           <TextS type="primary">Details</TextS>
         </Link>,
       ]}
+      style={{width:"290px"}}
     >
       <Link to={`/products/${product._id}`}>
         <div>

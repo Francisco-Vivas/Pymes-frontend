@@ -88,19 +88,48 @@ export default function LandingPage() {
           <img src="/images/Amarea.png" style={{ height: "150px" }} />
           <img src="/images/Area.png" style={{ height: "100px" }} />
           <img src="/images/CS.png" style={{ height: "150px" }} />
-          <img
-            src="https://cdn.logojoy.com/wp-content/uploads/2018/08/23162125/apple-logo-1024x728.png"
-            style={{ height: "150px" }}
-          />
-          <img
-            src="https://cdn.logojoy.com/wp-content/uploads/2018/08/23162125/apple-logo-1024x728.png"
-            style={{ height: "150px" }}
-          />
+          <img src="/images/4.png" style={{ height: "150px" }} />
+          <img src="/images/5.png" style={{ height: "150px" }} />
         </div>
+      </div>
+      <div style={{ padding: "30px", backgroundColor: "#88C0D0" }}>
+        <h1 style={{ textAlign: "center", color: "white", fontSize: "2rem" }}>
+          FOCUS ON YOUR GROWTH, LET US TAKE CARE OF THE REST
+        </h1>
+      </div>
+
+      <div
+        style={{
+          backgroundColor: "white",
+          height: "400px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ paddingLeft: "150px" }}>
+          <h1 style={{ fontSize: "2rem", color: "#4D5768", textAlign: "left" }}>
+            GET EVERYTHING IN ONE PLACE
+          </h1>
+          <h4 style={{ color: "#4D5768", textAlign: "left" }}>
+            Get notifications when inventory is below a specific quantity, which
+            <br />
+            you get to specify.
+            <br />
+            Visualize a summary of useful data un the dashboard, along with some
+            of your
+            <br />
+            top products, and get all your orders, clients, suppliers and
+            products' information in one useful place.
+          </h4>
+        </div>
+        <img
+          src="/images/2.png"
+          style={{ height: "250px", paddingLeft: "150px" }}
+        />
       </div>
       <div
         style={{
-          backgroundColor: "#4D5768",
+          backgroundColor: "#81A1C1",
           height: "400px",
           display: "flex",
           alignItems: "center",
@@ -112,37 +141,21 @@ export default function LandingPage() {
           <h1 style={{ fontSize: "2rem", color: "white", textAlign: "left" }}>
             PREMIUM ANALYTICS{" "}
           </h1>
-          <h4 style={{ color: "white" }}>
-            Get detailed analytics and projections from your sales and customers
+          <h4 style={{ color: "white", textAlign: "left" }}>
+            Get detailed analytics and projections from your sales and
+            customers.
+            <br />
+            Visualize in friendly graphics sales over specific periods of time,
+            <br />
+            among many other usefull information.
           </h4>
         </div>
       </div>
-      <div
-        style={{
-          backgroundColor: "white",
-          height: "500px",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        <div style={{ paddingLeft: "150px" }}>
-          <h1 style={{ fontSize: "2rem", color: "#4D5768", textAlign: "left" }}>
-            GET NOTIFICATIONS{" "}
-          </h1>
-          <h4 style={{ color: "#4D5768" }}>
-            Get notifications when inventory is low, payments are due, and more!
-          </h4>
-        </div>
-        <img
-          src="/images/2.png"
-          style={{ height: "250px", paddingLeft: "150px" }}
-        />
-      </div>
-      <div style={{ backgroundColor: "#E7EEF5", height: "500px" }}>
-        {/* Caracteristica 3 */}
-      </div>
-      <div style={{ backgroundColor: "white", height: "500px" }}>
-        {/* Call to action */}
+
+      <div style={{ backgroundColor: "#E7EEF5", height: "30px" }}>
+        <p style={{ fontSize: "11px", paddingTop: "5px" }}>
+          PYMES 2020 © Francisco Vivas & Maria Eugenia Reyna
+        </p>
       </div>
     </Row>
   );

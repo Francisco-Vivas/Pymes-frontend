@@ -43,6 +43,9 @@ export default function Dashboard() {
         <Divider />
       </Row>
       <Row style={{ width: "100%" }} justify="space-between">
+        <TitleS level={4} style={{ textAlign: "left" }}>
+          NOTIFICATIONS
+        </TitleS>
         <Col
           xs={24}
           sm={24}
@@ -88,6 +91,16 @@ export default function Dashboard() {
               value={user.clientsID ? user.clientsID.length : 0}
             />
           </Card>
+          <Card
+            style={{
+              margin: "3px",
+              width: "50%",
+              height: "110px",
+              marginTop: "10px",
+            }}
+          >
+            <Statistic title="Total Products" value={user.productsID.length} />
+          </Card>
           <Card style={{ margin: "10px", width: "155px" }}>
             <Statistic
               title="Total Sales"
@@ -97,11 +110,55 @@ export default function Dashboard() {
         </Col>
       </Row>
       <Row style={{ width: "100%" }} justify="space-between">
-        {/* #################### EL DISEÑO DE LOS PRODUCTOS VAN AQUÍ ####################*/}
-        {/* #################### EL DISEÑO DE LOS PRODUCTOS VAN AQUÍ ####################*/}
-        {/* #################### EL DISEÑO DE LOS PRODUCTOS VAN AQUÍ ####################*/}
-        {/* #################### EL DISEÑO DE LOS PRODUCTOS VAN AQUÍ ####################*/}
-        {/* #################### EL DISEÑO DE LOS PRODUCTOS VAN AQUÍ ####################*/}
+        <div>
+          <br />
+          <div>
+            <TitleS level={4} style={{ textAlign: "left" }}>
+              TOP PRODUCTS
+            </TitleS>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <Card
+              hoverable
+              style={{ width: "30%", height: "70%", margin: "5px" }}
+            >
+              <img
+                src={products[0].image}
+                style={{ width: "100%", textAlign: "center" }}
+              />
+              <Divider style={{ margin: "5px" }} />
+              <p style={{ fontSize: "0.7rem", margin: "0px" }}>
+                {products[0].name}
+              </p>
+            </Card>
+            <Card
+              hoverable
+              style={{ width: "30%", height: "70%", margin: "5px" }}
+            >
+              <img
+                src={products[1].image}
+                style={{ width: "100%", textAlign: "center" }}
+              />
+              <Divider style={{ margin: "5px" }} />
+              <p style={{ fontSize: "0.7rem", margin: "0px" }}>
+                {products[1].name}
+              </p>
+            </Card>
+            <Card
+              hoverable
+              style={{ width: "30%", height: "70%", margin: "5px" }}
+            >
+              <img
+                src={products[2].image}
+                style={{ width: "100%", textAlign: "center" }}
+              />
+              <Divider style={{ margin: "5px" }} />
+              <p style={{ fontSize: "0.7rem", margin: "0px" }}>
+                {products[2].name}
+              </p>
+            </Card>
+          </div>
+        </div>
       </Row>
     </Row>
   ) : (
