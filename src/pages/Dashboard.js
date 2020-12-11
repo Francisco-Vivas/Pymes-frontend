@@ -6,6 +6,8 @@ import { getAllProductsFn, getAvailableProductsFn } from '../services/products'
 import LowInventory from '../components/LowInventory'
 import OutOfStock from '../components/OutOfStock'
 
+const { Meta } = Card
+
 
 export default function Dashboard(){
 const { user } = useContextInfo()
@@ -19,9 +21,8 @@ useEffect(() => {
     }
     getAllProducts();
     }, []);
-
-
-
+    
+    
     console.log(products)
     console.log(user)
 
@@ -42,9 +43,9 @@ useEffect(() => {
                 <div>
                     <TitleS level={4} style={{textAlign:"left"}}>SUMMARY</TitleS>
                     <div style={{display:"flex", margin:"10px", width:"100%"}}>
-                        <Card style={{margin:"3px", width:"57%", height:"110px", marginTop:"10px"}}><Statistic title="Total Suppliers" value={user.suppliersID.length} /></Card>
+                        <Card style={{margin:"3px", width:"50%", height:"110px", marginTop:"10px"}}><Statistic title="Total Suppliers" value={user.suppliersID.length} /></Card>
                         <Card style={{margin:"3px", width:"50%", height:"110px", marginTop:"10px"}}><Statistic title="Total Clients" value={user.clientsID.length} /></Card>
-                        <Card style={{margin:"3px", width:"55%", height:"110px", marginTop:"10px"}}><Statistic title="Total Products" value={user.productsID.length} /></Card>
+                        <Card style={{margin:"3px", width:"50%", height:"110px", marginTop:"10px"}}><Statistic title="Total Products" value={user.productsID.length} /></Card>
                         <Card style={{margin:"3px", width:"50%", height:"110px", marginTop:"10px"}}><Statistic title="Total Sales" value={user.ordersID.length} /></Card>
                     </div>
                     <div>
@@ -52,12 +53,26 @@ useEffect(() => {
                         <div>
                             <TitleS level={4} style={{textAlign:"left"}}>TOP PRODUCTS</TitleS>
                         </div>
-                        <div>
-
+                        <div style={{display:"flex", justifyContent:"space-evenly"}}>
+                            <Card hoverable style={{width:"30%", height:"70%", margin:"5px"}}>
+                                <img src={products[0].image} style={{width:"100%", textAlign:"center"}}/>
+                                <Divider style={{margin:"5px"}}/>
+                                <p style={{fontSize:"0.7rem", margin:"0px"}}>{products[0].name}</p>
+                            </Card>
+                            <Card hoverable style={{width:"30%", height:"70%", margin:"5px"}}>
+                                <img src={products[1].image} style={{width:"100%", textAlign:"center"}}/>
+                                <Divider style={{margin:"5px"}}/>
+                                <p style={{fontSize:"0.7rem", margin:"0px"}}>{products[1].name}</p>
+                            </Card>
+                            <Card hoverable style={{width:"30%", height:"70%", margin:"5px"}}>
+                                <img src={products[2].image} style={{width:"100%", textAlign:"center"}}/>
+                                <Divider style={{margin:"5px"}}/>
+                                <p style={{fontSize:"0.7rem", margin:"0px"}}>{products[2].name}</p>
+                            </Card>
                         </div>
                     </div>
                 </div>
-                <div style={{display:"flex", flexDirection:"column"}}>
+                <div style={{display:"flex", flexDirection:"column", marginLeft:"10px"}}>
                     <div>
                         <TitleS level={4} style={{textAlign:"left"}}>NOTIFICATIONS</TitleS>
                     </div>
