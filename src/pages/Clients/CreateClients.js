@@ -36,7 +36,16 @@ export default function CreateClient({
       <Col {...sizes}>
         <TitleS style={{ margin: "2rem" }}> New Client </TitleS>
         <Form form={form} layout="horizontal" onFinish={handleSubmit}>
-          <Form.Item name="name" label="Name:">
+          <Form.Item
+            name="name"
+            label="Name:"
+            rules={[
+              {
+                required: true,
+                message: "Please input the client's name!",
+              },
+            ]}
+          >
             <InputSWhite />
           </Form.Item>
           <Form.Item name="phone" label="Phone:">

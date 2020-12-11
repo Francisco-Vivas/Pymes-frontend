@@ -42,7 +42,16 @@ export default function CreateSupplier({}) {
         <TitleS level={1}>New Supplier</TitleS>
         <Divider />
         <Form form={form} layout="horizontal" onFinish={handleSubmit}>
-          <Form.Item name="name" label="Name:">
+          <Form.Item
+            name="name"
+            label="Name:"
+            rules={[
+              {
+                required: true,
+                message: "Please input the Supplier's name!",
+              },
+            ]}
+          >
             <InputSWhite />
           </Form.Item>
           <Form.Item name="phone" label="Phone:">

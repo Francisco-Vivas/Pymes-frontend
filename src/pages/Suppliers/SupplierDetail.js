@@ -95,6 +95,7 @@ const SupplierDetail = ({
           <List
             style={{
               margin: "0.5rem",
+              width: "100%",
             }}
             pagination={{
               pageSize: 6,

@@ -19,7 +19,6 @@ export default function EditSupplier({
   const [supplier, setSupplier] = useState({});
   const [isModal, setIsModal] = useState(false);
   const [productsList, setProductsList] = useState([]);
-  const { name, phone, email, channel, lastOrder, products, _id } = supplier;
 
   useEffect(() => {
     async function getData() {
@@ -33,7 +32,6 @@ export default function EditSupplier({
 
   async function handleSubmit(values) {
     const newValues = { ...values, products: productsList.map((e) => e._id) };
-    console.log(newValues);
     const { data: newSupplier } = await updateSupplier(supplier._id, newValues);
     setSupplier(newSupplier);
     history.push(`/suppliers/${suppliersID}`);
@@ -43,12 +41,11 @@ export default function EditSupplier({
     setProductsList(productsList.filter((e) => e._id !== id));
   };
 
-  const HandlerAddProduct = (value) => {
-    console.log(value);
-    const newProduct = productsList.find((e) => e._id === value._id)
-      ? productsList
-      : [...productsList, value];
-    setProductsList([...newProduct]);
+  const HandlerAddProduct = (values) => {
+    const newUserItem = Object.keys(values).map((key) => {
+      return values[key];
+    });
+    setProductsList([...newUserItem]);
   };
 
   return (
