@@ -1,6 +1,6 @@
 {
-  "name": "frontend",
-  "version": "0.0.0",
+  "name": "Pymes",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "antd": "^4.9.1",
