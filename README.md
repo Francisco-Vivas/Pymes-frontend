@@ -24,4 +24,4 @@ To try out our app, login with this credentials:
 > Email: area@gmail.com
 > Password:123
 
-Check also the backend [here]((https://github.com/Francisco-Vivas/Pymes-backend/))!
+Check also the backend [here](https://github.com/Francisco-Vivas/Pymes-backend/)!
