@@ -5,7 +5,7 @@ import { ButtonS } from "./styledComponents/antdStyled";
 
 const { RangePicker } = DatePicker;
 
-const AnalyticsTimeSettings = ({ form }) => {
+const AnalyticsTimeSettings = ({ form, setConfigs }) => {
   const [formState, setFormState] = useState({
     dateRange: "last7days",
     rangePicker: [moment().subtract(7, "days"), moment()],
@@ -16,7 +16,11 @@ const AnalyticsTimeSettings = ({ form }) => {
   }, [formState]);
 
   function handleOnFinish(value) {
-    console.log(value);
+    const rangePicker = moment.range(
+      value.rangePicker[0],
+      value.rangePicker[1]
+    );
+    setConfigs({ ...value, rangePicker });
   }
 
   function handlerDateRangePicker(value) {
@@ -59,8 +63,8 @@ const AnalyticsTimeSettings = ({ form }) => {
     }
   }
 
-  function handleChangeRangePicker() {
-    setFormState({ ...formState, dateRange: "custom" });
+  function handleChangeRangePicker(value) {
+    setFormState({ dateRange: "custom", rangePicker: value });
   }
   return (
     <Menu>
