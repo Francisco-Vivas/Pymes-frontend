@@ -1,26 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { List, Avatar, InputNumber } from "antd";
 import { ButtonS } from "./styledComponents/antdStyled";
+import { TextS } from "./styledComponents/Typography";
 
 const ProductListItem = ({
   product,
-  HandlerAddQuantity,
+  objProductsObjValues,
   isSupplier = false,
 }) => {
-  const [quantity, setQuantity] = useState(1);
-  const onNumberChange = (value) => {
+  const [quantity, setQuantity] = useState(0);
+  const [isInTheList, setIsInTheList] = useState(false);
+  const { productsObjValues, setProductsObjValues } = objProductsObjValues;
+
+  useEffect(() => {
+    if (productsObjValues[product._id]) {
+      setIsInTheList(true);
+    }
+  });
+
+  const onChange = (value) => {
     setQuantity(value);
+    setIsInTheList(true);
+    console.log(productsObjValues[product._id]);
+
+    setProductsObjValues({
+      ...productsObjValues,
+      [product._id]: {
+        image: product.image,
+        _id: product._id,
+        quantity: value,
+        salePrice: product.salePrice,
+        name: product.name,
+      },
+    });
   };
 
   return isSupplier ? (
     <List.Item
       actions={[
-        <ButtonS
-          type="primary"
-          onClick={() => HandlerAddQuantity({ ...product })}
-        >
-          Add Product
-        </ButtonS>,
+        isInTheList ? (
+          <TextS>Added!</TextS>
+        ) : (
+          <ButtonS type="primary" onClick={onChange}>
+            Add Product
+          </ButtonS>
+        ),
       ]}
     >
       <List.Item.Meta
@@ -36,17 +60,11 @@ const ProductListItem = ({
     <List.Item
       actions={[
         <InputNumber
-          min={1}
+          min={0}
           max={product.quantity}
           value={quantity}
-          onChange={onNumberChange}
+          onChange={onChange}
         />,
-        <ButtonS
-          type="primary"
-          onClick={() => HandlerAddQuantity({ ...product, quantity })}
-        >
-          +
-        </ButtonS>,
       ]}
     >
       <List.Item.Meta
