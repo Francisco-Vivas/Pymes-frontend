@@ -81,7 +81,7 @@ export default function LandingPage() {
           <img src="/images/1.png" style={{ height: "400px" }} />
         </Col>
       </Col>
-      <Col span={24} style={{ backgroundColor: "#E7EEF5" }}>
+      <Col span={24} style={{ backgroundColor: "#E7EEF5", padding: "1.5rem" }}>
         <TitleS
           level={1}
           style={{
@@ -93,7 +93,11 @@ export default function LandingPage() {
         >
           PARTNERS
         </TitleS>
-        <Row justify="space-around" align="middle">
+        <Row
+          justify="space-around"
+          align="middle"
+          style={{ paddingBottom: "0.5rem" }}
+        >
           <Col xs={24} sm={12} md={12} lg={4} xl={4} span={4}>
             <img src="/images/Amarea.png" style={{ height: "150px" }} />
           </Col>

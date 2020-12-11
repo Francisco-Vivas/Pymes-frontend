@@ -49,7 +49,7 @@ export default function MainLayout({ children }) {
           {user ? (
             <>
               <Menu.Item key="1" style={{ color: "#dce9ed" }}>
-                {user.companyName}
+                <Link to="/profile">{user.companyName}</Link>
               </Menu.Item>
               <Menu.Item
                 onClick={handleLogout}
