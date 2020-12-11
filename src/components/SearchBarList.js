@@ -16,7 +16,6 @@ const SearchBarList = ({ HandlerAddQuantity, isSupplier = false }) => {
     }
     getProducts();
   }, []);
-
   useEffect(() => {
     async function searchProducts() {
       let dataOut;

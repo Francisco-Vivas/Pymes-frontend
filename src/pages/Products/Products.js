@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Row, Skeleton, Input } from "antd";
+import { Button, Card, Col, Row, Skeleton, Input, List } from "antd";
 import { Link } from "react-router-dom";
 import { getAllProductsFn, searchProductsFn } from "../../services/products";
 import ProductCard from "../../components/ProductCard";
@@ -90,29 +90,49 @@ export default function Products() {
           <br />
         </Row>
         <Row
-          key="a"
           gutter={[16, 16]}
           style={{
-            padding: "1rem",
             paddingBottom: "0",
-            marginTop: "1rem",
-            height: "auto",
-            overflowY: "scroll",
+            margin: "1rem 0 0",
+            height: "90%",
           }}
         >
-          {isSearching || products
-            ? products.map((product, i) => (
-                <ProductCard key={(i + 6) * 7} product={product} />
-              ))
-            : products === undefined
-            ? "Add smth"
-            : new Array(8).fill(null).map((e, i) => (
-                <Col key={(i + 5) ** 5}>
-                  <Card style={{ width: 300, marginTop: 16 }}>
-                    <Skeleton loading={!products} avatar active></Skeleton>
-                  </Card>
-                </Col>
-              ))}
+          {isSearching || products ? (
+            <List
+              style={{
+                width: "100%",
+                height: "100%",
+                overflowY: "scroll",
+                overflowX: "hidden",
+              }}
+              pagination={{
+                pageSize: 8,
+              }}
+              dataSource={products}
+              renderItem={(item) => {
+                return <ProductCard product={item} />;
+              }}
+              grid={{
+                gutter: [16, 16],
+                xs: 1,
+                sm: 2,
+                md: 4,
+                lg: 4,
+                xl: 6,
+                xxl: 8,
+              }}
+            />
+          ) : !products ? (
+            "Add smth"
+          ) : (
+            new Array(8).fill(null).map((e, i) => (
+              <Col key={(i + 5) ** 5}>
+                <Card style={{ width: 300, marginTop: 16 }}>
+                  <Skeleton loading={!products} avatar active></Skeleton>
+                </Card>
+              </Col>
+            ))
+          )}
         </Row>
       </Col>
     </Row>

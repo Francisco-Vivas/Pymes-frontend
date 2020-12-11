@@ -49,7 +49,7 @@ export default function MainLayout({ children }) {
           {user ? (
             <>
               <Menu.Item key="1" style={{ color: "#dce9ed" }}>
-                <Link to="/profile">Profile</Link>
+                {user.companyName}
               </Menu.Item>
               <Menu.Item
                 onClick={handleLogout}
@@ -103,8 +103,11 @@ export default function MainLayout({ children }) {
               <Menu.Item key="5" style={{ color: "#4D5768" }}>
                 <Link to="/clients">Clients</Link>
               </Menu.Item>
-              <Menu.Item key="6" style={{ color: "#4D5768", marginBottom: "100%" }}>
-                Analytics
+              <Menu.Item
+                key="6"
+                style={{ color: "#4D5768", marginBottom: "100%" }}
+              >
+                <Link to="/analytics">Analytics</Link>
               </Menu.Item>
               <Divider />
               <Menu.Item key="7" style={{ color: "#4D5768" }}>
@@ -126,7 +129,7 @@ export default function MainLayout({ children }) {
                 backgroundColor: "#F0F2F5",
               }}
             >
-              <div className="site-layout-content">{children}</div>
+              <div className="site-layout-content" style={{backgroundColor:"#F0F2F5"}}>{children}</div>
             </Content>
           </Layout>
         ) : (
@@ -139,7 +142,7 @@ export default function MainLayout({ children }) {
                 minHeight: 280,
               }}
             >
-              <div className="site-layout-content">{children}</div>
+              <div className="site-layout-content" >{children}</div>
             </Content>
           </Layout>
         )}

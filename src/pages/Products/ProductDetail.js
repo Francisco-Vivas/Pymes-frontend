@@ -21,12 +21,11 @@ export default function ProductDetail({
   }, []);
 
   const colorQuantity =
-    product?.quantity === 0
+    product?.quantity <= 0
       ? "#BF616A"
       : product?.quantity <= product?.threshold
       ? "#EBCB8B"
       : "#4d5768";
-  console.log(product);
   return product ? (
     <Row gutter={[16, 16]}>
       <Col xs={24} sm={24} md={12} lg={12}>
@@ -76,21 +75,34 @@ export default function ProductDetail({
         </div>
       </Col>
       <Col xs={24} sm={24} md={12} lg={12}>
-        <div>
-          <img
-            src={product.image}
-            alt={product.name}
-            style={{
-              height: "auto",
-              width: "84%",
-              boxSizing: "border-box",
-            }}
-          />
-        </div>
-        <div style={{ textAlign: "right", margin: "2rem 4rem" }}>
-          <Link to={`/products/${product._id}/edit`}>
-            <ButtonS type="primary">Edit Product</ButtonS>
-          </Link>
+        <div
+          style={{
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
+          <div>
+            {product.image ? (
+              <img
+                src={product.image}
+                alt={product.name}
+                style={{
+                  height: "auto",
+                  width: "84%",
+                  boxSizing: "border-box",
+                }}
+              />
+            ) : (
+              <TextS>No image available (but you can always edit it).</TextS>
+            )}
+          </div>
+          <div style={{ textAlign: "right", margin: "2rem 4rem" }}>
+            <Link to={`/products/${product._id}/edit`}>
+              <ButtonS type="primary">Edit Product</ButtonS>
+            </Link>
+          </div>
         </div>
       </Col>
     </Row>
