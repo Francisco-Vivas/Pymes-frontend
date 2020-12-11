@@ -1,6 +1,8 @@
-# PYMES App
+# Pymes
+<p align="center">
+  <img width="460" height="300" src="https://raw.githubusercontent.com/Francisco-Vivas/Pymes-frontend/main/public/images/LogoFondo.png">
+</p>
 
-![pymes_logo](https://raw.githubusercontent.com/Francisco-Vivas/Pymes-frontend/main/public/images/LogoFondo.png)
 <br /> 
 <a href=""><img alt="open-source" src="https://img.shields.io/badge/Open%20Source-%F0%9F%A7%A1-orange"></a>
 <a href=""><img alt="website" src="https://img.shields.io/badge/Website-%F0%9F%92%BB-lightgrey"></a>
@@ -9,7 +11,7 @@
 
 By [Francisco Vivas]((https://www.linkedin.com/in/vivas-francisco/)) y [Maria Eugenia Reyna]((https://www.linkedin.com/in/mereynag/))
 
-## What is PYMES App?
+## What is Pymes?
 Pymes is your ally when it comes to the organization of your business.<br /> 
 Keep track of your orders, clients, suppliers and much more! What are your waiting to sign up?!
 
