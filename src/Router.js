@@ -24,6 +24,7 @@ import { useContextInfo } from "./hooks/auth.hooks";
 import Products from "./pages/Products/Products";
 import ProductDetail from "./pages/Products/ProductDetail";
 import FormProduct from "./components/FromProduct";
+import Analytics from "./pages/Analytics";
 
 const Router = () => {
   const { user } = useContextInfo();
@@ -54,12 +55,32 @@ const Router = () => {
             component={OrderDetail}
           />
           <ProtectedRoute exact path="/suppliers" component={Suppliers} />
-          <ProtectedRoute exact path="/suppliers/create-supplier" component={CreateSupplier} />
-          <ProtectedRoute exact path="/suppliers/:suppliersID" component={SupplierDetail} />
-          <ProtectedRoute exact path="/suppliers/:suppliersID/edit" component={EditSupplier} />
+          <ProtectedRoute
+            exact
+            path="/suppliers/create-supplier"
+            component={CreateSupplier}
+          />
+          <ProtectedRoute
+            exact
+            path="/suppliers/:suppliersID"
+            component={SupplierDetail}
+          />
+          <ProtectedRoute
+            exact
+            path="/suppliers/:suppliersID/edit"
+            component={EditSupplier}
+          />
           <ProtectedRoute exact path="/clients" component={Clients} />
-          <ProtectedRoute exact path="/clients/create-client" component={CreateClients} />
-          <ProtectedRoute exact path="/clients/:clientsID/edit" component={UpdateClient} />
+          <ProtectedRoute
+            exact
+            path="/clients/create-client"
+            component={CreateClients}
+          />
+          <ProtectedRoute
+            exact
+            path="/clients/:clientsID/edit"
+            component={UpdateClient}
+          />
           <ProtectedRoute exact path="/products" component={Products} />
           <ProtectedRoute
             exact
@@ -76,6 +97,7 @@ const Router = () => {
             path="/products/:productID"
             component={ProductDetail}
           />
+          <ProtectedRoute exact path="/analytics" component={Analytics} />
           {/* <Route exact path="*" component={NotFound} /> */}
         </Switch>
       </Layout>

@@ -39,26 +39,28 @@ export default function UpdateOrder({
   const [isModal, setIsModal] = useState(false);
   const [totalValue, setTotalValue] = useState(0);
 
-  const [items, setItems] = useState([]);
-  const [itemsQuantity, setItemsQuantity] = useState([]);
-  const [itemsSalePrice, setItemsSalePrice] = useState([]);
-  const [itemsSubtotal, setItemsSubtotal] = useState([]);
-
   useEffect(() => {
     async function getData() {
       const { data } = await getOrderDetail(ordersID);
       setOrder(data);
       const { data: clientes } = await getAllClients();
       setClients(clientes);
-      setProductsList(data.items);
-      setItems(data.items);
-      setItemsQuantity(data.itemsQuantity);
-      setItemsSalePrice(data.itemsSalePrice);
-      setItemsSubtotal(data.itemsSubtotal);
+      const products = data.items.map((e, i) => {
+        return {
+          ...e,
+          quantity: data.itemsQuantity[i],
+          salePrice: data.itemsSalePrice[i],
+          subtotal: data.itemsSubtotal[i],
+        };
+      });
+      setProductsList(products);
       form.setFieldsValue({
         ...data,
         clientID: data.clientID._id,
       });
+      setTotalValue(
+        products.reduce((acc, cv) => acc + cv.salePrice * cv.quantity, 0)
+      );
     }
     getData();
   }, []);
@@ -74,7 +76,7 @@ export default function UpdateOrder({
   const HandlerAddQuantity = (value) => {
     let isInTheArray = false;
     let newUserItem = productsList.map((e) => {
-      if (e.name === value.name) {
+      if (e._id === value._id && e.salePrice === value.salePrice) {
         isInTheArray = true;
         return { ...e, quantity: e.quantity + value.quantity };
       } else {
@@ -84,18 +86,16 @@ export default function UpdateOrder({
     newUserItem = isInTheArray ? newUserItem : [...productsList, value];
     setProductsList([...newUserItem]);
     setTotalValue(
-      productsList.reduce((acc, cv) => acc + cv.salePrice * cv.quantity, 0)
+      newUserItem.reduce((acc, cv) => acc + cv.salePrice * cv.quantity, 0)
     );
-    for (let item of productsList) {
-      setItems([...items, item._id]);
-      setItemsQuantity([...itemsQuantity, item.quantity]);
-      setItemsSalePrice([...itemsSalePrice, item.salePrice]);
-      setItemsSubtotal([...itemsSubtotal, item.salePrice * item.quantity]);
-    }
   };
 
   const handlerRemoveItem = (id) => {
-    setProductsList(productsList.filter((e) => e._id !== id));
+    const newList = productsList.filter((e) => e._id !== id);
+    setProductsList(newList);
+    setTotalValue(
+      newList.reduce((acc, cv) => acc + cv.salePrice * cv.quantity, 0)
+    );
   };
 
   const AddClientButton = (menu) => (
@@ -128,10 +128,7 @@ export default function UpdateOrder({
   async function handleSubmit(values) {
     const updatedOrder = {
       ...values,
-      items,
-      itemsQuantity,
-      itemsSalePrice,
-      itemsSubtotal,
+      productsList,
       total: totalValue,
     };
     const { data: newOrder } = await updateOrder(order._id, updatedOrder);
