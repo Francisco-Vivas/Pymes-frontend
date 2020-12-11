@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { List, Avatar, InputNumber } from "antd";
 import { ButtonS } from "./styledComponents/antdStyled";
+import { TextS } from "./styledComponents/Typography";
 
 const ProductListItem = ({
   product,
@@ -8,12 +9,19 @@ const ProductListItem = ({
   isSupplier = false,
 }) => {
   const [quantity, setQuantity] = useState(0);
-
+  const [isInTheList, setIsInTheList] = useState(false);
   const { productsObjValues, setProductsObjValues } = objProductsObjValues;
+
+  useEffect(() => {
+    if (productsObjValues[product._id]) {
+      setIsInTheList(true);
+    }
+  });
 
   const onChange = (value) => {
     setQuantity(value);
-    console.log(value, product._id, product);
+    setIsInTheList(true);
+    console.log(productsObjValues[product._id]);
 
     setProductsObjValues({
       ...productsObjValues,
@@ -22,6 +30,7 @@ const ProductListItem = ({
         _id: product._id,
         quantity: value,
         salePrice: product.salePrice,
+        name: product.name,
       },
     });
   };
@@ -29,9 +38,13 @@ const ProductListItem = ({
   return isSupplier ? (
     <List.Item
       actions={[
-        <ButtonS type="primary" onClick={onChange}>
-          Add Product
-        </ButtonS>,
+        isInTheList ? (
+          <TextS>Added!</TextS>
+        ) : (
+          <ButtonS type="primary" onClick={onChange}>
+            Add Product
+          </ButtonS>
+        ),
       ]}
     >
       <List.Item.Meta
