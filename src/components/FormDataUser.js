@@ -58,6 +58,7 @@ const FormDataUser = ({ onFinishFn, isSignup = true, logUpdate = null }) => {
       if (isSignup) return history.push("/login");
       return history.push("/profile");
     } catch (err) {
+      setIsDone(false);
       console.dir(err.response.data.err.message);
       message.error(err.response.data.err.message);
     }
